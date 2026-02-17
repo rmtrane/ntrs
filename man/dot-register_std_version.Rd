@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal-registry-functions.R
 \name{.register_std_version}
 \alias{.register_std_version}
-\title{Register a version}
+\title{Register a standardization method version for a test score class}
 \usage{
 .register_std_version(
   test_class,
@@ -14,24 +14,35 @@
 )
 }
 \arguments{
-\item{test_class}{A single string.}
+\item{test_class}{A test_scores object whose class determines which
+registration method to use}
 
-\item{method}{A single string. Must be one of the implemented methods. See \code{get_}}
+\item{method}{Character string naming the standardization method (e.g.,
+"norms", "regression"). Must correspond to an implemented \verb{std_using_*()}
+generic function.}
 
-\item{version}{A single string.}
+\item{version}{Character string identifying this version of the method
+(e.g., "updated", "nacc", "v2024"). Used to retrieve this specific
+standardization data later.}
 
-\item{data}{Data.}
+\item{data}{A list containing the standardization data (e.g., norm tables,
+regression coefficients, lookup tables). Structure depends on the method.}
 
-\item{description}{A single string. Optional.}
+\item{description}{Character string describing this version (e.g., "Updated
+norms from 2024 cohort"). Used for documentation and user information.}
 
-\item{overwrite}{A logical value. Optional.}
+\item{overwrite}{Logical. If \code{TRUE}, allows overwriting an existing version.
+If \code{FALSE} (default), attempting to register an existing version throws an
+error.}
 }
 \value{
-Returns \code{NULL}, invisibly. The function will raise an error if \code{method} is not
-implemented for \code{test_class} or if \code{version} already exists and \code{overwrite} is \code{FALSE}.
-A warning will be issued if \code{version} exists and \code{overwrite} is \code{TRUE}.
+Invisible \code{NULL}. Called for side effects (storing data in
+\code{.std_versions} environment).
 }
 \description{
-A short description...
+Internal S3 generic for registering versions of standardization methods
+(e.g., norms, regression models) for specific test score classes. This
+function stores the standardization data in a nested environment structure
+organized by method, test class, and version.
 }
 \keyword{internal}

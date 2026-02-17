@@ -2,7 +2,7 @@
 % Please edit documentation in R/test_scores-MOCATOTS.R
 \name{.setup_MOCATOTS_versions}
 \alias{.setup_MOCATOTS_versions}
-\title{Setup MOCATOTS versions}
+\title{Setup MOCATOTS method versions}
 \usage{
 .setup_MOCATOTS_versions()
 }

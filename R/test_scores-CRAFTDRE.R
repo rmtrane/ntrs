@@ -1,32 +1,33 @@
-#' MOCATOTS Test Scores
+#' CRAFTDRE Test Scores
 #'
-#' @description Create a `MOCATOTS` object to hold MoCA scores.
+#' @description Create a `CRAFTDRE` object to hold CRAFTDRE scores.
 #'
 #' @param scores Numeric scores.
 #'
 #' @returns
-#' An object of class `MOCATOTS`.
+#' An object of class `CRAFTDRE`.
 #'
 #' @export
-MOCATOTS <- function(scores = numeric()) {
+CRAFTDRE <- function(scores = numeric()) {
   ts <- test_scores(
     scores,
-    label = "MoCA",
-    range = c(0, 30),
-    codes = c(
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
-      "Item(s) or whole test not administered" = 88
-    ),
-    class = "MOCATOTS"
+    label = "Craft Delay - Paraphrase",
+    range = c(0, 25),
+    codes = c("Physical problem" = 95,
+      "Cognitive/behavior problem" = 96,
+      "Other problem" = 97,
+      "Verbal refusal" = 98,
+      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4),
+    class = "CRAFTDRE"
   )
 
   ts
-}
+  }
 
-#' Setup MOCATOTS method versions
+#' Setup CRAFTDRE method versions
 #'
 #' @description
-#' Registers versions for the MOCATOTS test class,
+#' Registers versions for the %s test class,
 #' and sets a default method. Meant to be called in .onLoad
 #'
 #' @returns
@@ -34,9 +35,9 @@ MOCATOTS <- function(scores = numeric()) {
 #' registering test versions and setting defaults.
 #'
 #' @keywords internal
-.setup_MOCATOTS_versions <- function() {
-  # Register norms versions for MOCATOTS
-  lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$MOCATOTS
+.setup_CRAFTDRE_versions <- function() {
+# Register norms versions for CRAFTDRE
+  lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$CRAFTDRE
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
   )] <- c("age", "educ")
@@ -44,7 +45,7 @@ MOCATOTS <- function(scores = numeric()) {
   lookup_table$sex <- factor(lookup_table$sex, levels = c("m", "f"))
 
   register_norms_version(
-    test_class = MOCATOTS(),
+    test_class = CRAFTDRE(),
     version = "nacc",
     lookup_table = lookup_table,
     covariate_prep_funs = list(
@@ -54,7 +55,7 @@ MOCATOTS <- function(scores = numeric()) {
     )
   )
 
-  lookup_table <- NpsychBatteryNorms::normative_summaries$updated$MOCATOTS
+  lookup_table <- NpsychBatteryNorms::normative_summaries$updated$CRAFTDRE
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
   )] <- c("age", "educ")
@@ -62,7 +63,7 @@ MOCATOTS <- function(scores = numeric()) {
   lookup_table$sex <- factor(lookup_table$sex, levels = c("m", "f"))
 
   register_norms_version(
-    test_class = MOCATOTS(),
+    test_class = CRAFTDRE(),
     version = "updated",
     lookup_table = lookup_table,
     covariate_prep_funs = list(
@@ -71,11 +72,10 @@ MOCATOTS <- function(scores = numeric()) {
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
     )
   )
-
-  # Register regression versions for MOCATOTS
+# Register regression versions for CRAFTDRE
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
-    var_name == "MOCATOTS"
+    var_name == "CRAFTDRE"
   )[, setdiff(
     names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
     "var_name"
@@ -84,7 +84,7 @@ MOCATOTS <- function(scores = numeric()) {
   names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
-    test_class = MOCATOTS(),
+    test_class = CRAFTDRE(),
     version = "updated_2024.06",
     coefs = coefs[, -which(names(coefs) == "delay")],
     covariate_prep_funs = list(
@@ -93,22 +93,22 @@ MOCATOTS <- function(scores = numeric()) {
         x[x > 110] <- 110
 
         x
-      },
+  },
       sex = \(x) {
         as.numeric(x == 2)
-      },
+  },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-      }
+  }
     )
   )
 
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
-    var_name == "MOCATOTS"
+    var_name == "CRAFTDRE"
   )[, setdiff(
     names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
     "var_name"
@@ -117,7 +117,7 @@ MOCATOTS <- function(scores = numeric()) {
   names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
-    test_class = MOCATOTS(),
+    test_class = CRAFTDRE(),
     version = "updated_2025.06",
     coefs = coefs[, -which(names(coefs) == "delay")],
     covariate_prep_funs = list(
@@ -126,22 +126,21 @@ MOCATOTS <- function(scores = numeric()) {
         x[x > 110] <- 110
 
         x
-      },
+  },
       sex = \(x) {
         as.numeric(x == 2)
-      },
+  },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-      }
+  }
     )
   )
-
-  coefs <- subset(
+coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["nacc"]],
-    var_name == "MOCATOTS"
+    var_name == "CRAFTDRE"
   )[, setdiff(
     names(NpsychBatteryNorms::reg_coefs[["nacc"]]),
     "var_name"
@@ -155,7 +154,7 @@ MOCATOTS <- function(scores = numeric()) {
   names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
-    test_class = MOCATOTS(),
+    test_class = CRAFTDRE(),
     version = "nacc",
     coefs = na.omit(coefs),
     covariate_prep_funs = list(
@@ -164,23 +163,22 @@ MOCATOTS <- function(scores = numeric()) {
         x[x > 110] <- 110
 
         x
-      },
+  },
       sex = \(x) {
         as.numeric(x == 2)
-      },
+  },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-      }
+  }
     )
   )
-
-  ## Set the default for MOCATOTS
+## Set the default for %s
   set_default_method(
-    test_class = MOCATOTS(),
+    test_class = CRAFTDRE(),
     method = "regression",
     version = "updated_2025.06"
   )
-}
+  }

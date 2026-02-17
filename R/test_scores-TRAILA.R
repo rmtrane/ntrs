@@ -1,32 +1,33 @@
-#' MOCATOTS Test Scores
+#' TRAILA Test Scores
 #'
-#' @description Create a `MOCATOTS` object to hold MoCA scores.
+#' @description Create a `TRAILA` object to hold TRAILA scores.
 #'
 #' @param scores Numeric scores.
 #'
 #' @returns
-#' An object of class `MOCATOTS`.
+#' An object of class `TRAILA`.
 #'
 #' @export
-MOCATOTS <- function(scores = numeric()) {
+TRAILA <- function(scores = numeric()) {
   ts <- test_scores(
     scores,
-    label = "MoCA",
-    range = c(0, 30),
-    codes = c(
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
-      "Item(s) or whole test not administered" = 88
-    ),
-    class = "MOCATOTS"
+    label = "Trailmaking Part A",
+    range = c(0, 150),
+    codes = c("Physical problem" = 995,
+      "Cognitive/behavior problem" = 996,
+      "Other problem" = 997,
+      "Verbal refusal" = 998,
+      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4),
+    class = "TRAILA"
   )
 
   ts
-}
+  }
 
-#' Setup MOCATOTS method versions
+#' Setup TRAILA method versions
 #'
 #' @description
-#' Registers versions for the MOCATOTS test class,
+#' Registers versions for the %s test class,
 #' and sets a default method. Meant to be called in .onLoad
 #'
 #' @returns
@@ -34,9 +35,9 @@ MOCATOTS <- function(scores = numeric()) {
 #' registering test versions and setting defaults.
 #'
 #' @keywords internal
-.setup_MOCATOTS_versions <- function() {
-  # Register norms versions for MOCATOTS
-  lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$MOCATOTS
+.setup_TRAILA_versions <- function() {
+# Register norms versions for TRAILA
+  lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$TRAILA
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
   )] <- c("age", "educ")
@@ -44,7 +45,7 @@ MOCATOTS <- function(scores = numeric()) {
   lookup_table$sex <- factor(lookup_table$sex, levels = c("m", "f"))
 
   register_norms_version(
-    test_class = MOCATOTS(),
+    test_class = TRAILA(),
     version = "nacc",
     lookup_table = lookup_table,
     covariate_prep_funs = list(
@@ -54,7 +55,7 @@ MOCATOTS <- function(scores = numeric()) {
     )
   )
 
-  lookup_table <- NpsychBatteryNorms::normative_summaries$updated$MOCATOTS
+  lookup_table <- NpsychBatteryNorms::normative_summaries$updated$TRAILA
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
   )] <- c("age", "educ")
@@ -62,7 +63,7 @@ MOCATOTS <- function(scores = numeric()) {
   lookup_table$sex <- factor(lookup_table$sex, levels = c("m", "f"))
 
   register_norms_version(
-    test_class = MOCATOTS(),
+    test_class = TRAILA(),
     version = "updated",
     lookup_table = lookup_table,
     covariate_prep_funs = list(
@@ -71,11 +72,10 @@ MOCATOTS <- function(scores = numeric()) {
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
     )
   )
-
-  # Register regression versions for MOCATOTS
+# Register regression versions for TRAILA
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
-    var_name == "MOCATOTS"
+    var_name == "TRAILA"
   )[, setdiff(
     names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
     "var_name"
@@ -84,7 +84,7 @@ MOCATOTS <- function(scores = numeric()) {
   names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
-    test_class = MOCATOTS(),
+    test_class = TRAILA(),
     version = "updated_2024.06",
     coefs = coefs[, -which(names(coefs) == "delay")],
     covariate_prep_funs = list(
@@ -93,22 +93,22 @@ MOCATOTS <- function(scores = numeric()) {
         x[x > 110] <- 110
 
         x
-      },
+  },
       sex = \(x) {
         as.numeric(x == 2)
-      },
+  },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-      }
+  }
     )
   )
 
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
-    var_name == "MOCATOTS"
+    var_name == "TRAILA"
   )[, setdiff(
     names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
     "var_name"
@@ -117,7 +117,7 @@ MOCATOTS <- function(scores = numeric()) {
   names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
-    test_class = MOCATOTS(),
+    test_class = TRAILA(),
     version = "updated_2025.06",
     coefs = coefs[, -which(names(coefs) == "delay")],
     covariate_prep_funs = list(
@@ -126,22 +126,21 @@ MOCATOTS <- function(scores = numeric()) {
         x[x > 110] <- 110
 
         x
-      },
+  },
       sex = \(x) {
         as.numeric(x == 2)
-      },
+  },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-      }
+  }
     )
   )
-
-  coefs <- subset(
+coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["nacc"]],
-    var_name == "MOCATOTS"
+    var_name == "TRAILA"
   )[, setdiff(
     names(NpsychBatteryNorms::reg_coefs[["nacc"]]),
     "var_name"
@@ -155,7 +154,7 @@ MOCATOTS <- function(scores = numeric()) {
   names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
-    test_class = MOCATOTS(),
+    test_class = TRAILA(),
     version = "nacc",
     coefs = na.omit(coefs),
     covariate_prep_funs = list(
@@ -164,23 +163,22 @@ MOCATOTS <- function(scores = numeric()) {
         x[x > 110] <- 110
 
         x
-      },
+  },
       sex = \(x) {
         as.numeric(x == 2)
-      },
+  },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-      }
+  }
     )
   )
-
-  ## Set the default for MOCATOTS
+## Set the default for %s
   set_default_method(
-    test_class = MOCATOTS(),
+    test_class = TRAILA(),
     method = "regression",
     version = "updated_2025.06"
   )
-}
+  }

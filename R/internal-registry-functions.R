@@ -1,35 +1,32 @@
 # Registry Environments
 .std_versions <- new.env(parent = emptyenv())
 
-#' Get test score classes
-#'
-#' @description
-#' Get all test score classes available with some method/version
-#'
-#' @returns
-#' A character vector of the names of test score classes.
-#'
-#' @keywords internal
-get_test_scores_classes <- function() {
-  unique(unlist(lapply(.std_versions, \(x) ls(envir = x))))
-}
 
-#' Register a version
+#' Register a standardization method version for a test score class
 #'
-#' @description
-#' A short description...
+#' Internal S3 generic for registering versions of standardization methods
+#' (e.g., norms, regression models) for specific test score classes. This
+#' function stores the standardization data in a nested environment structure
+#' organized by method, test class, and version.
 #'
-#' @param method A single string. Must be one of the implemented methods. See `get_`
-#' @param test_class A single string.
-#' @param version A single string.
-#' @param data Data.
-#' @param description A single string. Optional.
-#' @param overwrite A logical value. Optional.
+#' @param test_class A test_scores object whose class determines which
+#'   registration method to use
+#' @param method Character string naming the standardization method (e.g.,
+#'   "norms", "regression"). Must correspond to an implemented `std_using_*()`
+#'   generic function.
+#' @param version Character string identifying this version of the method
+#'   (e.g., "updated", "nacc", "v2024"). Used to retrieve this specific
+#'   standardization data later.
+#' @param data A list containing the standardization data (e.g., norm tables,
+#'   regression coefficients, lookup tables). Structure depends on the method.
+#' @param description Character string describing this version (e.g., "Updated
+#'   norms from 2024 cohort"). Used for documentation and user information.
+#' @param overwrite Logical. If `TRUE`, allows overwriting an existing version.
+#'   If `FALSE` (default), attempting to register an existing version throws an
+#'   error.
 #'
-#' @returns
-#' Returns `NULL`, invisibly. The function will raise an error if `method` is not
-#' implemented for `test_class` or if `version` already exists and `overwrite` is `FALSE`.
-#' A warning will be issued if `version` exists and `overwrite` is `TRUE`.
+#' @return Invisible `NULL`. Called for side effects (storing data in
+#'   `.std_versions` environment).
 #'
 #' @keywords internal
 .register_std_version <- function(
@@ -43,6 +40,25 @@ get_test_scores_classes <- function() {
   UseMethod(".register_std_version")
 }
 
+#' @describeIn .register_std_version Method for test_scores objects
+#'
+#' This method validates that the specified standardization method is
+#' implemented for the test class, creates the necessary nested environment
+#' structure if needed, and stores the version data with metadata.
+#'
+#' The function stores data in a three-level nested environment:
+#' `.std_versions[[method]][[test_class]][[version]]`, where each version
+#' entry contains:
+#' \itemize{
+#'   \item `test_class` - The specific test class name
+#'   \item `method` - The standardization method name
+#'   \item `version` - The version identifier
+#'   \item `data` - The standardization data
+#'   \item `description` - Version description
+#' }
+#'
+#' @exportS3Method NpsychBatteryNormsS3::.register_std_version
+#'
 #' @keywords internal
 .register_std_version.test_scores <- function(
   test_class,
@@ -98,15 +114,39 @@ get_test_scores_classes <- function() {
     method = method,
     version = version,
     data = data,
-    description = description,
-    registered_at = Sys.time()
+    description = description
   )
 
   invisible()
 }
 
-#' Internal function to validate common registration parameters
-#' @noRd
+#' Validate registration parameters for standardization versions
+#'
+#' Internal helper function that validates the `version` and `description`
+#' parameters used when registering a new standardization method version.
+#' This function is called by `.register_std_version()` to ensure parameter
+#' validity before storing version data.
+#'
+#' @param version Character string identifying the version. Must be a single
+#'   non-empty character string (length 1).
+#' @param description Character string describing the version. Must be a single
+#'   non-empty character string (length 1).
+#'
+#' @return Invisible `NULL` if validation passes. Throws an error if either
+#'   parameter fails validation.
+#'
+#' @details
+#' The function checks that both `version` and `description`:
+#' \itemize{
+#'   \item Are character vectors
+#'   \item Have length exactly 1
+#'   \item Are not `NULL`
+#' }
+#'
+#' If validation fails, an error is thrown with a descriptive message
+#' indicating which parameter failed and why.
+#'
+#' @keywords internal
 .validate_registration_params <- function(version, description) {
   if (!is.character(version) || length(version) != 1 || version == "") {
     cli::cli_abort(c(
@@ -126,74 +166,95 @@ get_test_scores_classes <- function() {
   invisible()
 }
 
-#' @export
+#' Check if a standardization method is implemented for a test class
+#'
+#' Internal S3 generic that determines whether a specific standardization
+#' method has been implemented for a given test_scores class. This is used
+#' by `.register_std_version()` to validate that a method exists before
+#' allowing version registration.
+#'
+#' @param test_scores A test_scores object to check method implementation for
+#' @param method Character string naming the standardization method to check
+#'   (e.g., "norms", "regression"). This corresponds to a `std_using_*()`
+#'   generic function.
+#'
+#' @return Logical. `TRUE` if the method is implemented (i.e., a
+#'   `std_using_<method>()` S3 method exists for the test class), `FALSE`
+#'   otherwise.
+#'
+#' @details
+#' The function constructs a call to `std_using_<method>(test_scores)` and
+#' uses `sloop::s3_dispatch()` to check if a method exists for the specific
+#' test class. It searches both the current environment and all parent frames
+#' to detect methods that may be defined in different contexts.
+#'
+#' @keywords internal
 .method_implemented <- function(test_scores, method) {
   UseMethod(".method_implemented")
 }
 
-#' @export
+#' @describeIn .method_implemented Method for test_scores objects
+#'
+#' This method uses `sloop::s3_dispatch()` to check whether a
+#' `std_using_<method>()` S3 method exists for the specific test class.
+#' It searches through the call stack to handle cases where methods might
+#' be defined in different evaluation contexts. The latter is particularly
+#' important for unit tests using `testthat`.
+#'
+#' @exportS3Method NpsychBatteryNormsS3::.method_implemented
+#'
+#' @keywords internal
 .method_implemented.test_scores <- function(test_scores, method) {
-  call <- rlang::parse_expr(paste0("std_using_", method, "(test_scores)"))
-  s3_dispatches <- rlang::inject(sloop::s3_dispatch(!!call))
+  # call <- rlang::parse_expr(paste0("std_using_", method, "(test_scores)"))
+  # if (any(rlang::inject(sloop::s3_dispatch(!!call))$exists)) {
+  #   return(TRUE)
+  # }
 
-  any(s3_dispatches$exists)
+  # nframes <- sys.nframe()
+
+  # print(nframes)
+
+  # for (i in seq_len(nframes)) {
+  #   s3_dispatches <- rlang::inject(
+  #     sloop::s3_dispatch(!!call),
+  #     env = sys.frame(i - 1)
+  #   )
+
+  #   if (any(s3_dispatches$exists)) {
+  #     return(TRUE)
+  #   }
+  # }
+
+  # FALSE
+
+  generic_name <- paste0("std_using_", method)
+  classes <- class(test_scores)
+
+  # Check registered S3 methods
+  if (
+    any(vapply(
+      classes,
+      function(cls) {
+        !is.null(utils::getS3method(generic_name, cls, optional = TRUE))
+      },
+      logical(1)
+    ))
+  ) {
+    return(TRUE)
+  }
+
+  # Fallback: search calling environments for method-style functions
+  # This handles cases where methods are defined in local scopes (e.g., testthat)
+  n <- sys.nframe()
+  for (i in seq_len(n)) {
+    env <- sys.frame(i)
+    for (cls in classes) {
+      method_name <- paste0(generic_name, ".", cls)
+      if (exists(method_name, envir = env, inherits = FALSE)) {
+        return(TRUE)
+      }
+    }
+  }
+
+  FALSE
 }
-
-# .method_implemented <- function(test_class, method) {
-#   generic_name <- paste0("std_using_", method)
-#   func_name <- paste0(generic_name, ".", test_class)
-
-#   # Check if the function exists in the namespace.
-#   # This works during .onLoad() because the namespace environment
-#   # is already populated with function definitions — it's the
-#   # S3 methods *table* that hasn't been built yet.
-
-#   # ns <- asNamespace("NpsychBatteryNormsS3")
-#   ns <- tryCatch(
-#     asNamespace("NpsychBatteryNormsS3"),
-#     error = function(e) parent.env()
-#   )
-
-#   if (exists(func_name, envir = ns, mode = "function", inherits = FALSE)) {
-#     return(TRUE)
-#   }
-
-#   # Check the S3 methods table (user extensions, other packages)
-#   s3_method <- utils::getS3method(
-#     f = generic_name,
-#     class = test_class,
-#     optional = TRUE,
-#   )
-
-#   if (!is.null(s3_method)) {
-#     return(TRUE)
-#   }
-
-#   # Check user-supplied environment (for testing purposes)
-#   # if (
-#   #   !is.null(env) &&
-#   #     exists(func_name, envir = env, mode = "function", inherits = FALSE)
-#   # ) {
-#   #   return(TRUE)
-#   # }
-
-#   for (i in seq_len(sys.nframe())) {
-#     frame <- sys.frame(i)
-#     if (exists(func_name, envir = frame, mode = "function", inherits = FALSE)) {
-#       return(TRUE)
-#     }
-#   }
-
-#   if (
-#     test_class != "test_scores" &&
-#       .method_implemented(test_class = "test_scores", method)
-#   ) {
-#     cli::cli_inform(
-#       "No specific {.val {method}} method implemented for {.cls {test_class}}. Make sure version specification is compatible with the standard implementation of {.val method} for a generic {.cls test_scores} object."
-#     )
-
-#     return(TRUE)
-#   }
-
-#   FALSE
-# }
