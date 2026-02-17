@@ -35,12 +35,43 @@ new_test_scores <- function(
     cli::cli_abort("{.arg scores} must be a numeric vector.")
   }
 
+  if (!is.character(class)) {
+    cli::cli_abort("{.arg class} must be a character vector.")
+  }
+
   structure(
     scores,
     label = label,
     range = range,
     codes = codes,
     class = c(class, "test_scores")
+  )
+}
+
+#' Test scores
+#'
+#' @description
+#' A short description...
+#'
+#' @param scores A numeric vector.
+#' @param label A single string. Optional. Defaults to `short_descriptor` in `rdd`.
+#' @param range A numeric vector of length 2. Optional. Defaults to `range` in `rdd`.
+#' @param codes A character vector. Optional. Defaults to `codes` in `rdd`.
+#' @param class A single string. Optional. Additional classes to add to the resulting class.
+#'
+#' @returns
+#' A validated `test_scores` object. Will error if validation fails.
+#'
+#' @export
+test_scores <- function(
+  scores,
+  label = rdd[[class]]$short_descriptor,
+  range = rdd[[class]]$range,
+  codes = rdd[[class]]$codes,
+  class = character()
+) {
+  validate_test_scores(
+    x = new_test_scores(scores, label, range, codes, class)
   )
 }
 
@@ -75,15 +106,9 @@ validate_test_scores <- function(
 
   cls <- setdiff(class(x), "test_scores")
 
-  if (is.null(cls)) {
-    cli::cli_abort("{.arg class} must be provided.")
-  } else if (!is.character(cls)) {
+  if (length(cls) != 1) {
     cli::cli_abort(
-      "{.arg cls} must be a character, not {.cls {class(cls)}}."
-    )
-  } else if (length(cls) != 1) {
-    cli::cli_abort(
-      "{.arg cls} must be of length one, but is length {length(cls)}."
+      "{.arg class} must be of length one, but is length {length(cls)}."
     )
   }
 
@@ -108,61 +133,6 @@ validate_test_scores <- function(
   x
 }
 
-#' Test scores
-#'
-#' @description
-#' A short description...
-#'
-#' @param scores A numeric vector.
-#' @param label A single string. Optional. Defaults to `short_descriptor` in `rdd`.
-#' @param range A numeric vector of length 2. Optional. Defaults to `range` in `rdd`.
-#' @param codes A character vector. Optional. Defaults to `codes` in `rdd`.
-#' @param class A single string. Optional. Additional classes to add to the resulting class.
-#'
-#' @returns
-#' A validated `test_scores` object. Will error if validation fails.
-#'
-#' @export
-test_scores <- function(
-  scores,
-  label = rdd[[class]]$short_descriptor,
-  range = rdd[[class]]$range,
-  codes = rdd[[class]]$codes,
-  class = character()
-) {
-  validate_test_scores(
-    x = new_test_scores(scores, label, range, codes, class)
-  )
-}
-
-#' Register a test score class
-#'
-#' @description
-#' A short description...
-#' #' @param class_name A single character string.
-#'
-#' @returns
-#' `class_name`, invisibly. An error is thrown if `class_name` is not a
-#' single character string.
-#'
-#' @export
-register_test_score_class <- function(class_name) {
-  if (!is.character(class_name)) {
-    cli::cli_abort(
-      "{.arg class_name} must be a character string, not of class {.cls {class(class_name)}}"
-    )
-  }
-
-  if (length(class_name) != 1L) {
-    cli::cli_abort(
-      "{.arg class_name} must be of length 1, but is of length {length(class_name)}."
-    )
-  }
-
-  .test_score_classes[[class_name]] <- TRUE
-
-  invisible(class_name)
-}
 
 #' Remove error codes
 #'
