@@ -14,7 +14,7 @@ REYTOTAL <- function(scores = numeric()) {
     label = "RAVLT Total Learning",
     range = c(0, 75),
     codes = numeric(),
-    class = "REYTOTAL"
+    subclass = "REYTOTAL"
   )
 
   ts

@@ -132,7 +132,6 @@ test_that(".register_std_version() generic exists and is S3", {
 test_that(".register_std_version.npsych_scores() rejects unimplemented methods", {
   test_obj <- MOCATOTS(c(25, 28, 30))
 
-  # Should error when trying to register a method that doesn't exist
   testthat::local_reproducible_output()
 
   expect_error(
@@ -338,7 +337,7 @@ test_that(".register_std_version.npsych_scores() stores correct metadata", {
   stored <- .std_versions[["norms"]][[scores_class]][[test_version]]
 
   # Verify metadata (not including registered_at since it's not stored)
-  expect_equal(stored$scores_class, "MOCATOTS")
+  expect_equal(stored$subclass, "MOCATOTS")
   expect_equal(stored$method, "norms")
   expect_equal(stored$version, test_version)
   expect_equal(stored$description, test_description)

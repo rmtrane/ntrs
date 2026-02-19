@@ -9,9 +9,9 @@ get_version_data(scores, method = NULL, version = NULL)
 \arguments{
 \item{scores}{A single string specifying the test class.}
 
-\item{method}{A single string specifying the method.}
+\item{method}{A single string specifying the method. If \code{NULL} (default), the function will attempt to retrieve the default version for the given method and test class.}
 
-\item{version}{A single string. If \code{"default"} (default), the function will attempt to retrieve the default version for the given method and test class.}
+\item{version}{A single string. If \code{NULL} (default), the function will attempt to retrieve the default version for the given method and test class.}
 }
 \value{
 The object representing the requested version data. The function will error if \code{version} is not \code{NULL} when \code{method = NULL},

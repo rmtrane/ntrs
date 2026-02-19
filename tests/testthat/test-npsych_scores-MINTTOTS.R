@@ -102,8 +102,18 @@ test_that("MINTTOTS with no arguments returns an empty MINTTOTS object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_MINTTOTS_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "MINTTOTS",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_MINTTOTS_versions())
+
 
 test_that(".setup_MINTTOTS_versions registers the expected methods", {
   methods <- list_std_methods(MINTTOTS())

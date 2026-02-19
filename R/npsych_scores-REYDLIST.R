@@ -14,7 +14,7 @@ REYDLIST <- function(scores = numeric()) {
     label = "RAVLT Distractor List",
     range = c(0, 15),
     # codes = c("" = ),
-    class = "REYDLIST"
+    subclass = "REYDLIST"
   )
 
   ts

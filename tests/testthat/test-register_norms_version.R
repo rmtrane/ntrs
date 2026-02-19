@@ -185,24 +185,26 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
 
   # No error when grouping cols differ
   expect_no_error(
-    register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_dup_ok",
-      description = "unique groups",
-      lookup_table = data.frame(
-        age = factor(c("60-69", "70-79")),
-        m = c(25, 26),
-        sd = c(3, 4)
-      ),
-      covar_fns = list(
-        age = function(x) {
-          cut(
-            x,
-            breaks = c(60, 70, 80),
-            right = FALSE,
-            labels = c("60-69", "70-79")
-          )
-        }
+    suppressMessages(
+      register_norms_version(
+        scores = MOCATOTS(),
+        version = "test_dup_ok",
+        description = "unique groups",
+        lookup_table = data.frame(
+          age = factor(c("60-69", "70-79")),
+          m = c(25, 26),
+          sd = c(3, 4)
+        ),
+        covar_fns = list(
+          age = function(x) {
+            cut(
+              x,
+              breaks = c(60, 70, 80),
+              right = FALSE,
+              labels = c("60-69", "70-79")
+            )
+          }
+        )
       )
     )
   )
@@ -272,22 +274,24 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
 
   # Allowed optional columns should not trigger error
   expect_no_error(
-    register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_allowed_cols",
-      description = "all optional cols",
-      lookup_table = data.frame(
-        age = factor("60-69"),
-        sex = factor("Male"),
-        educ = factor("12-15"),
-        n = 100L,
-        m = 25,
-        sd = 3
-      ),
-      covar_fns = list(
-        age = function(x) factor("60-69"),
-        sex = function(x) factor("Male"),
-        educ = function(x) factor("12-15")
+    suppressMessages(
+      register_norms_version(
+        scores = MOCATOTS(),
+        version = "test_allowed_cols",
+        description = "all optional cols",
+        lookup_table = data.frame(
+          age = factor("60-69"),
+          sex = factor("Male"),
+          educ = factor("12-15"),
+          n = 100L,
+          m = 25,
+          sd = 3
+        ),
+        covar_fns = list(
+          age = function(x) factor("60-69"),
+          sex = function(x) factor("Male"),
+          educ = function(x) factor("12-15")
+        )
       )
     )
   )
@@ -633,13 +637,13 @@ test_that("register_norms_version() successfully registers norms version with va
   )
 
   expect_no_error(
-    register_norms_version(
+    suppressMessages(register_norms_version(
       scores = MOCATOTS(),
       version = "test_v",
       description = "Test norms version",
       lookup_table = valid_lt,
       covar_fns = covar_prep_funs
-    )
+    ))
   )
 
   # Check that the version is registered
@@ -669,22 +673,26 @@ test_that("register_norms_version() errors when re-registering without overwrite
   valid_lt <- data.frame(m = 50, sd = 10)
 
   # Register initial version
-  register_norms_version(
-    scores = MOCATOTS(),
-    version = "test_overwrite",
-    lookup_table = valid_lt,
-    covar_fns = list()
+  suppressMessages(
+    register_norms_version(
+      scores = MOCATOTS(),
+      version = "test_overwrite",
+      lookup_table = valid_lt,
+      covar_fns = list()
+    )
   )
 
   # Attempting to re-register without overwrite should error
   testthat::local_reproducible_output()
 
   expect_error(
-    register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_overwrite",
-      lookup_table = data.frame(m = 55, sd = 12),
-      covar_fns = list()
+    suppressMessages(
+      register_norms_version(
+        scores = MOCATOTS(),
+        version = "test_overwrite",
+        lookup_table = data.frame(m = 55, sd = 12),
+        covar_fns = list()
+      )
     ),
     "already exists for.*overwrite =.+TRUE"
   )
@@ -701,21 +709,25 @@ test_that("register_norms_version() warns and succeeds when re-registering with 
   valid_lt <- data.frame(m = 50, sd = 10)
 
   # Register initial version
-  register_norms_version(
-    scores = MOCATOTS(),
-    version = "test_overwrite2",
-    lookup_table = valid_lt,
-    covar_fns = list()
+  suppressMessages(
+    register_norms_version(
+      scores = MOCATOTS(),
+      version = "test_overwrite2",
+      lookup_table = valid_lt,
+      covar_fns = list()
+    )
   )
 
   # Re-registering with overwrite = TRUE should warn but succeed
   expect_warning(
-    register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_overwrite2",
-      lookup_table = data.frame(m = 55, sd = 12),
-      covar_fns = list(),
-      overwrite = TRUE
+    suppressMessages(
+      register_norms_version(
+        scores = MOCATOTS(),
+        version = "test_overwrite2",
+        lookup_table = data.frame(m = 55, sd = 12),
+        covar_fns = list(),
+        overwrite = TRUE
+      )
     ),
     "Overwriting existing version"
   )
@@ -735,23 +747,25 @@ test_that("register_norms_version() errors when re-registering without overwrite
   valid_lt <- data.frame(m = 50, sd = 10)
 
   # Register initial version
-  register_norms_version(
-    scores = MOCATOTS(),
-    version = "test_overwrite",
-    lookup_table = valid_lt,
-    covar_fns = list()
+  suppressMessages(
+    register_norms_version(
+      scores = MOCATOTS(),
+      version = "test_overwrite",
+      lookup_table = valid_lt,
+      covar_fns = list()
+    )
   )
 
   # Attempting to re-register without overwrite should error
   testthat::local_reproducible_output()
 
   expect_error(
-    register_norms_version(
+    suppressMessages(register_norms_version(
       scores = MOCATOTS(),
       version = "test_overwrite",
       lookup_table = data.frame(m = 55, sd = 12),
       covar_fns = list()
-    ),
+    )),
     "already exists.+overwrite.+=.+TRUE"
   )
 
@@ -763,21 +777,25 @@ test_that("register_norms_version() warns and succeeds when re-registering with 
   valid_lt <- data.frame(m = 50, sd = 10)
 
   # Register initial version
-  register_norms_version(
-    scores = MOCATOTS(),
-    version = "test_overwrite2",
-    lookup_table = valid_lt,
-    covar_fns = list()
+  suppressMessages(
+    register_norms_version(
+      scores = MOCATOTS(),
+      version = "test_overwrite2",
+      lookup_table = valid_lt,
+      covar_fns = list()
+    )
   )
 
   # Re-registering with overwrite = TRUE should warn but succeed
   expect_warning(
-    register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_overwrite2",
-      lookup_table = data.frame(m = 55, sd = 12),
-      covar_fns = list(),
-      overwrite = TRUE
+    suppressMessages(
+      register_norms_version(
+        scores = MOCATOTS(),
+        version = "test_overwrite2",
+        lookup_table = data.frame(m = 55, sd = 12),
+        covar_fns = list(),
+        overwrite = TRUE
+      )
     ),
     "Overwriting existing version"
   )

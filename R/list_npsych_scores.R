@@ -1,7 +1,7 @@
 #' List `npsych_scores` subclasses
 #'
 #' @description
-#' This function is a helper that lists all available subclasses, i.e. all functions created using `new_class <- function(scores) { npsych_scores(..., class = "new_class")}`.
+#' This function is a helper that lists all available subclasses, i.e. all functions created using `new_class <- function(scores) { npsych_scores(...,subclass = "new_class")}`.
 #'
 #' @returns
 #' A character vector of valid test subclass names.

@@ -110,8 +110,18 @@ test_that("OTRAILB with no arguments returns an empty OTRAILB object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_OTRAILB_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "OTRAILB",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_OTRAILB_versions())
+
 
 test_that(".setup_OTRAILB_versions registers the expected methods", {
   methods <- list_std_methods(OTRAILB())

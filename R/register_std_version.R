@@ -38,7 +38,7 @@
   UseMethod(".register_std_version")
 }
 
-#' @describeIn .register_std_version Method for npsych_scores objects
+#' Method for npsych_scores objects
 #'
 #' This method validates that the specified standardization method is
 #' implemented for the test class, creates the necessary nested environment
@@ -54,6 +54,9 @@
 #'   \item `data` - The standardization data
 #'   \item `description` - Version description
 #' }
+#'
+#'
+#' @rdname .register_std_version
 #'
 #' @exportS3Method NpsychBatteryNormsS3::.register_std_version
 #'
@@ -112,7 +115,7 @@
   # assign(
   #   x = version,
   #   value = list(
-  #     scores_class = scores_class,
+  #     scoressubclass = scores_class,
   #     method = method,
   #     version = version,
   #     data = data,
@@ -122,7 +125,7 @@
   # )
 
   .std_versions[[method]][[scores_class]][[version]] <- list(
-    scores_class = scores_class,
+    subclass = scores_class,
     method = method,
     version = version,
     data = data,

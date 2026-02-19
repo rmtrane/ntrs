@@ -5,7 +5,7 @@ make_npsych_scores <- function(scores, codes = c(missing = -99)) {
     label = "My Test",
     range = c(0, 10),
     codes = codes,
-    class = "my_test"
+    subclass = "my_test"
   )
 }
 
@@ -35,7 +35,7 @@ test_that("remove_error_codes replaces multiple distinct codes with NA", {
     label = "My Test",
     range = c(0, 10),
     codes = c("missing" = -99, "refused" = -98),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   result <- remove_error_codes(x)
@@ -49,7 +49,7 @@ test_that("remove_error_codes replaces all values when all are codes", {
     label = "My Test",
     range = c(0, 10),
     codes = c(missing = -99, refused = -98),
-    class = "my_test"
+    subclass = "my_test"
   )
   result <- remove_error_codes(x)
 

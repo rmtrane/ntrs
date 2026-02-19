@@ -16,11 +16,11 @@
 #' @param label A single string.
 #' @param range A numeric vector, typically of length two.
 #' @param codes A vector or list of codes.
-#' @param class Optional.
+#' @param subclass Optional.
 #'
 #' @returns
 #' A numeric vector with additional attributes `label`, `range`, `codes`,
-#' and classes `npsych_scores` and `class`. Raises an error if `scores` is
+#' and classes `npsych_scores` and `subclass`. Raises an error if `scores` is
 #' not a numeric vector.
 #'
 #' @keywords internal
@@ -29,13 +29,13 @@ new_npsych_scores <- function(
   label,
   range,
   codes,
-  class
+  subclass
 ) {
   if (!is.numeric(scores)) {
     cli::cli_abort("{.arg scores} must be a numeric vector.")
   }
 
-  if (!is.character(class)) {
+  if (!is.character(subclass)) {
     cli::cli_abort("{.arg class} must be a character vector.")
   }
 
@@ -44,7 +44,7 @@ new_npsych_scores <- function(
     label = label,
     range = range,
     codes = codes,
-    class = c(class, "npsych_scores")
+    class = c(subclass, "npsych_scores")
   )
 }
 
@@ -57,7 +57,7 @@ new_npsych_scores <- function(
 #' @param label A single string.
 #' @param range A numeric vector of length 2.
 #' @param codes A character vector. Optional. Should be a named character vector of the form `c("error_label" = {numeric code})`.
-#' @param class A single string. Optional.
+#' @param subclass A single string. Optional.
 #'
 #' @returns
 #' A validated `npsych_scores` object. Will error if validation fails.
@@ -68,10 +68,10 @@ npsych_scores <- function(
   label,
   range,
   codes = numeric(),
-  class = character()
+  subclass = character()
 ) {
   validate_npsych_scores(
-    x = new_npsych_scores(scores, label, range, codes, class)
+    x = new_npsych_scores(scores, label, range, codes, subclass)
   )
 }
 

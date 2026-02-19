@@ -107,8 +107,18 @@ test_that("OTRLBRR with no arguments returns an empty OTRLBRR object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_OTRLBRR_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "OTRLBRR",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_OTRLBRR_versions())
+
 
 test_that(".setup_OTRLBRR_versions registers the expected methods", {
   methods <- list_std_methods(OTRLBRR())

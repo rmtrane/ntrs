@@ -44,7 +44,7 @@ test_that(".is_valid_npsych_scores() returns FALSE for a constructor whose class
         label = "Wrong",
         range = c(0, 10),
         codes = numeric(),
-        class = "actually_different_class"
+        subclass = "actually_different_class"
       )
     },
     envir = .GlobalEnv

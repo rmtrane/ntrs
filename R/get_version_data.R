@@ -4,8 +4,8 @@
 #' A short description...
 #'
 #' @param scores A single string specifying the test class.
-#' @param method A single string specifying the method.
-#' @param version A single string. If `"default"` (default), the function will attempt to retrieve the default version for the given method and test class.
+#' @param method A single string specifying the method. If `NULL` (default), the function will attempt to retrieve the default version for the given method and test class.
+#' @param version A single string. If `NULL` (default), the function will attempt to retrieve the default version for the given method and test class.
 #'
 #' @returns
 #' The object representing the requested version data. The function will error if `version` is not `NULL` when `method = NULL`,
@@ -19,7 +19,7 @@ get_version_data <- function(scores, method = NULL, version = NULL) {
 #' @export
 get_version_data.npsych_scores <- function(
   scores,
-  method = "default",
+  method = NULL,
   version = NULL
 ) {
   scores_class <- setdiff(class(scores), "npsych_scores")
@@ -35,10 +35,10 @@ get_version_data.npsych_scores <- function(
 
     scores_defaults <- get_std_defaults(scores)
 
-    method <- scores_defaults["method"]
+    method <- scores_defaults$method
 
-    if (version %in% names(scores_defaults)) {
-      version <- scores_defaults["version"]
+    if ("version" %in% names(scores_defaults)) {
+      version <- scores_defaults$version
     }
   } else {
     # If method is given, check that it is valid

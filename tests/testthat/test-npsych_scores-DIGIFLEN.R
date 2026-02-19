@@ -102,8 +102,17 @@ test_that("DIGIFLEN with no arguments returns an empty DIGIFLEN object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_DIGIFLEN_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "DIGIFLEN",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_DIGIFLEN_versions())
 
 test_that(".setup_DIGIFLEN_versions registers the expected methods", {
   methods <- list_std_methods(DIGIFLEN())

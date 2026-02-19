@@ -72,8 +72,17 @@ test_that("REYDLIST with no arguments returns an empty REYDLIST object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_REYDLIST_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "REYDLIST",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_REYDLIST_versions())
 
 test_that(".setup_REYDLIST_versions registers the expected methods", {
   methods <- list_std_methods(REYDLIST())

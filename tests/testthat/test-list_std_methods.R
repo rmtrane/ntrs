@@ -86,7 +86,7 @@ test_that("list_std_methods() finds method implemented via npsych_scores generic
         label = "New Class",
         range = c(0, 10),
         codes = numeric(),
-        class = "new_class"
+        subclass = "new_class"
       )
     },
     envir = .GlobalEnv
@@ -94,7 +94,7 @@ test_that("list_std_methods() finds method implemented via npsych_scores generic
   withr::defer(rm("new_class", envir = .GlobalEnv))
 
   # norms and regression are both implemented via std_using_*.npsych_scores,
-  # but without versions. Hence, should not be surfaced by get_std_methods...
+  # but without versions. Hence, should not be surfaced by list_std_methods...
   result <- list_std_methods(new_class())
 
   expect_false("norms" %in% result)
@@ -128,7 +128,7 @@ test_that("list_std_methods() returns empty character vector for class with no m
         label = "Bare Class",
         range = c(0, 10),
         codes = numeric(),
-        class = "bare_class"
+        subclass = "bare_class"
       )
     },
     envir = .GlobalEnv
@@ -145,6 +145,7 @@ test_that(".is_valid_std_method() errors when scores is not a npsych_scores obje
     .is_valid_std_method("norms", "MOCATOTS"),
     "must be a"
   )
+
   testthat::local_reproducible_output()
 
   expect_error(

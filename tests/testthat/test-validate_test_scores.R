@@ -4,7 +4,7 @@ test_that("validate_npsych_scores returns x invisibly on success", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_equal(x, validate_npsych_scores(x))
@@ -26,7 +26,7 @@ test_that("validate_npsych_scores errors when no additional class is present", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = character() # results in class = "npsych_scores" only
+    subclass = character() # results in subclass = "npsych_scores" only
   )
 
   testthat::local_reproducible_output()
@@ -42,7 +42,7 @@ test_that("validate_npsych_scores errors when cls has length > 1", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = c("foo", "bar")
+    subclass = c("foo", "bar")
   )
 
   testthat::local_reproducible_output()
@@ -61,7 +61,7 @@ test_that("validate_npsych_scores errors when label is not a character", {
     label = 42, # numeric, not character
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   testthat::local_reproducible_output()
@@ -75,7 +75,7 @@ test_that("validate_npsych_scores errors when label has length > 1", {
     label = c("foo", "bar"), # length 2
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   testthat::local_reproducible_output()
@@ -94,7 +94,7 @@ test_that("validate_npsych_scores errors when range is not numeric", {
     label = "My Test",
     range = c("1", "10"), # character, not numeric
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   testthat::local_reproducible_output()
@@ -108,7 +108,7 @@ test_that("validate_npsych_scores errors when range is not length 2", {
     label = "My Test",
     range = c(0, 10, 20), # length 3
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
   testthat::local_reproducible_output()
 
@@ -119,7 +119,7 @@ test_that("validate_npsych_scores errors when range is not length 2", {
     label = "My Test",
     range = 10, # length 1
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
   testthat::local_reproducible_output()
 
@@ -137,7 +137,7 @@ test_that("validate_npsych_scores errors when codes is not numeric", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = "N/A"), # named but character
-    class = "my_test"
+    subclass = "my_test"
   )
 
   testthat::local_reproducible_output()
@@ -151,7 +151,7 @@ test_that("validate_npsych_scores errors when codes is unnamed", {
     label = "My Test",
     range = c(1, 10),
     codes = c(-99, -98), # numeric but no names
-    class = "my_test"
+    subclass = "my_test"
   )
 
   testthat::local_reproducible_output()
@@ -170,7 +170,7 @@ test_that("validate_npsych_scores passes when all scores are within range", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_no_error(validate_npsych_scores(x))
@@ -182,7 +182,7 @@ test_that("validate_npsych_scores passes when scores equal the boundary values e
     label = "My Test",
     range = c(0, 100),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_no_error(validate_npsych_scores(x))
@@ -194,7 +194,7 @@ test_that("validate_npsych_scores passes when out-of-range scores are valid erro
     label = "My Test",
     range = c(0, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_no_error(validate_npsych_scores(x))
@@ -206,7 +206,7 @@ test_that("validate_npsych_scores passes when multiple codes are present in scor
     label = "My Test",
     range = c(0, 10),
     codes = c(missing = -99, refused = -98),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_no_error(validate_npsych_scores(x))
@@ -218,7 +218,7 @@ test_that("validate_npsych_scores errors when a score is out of range and not a 
     label = "My Test",
     range = c(0, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   testthat::local_reproducible_output()
@@ -232,7 +232,7 @@ test_that("validate_npsych_scores error message mentions the range and the codes
     label = "My Test",
     range = c(0, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   # The error should reference the valid range and the code value

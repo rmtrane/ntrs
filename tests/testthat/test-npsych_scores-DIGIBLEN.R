@@ -102,8 +102,17 @@ test_that("DIGIBLEN with no arguments returns an empty DIGIBLEN object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_DIGIBLEN_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "DIGIBLEN",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_DIGIBLEN_versions())
 
 test_that(".setup_DIGIBLEN_versions registers the expected methods", {
   methods <- list_std_methods(DIGIBLEN())

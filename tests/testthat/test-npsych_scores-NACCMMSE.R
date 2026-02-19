@@ -107,8 +107,17 @@ test_that("NACCMMSE with no arguments returns an empty NACCMMSE object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_NACCMMSE_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "NACCMMSE",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_NACCMMSE_versions())
 
 test_that(".setup_NACCMMSE_versions registers the expected methods", {
   methods <- list_std_methods(NACCMMSE())

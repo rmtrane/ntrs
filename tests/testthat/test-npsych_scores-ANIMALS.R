@@ -102,8 +102,18 @@ test_that("ANIMALS with no arguments returns an empty ANIMALS object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_ANIMALS_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "ANIMALS",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_ANIMALS_versions())
+
 
 test_that(".setup_ANIMALS_versions registers the expected methods", {
   methods <- list_std_methods(ANIMALS())

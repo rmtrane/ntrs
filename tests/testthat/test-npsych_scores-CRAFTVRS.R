@@ -102,8 +102,18 @@ test_that("CRAFTVRS with no arguments returns an empty CRAFTVRS object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_CRAFTVRS_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "CRAFTVRS",
+      envir = x
+    )
+  }
+)
+
+
+suppressMessages(.setup_CRAFTVRS_versions())
 
 test_that(".setup_CRAFTVRS_versions registers the expected methods", {
   methods <- list_std_methods(CRAFTVRS())

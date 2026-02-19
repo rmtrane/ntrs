@@ -102,8 +102,17 @@ test_that("DIGFORCT with no arguments returns an empty DIGFORCT object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_DIGFORCT_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "DIGFORCT",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_DIGFORCT_versions())
 
 test_that(".setup_DIGFORCT_versions registers the expected methods", {
   methods <- list_std_methods(DIGFORCT())
@@ -111,6 +120,11 @@ test_that(".setup_DIGFORCT_versions registers the expected methods", {
   expect_true("norms" %in% methods)
   expect_true("regression" %in% methods)
 })
+
+withr::defer(
+  rm(list = ls(.std_versions), envir = .std_versions),
+  envir = teardown_env()
+)
 
 # ---------------------------------------------------------------------------
 # Norms versions

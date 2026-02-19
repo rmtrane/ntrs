@@ -102,8 +102,18 @@ test_that("TRAILA with no arguments returns an empty TRAILA object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_TRAILA_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "TRAILA",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_TRAILA_versions())
+
 
 test_that(".setup_TRAILA_versions registers the expected methods", {
   methods <- list_std_methods(TRAILA())

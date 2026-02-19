@@ -105,8 +105,24 @@ test_that("WAIS with no arguments returns an empty WAIS object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_WAIS_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(
+      rm(
+        list = "WAIS",
+        envir = x
+      )
+    )
+  }
+)
+
+suppressMessages(.setup_WAIS_versions())
+
+withr::defer(
+  rm(list = ls(.std_versions), envir = .std_versions),
+  envir = teardown_env()
+)
 
 test_that(".setup_WAIS_versions registers the expected methods", {
   methods <- list_std_methods(WAIS())

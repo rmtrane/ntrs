@@ -102,8 +102,17 @@ test_that("UDSVERFC with no arguments returns an empty UDSVERFC object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_UDSVERFC_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "UDSVERFC",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_UDSVERFC_versions())
 
 test_that(".setup_UDSVERFC_versions registers the expected methods", {
   methods <- list_std_methods(UDSVERFC())

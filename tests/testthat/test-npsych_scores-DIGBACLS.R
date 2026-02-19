@@ -102,8 +102,18 @@ test_that("DIGBACLS with no arguments returns an empty DIGBACLS object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_DIGBACLS_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "DIGBACLS",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_DIGBACLS_versions())
+
 
 test_that(".setup_DIGBACLS_versions registers the expected methods", {
   methods <- list_std_methods(DIGBACLS())

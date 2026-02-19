@@ -102,8 +102,19 @@ test_that("LOGIMEM with no arguments returns an empty LOGIMEM object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_LOGIMEM_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "LOGIMEM",
+      envir = x
+    ))
+  }
+)
+
+
+suppressMessages(.setup_LOGIMEM_versions())
+
 
 test_that(".setup_LOGIMEM_versions registers the expected methods", {
   methods <- list_std_methods(LOGIMEM())

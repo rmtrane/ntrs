@@ -21,7 +21,7 @@ REY6REC <- function(scores = numeric()) {
       "Verbal refusal" = 98,
       "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
     ),
-    class = "REY6REC"
+    subclass = "REY6REC"
   )
 
   ts

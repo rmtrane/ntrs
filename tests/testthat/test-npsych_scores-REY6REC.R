@@ -107,8 +107,18 @@ test_that("REY6REC with no arguments returns an empty REY6REC object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_REY6REC_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "REY6REC",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_REY6REC_versions())
+
 
 test_that(".setup_REY6REC_versions registers the expected methods", {
   methods <- list_std_methods(REY6REC())

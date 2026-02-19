@@ -1,9 +1,5 @@
 # Test file for list_method_versions() / get_versions.npsych_scores()
 
-if (!exists("norms", envir = .std_versions)) {
-  .setup_MOCATOTS_versions()
-}
-
 # Test 1: S3 generic structure ----
 test_that("list_method_versions() is an S3 generic", {
   skip_on_covr()
@@ -167,14 +163,16 @@ test_that("list_method_versions() sees newly registered versions", {
     sd = c(3.0, 2.8)
   )
 
-  register_norms_version(
-    scores = MOCATOTS(),
-    version = "test_get_versions_v1",
-    lookup_table = lookup_table,
-    covar_fns = list(
-      age = \(x) factor(ifelse(x < 70, "60-69", "70-79")),
-      sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f")),
-      educ = \(x) factor(ifelse(x < 16, "12-15", "16+"))
+  suppressMessages(
+    register_norms_version(
+      scores = MOCATOTS(),
+      version = "test_get_versions_v1",
+      lookup_table = lookup_table,
+      covar_fns = list(
+        age = \(x) factor(ifelse(x < 70, "60-69", "70-79")),
+        sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f")),
+        educ = \(x) factor(ifelse(x < 16, "12-15", "16+"))
+      )
     )
   )
 
@@ -197,14 +195,16 @@ test_that("list_method_versions() reflects multiple new registrations", {
     rmse = 3.0
   )
 
-  register_regression_version(
-    scores = MOCATOTS(),
-    version = "test_get_versions_reg_v1",
-    coefs = coefs_v1,
-    covar_fns = list(
-      age = \(x) pmin(pmax(x, 0), 110),
-      sex = \(x) as.numeric(x == 2),
-      educ = \(x) pmin(pmax(x, 0), 31)
+  suppressMessages(
+    register_regression_version(
+      scores = MOCATOTS(),
+      version = "test_get_versions_reg_v1",
+      coefs = coefs_v1,
+      covar_fns = list(
+        age = \(x) pmin(pmax(x, 0), 110),
+        sex = \(x) as.numeric(x == 2),
+        educ = \(x) pmin(pmax(x, 0), 31)
+      )
     )
   )
 
@@ -216,14 +216,16 @@ test_that("list_method_versions() reflects multiple new registrations", {
     rmse = 2.9
   )
 
-  register_regression_version(
-    scores = MOCATOTS(),
-    version = "test_get_versions_reg_v2",
-    coefs = coefs_v2,
-    covar_fns = list(
-      age = \(x) pmin(pmax(x, 0), 110),
-      sex = \(x) as.numeric(x == 2),
-      educ = \(x) pmin(pmax(x, 0), 31)
+  suppressMessages(
+    register_regression_version(
+      scores = MOCATOTS(),
+      version = "test_get_versions_reg_v2",
+      coefs = coefs_v2,
+      covar_fns = list(
+        age = \(x) pmin(pmax(x, 0), 110),
+        sex = \(x) as.numeric(x == 2),
+        educ = \(x) pmin(pmax(x, 0), 31)
+      )
     )
   )
 
@@ -278,14 +280,14 @@ test_that("list_method_versions() correctly distinguishes between test classes",
     sd = 2.0
   )
 
-  register_norms_version(
+  suppressMessages(register_norms_version(
     scores = test_obj2,
     version = "another_class_version",
     lookup_table = lookup_table,
     covar_fns = list(
       age = \(x) factor("60-69")
     )
-  )
+  ))
 
   # get_versions should return different results for each class
   versions1 <- list_method_versions(test_obj1, "norms")
@@ -323,7 +325,13 @@ test_that("list_method_versions() handles test class with no versions gracefully
 # Test 10: No method edge case ----
 
 test_that("list_method_versions() handles method without versions gracefully", {
+  ## Remove all methods
   rm(list = ls(.std_versions), envir = .std_versions)
+
+  ## Rerun setup
+  withr::defer({
+    suppressMessages(NpsychBatteryNormsS3:::.onLoad())
+  })
 
   testthat::local_reproducible_output()
 

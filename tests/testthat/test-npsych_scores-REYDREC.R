@@ -107,8 +107,17 @@ test_that("REYDREC with no arguments returns an empty REYDREC object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_REYDREC_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "REYDREC",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_REYDREC_versions())
 
 test_that(".setup_REYDREC_versions registers the expected methods", {
   methods <- list_std_methods(REYDREC())

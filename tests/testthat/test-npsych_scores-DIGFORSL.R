@@ -102,8 +102,17 @@ test_that("DIGFORSL with no arguments returns an empty DIGFORSL object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_DIGFORSL_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "DIGFORSL",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_DIGFORSL_versions())
 
 test_that(".setup_DIGFORSL_versions registers the expected methods", {
   methods <- list_std_methods(DIGFORSL())

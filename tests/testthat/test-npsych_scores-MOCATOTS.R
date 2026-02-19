@@ -87,8 +87,17 @@ test_that("MOCATOTS with no arguments returns an empty MOCATOTS object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_MOCATOTS_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "MOCATOTS",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_MOCATOTS_versions())
 
 test_that(".setup_MOCATOTS_versions registers the expected methods", {
   methods <- list_std_methods(MOCATOTS())

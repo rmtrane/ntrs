@@ -102,14 +102,28 @@ test_that("DIGIB with no arguments returns an empty DIGIB object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_DIGIB_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    suppressWarnings(rm(
+      list = "DIGIB",
+      envir = x
+    ))
+  }
+)
+
+suppressMessages(.setup_DIGIB_versions())
 
 test_that(".setup_DIGIB_versions registers the expected methods", {
   methods <- list_std_methods(DIGIB())
 
   expect_true("regression" %in% methods)
 })
+
+withr::defer(
+  rm(list = ls(.std_versions), envir = .std_versions),
+  envir = teardown_env()
+)
 
 # ---------------------------------------------------------------------------
 # Regression versions

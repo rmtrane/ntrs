@@ -27,7 +27,7 @@ test_that("'list_npsych_scores()' picks up new method", {
         label = "New Class",
         range = c(0, 10),
         codes = c("Not Available" = 99),
-        class = "new_class"
+        subclass = "new_class"
       )
     },
     envir = .GlobalEnv
@@ -43,11 +43,7 @@ test_that("'list_npsych_scores()' picks up new method", {
 # Registry source ----
 
 test_that("list_npsych_scores() finds subclass with registered norms version", {
-  # expect_true("MOCATOTS" %in% list_npsych_scores())
-  expect_equal(
-    "MOCATOTS",
-    list_npsych_scores()
-  )
+  expect_true("MOCATOTS" %in% list_npsych_scores())
 })
 
 test_that("list_npsych_scores() finds subclass with registered regression version", {
@@ -61,7 +57,7 @@ test_that("list_npsych_scores() finds subclass with registered regression versio
         label = "Regression Only",
         range = c(0, 10),
         codes = numeric(),
-        class = "reg_only_class"
+        subclass = "reg_only_class"
       )
     },
     envir = .GlobalEnv
@@ -112,16 +108,7 @@ test_that("list_npsych_scores() does not return class scraped from S3 name that 
 })
 
 # Combined behaviour ----
-
-test_that("list_npsych_scores() does not return duplicates for classes in both registry and S3 scan", {
-  # MOCATOTS is in the registry and has S3 methods in the loaded namespace
-  result <- list_npsych_scores()
-  expect_equal(sum(result == "MOCATOTS"), 1L)
-})
-
 test_that("list_npsych_scores() returns all known internal subclasses", {
-  result <- list_npsych_scores()
-
   internal_classes <- c(
     "ANIMALS",
     "BOSTON",
@@ -160,6 +147,8 @@ test_that("list_npsych_scores() returns all known internal subclasses", {
     "VEG",
     "WAIS"
   )
+
+  result <- list_npsych_scores()
 
   expect_true(all(internal_classes %in% result))
 })

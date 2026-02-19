@@ -102,8 +102,22 @@ test_that("VEG with no arguments returns an empty VEG object", {
 # outside any test_that() block; all tests below only read the registry.
 # ---------------------------------------------------------------------------
 
-rm(list = ls(envir = .std_versions), envir = .std_versions)
-.setup_VEG_versions()
+lapply(
+  c(.std_versions[["norms"]], .std_versions[["regression"]], .std_defaults),
+  \(x) {
+    rm(
+      list = "VEG",
+      envir = x
+    )
+  }
+)
+
+suppressMessages(.setup_VEG_versions())
+
+withr::defer(
+  rm(list = ls(.std_versions), envir = .std_versions),
+  envir = teardown_env()
+)
 
 test_that(".setup_VEG_versions registers the expected methods", {
   methods <- list_std_methods(VEG())

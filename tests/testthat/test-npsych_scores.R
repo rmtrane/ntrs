@@ -8,7 +8,7 @@ test_that("npsych_scores returns an object with the correct values", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_equal(as.numeric(result), c(1, 5, 10))
@@ -20,7 +20,7 @@ test_that("npsych_scores returns an object inheriting npsych_scores", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_s3_class(result, "npsych_scores")
@@ -32,7 +32,7 @@ test_that("npsych_scores sets class with custom class first, npsych_scores secon
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_equal(class(result), c("my_test", "npsych_scores"))
@@ -44,7 +44,7 @@ test_that("npsych_scores attaches attributes correctly", {
     label = "My Test",
     range = c(1, 10),
     codes = c(missing = -99),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_equal(attr(result, "label"), "My Test")
@@ -59,7 +59,7 @@ test_that("npsych_scores accepts error codes as valid scores", {
       label = "My Test",
       range = c(1, 10),
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     )
   )
 })
@@ -92,7 +92,7 @@ test_that("npsych_scores produces the same result as new_npsych_scores + validat
     label = args$label,
     range = args$range,
     codes = args$codes,
-    class = args$class
+    subclass = args$class
   )
 
   expect_equal(result_public, result_combined)
@@ -112,7 +112,7 @@ test_that("npsych_scores errors when scores is not numeric", {
       label = "My Test",
       range = c(1, 10),
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "scores"
   )
@@ -127,7 +127,7 @@ test_that("npsych_scores errors when class is not a character vector", {
       label = "My Test",
       range = c(1, 10),
       codes = c(missing = -99),
-      class = 123
+      subclass = 123
     ),
     regexp = "class"
   )
@@ -147,7 +147,7 @@ test_that("npsych_scores errors when class is empty", {
       label = "My Test",
       range = c(1, 10),
       codes = c(missing = -99),
-      class = character()
+      subclass = character()
     ),
     regexp = "class"
   )
@@ -162,7 +162,7 @@ test_that("npsych_scores errors when scores are out of range and not a code", {
       label = "My Test",
       range = c(1, 10),
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "scores"
   )
@@ -177,7 +177,7 @@ test_that("npsych_scores errors when label is not a single string", {
       label = c("foo", "bar"),
       range = c(1, 10),
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "label"
   )
@@ -192,7 +192,7 @@ test_that("npsych_scores errors when range is not a numeric vector of length 2",
       label = "My Test",
       range = c(1, 10, 20),
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "range"
   )
@@ -207,7 +207,7 @@ test_that("npsych_scores errors when codes is unnamed", {
       label = "My Test",
       range = c(1, 10),
       codes = c(-99, -98),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "codes"
   )
@@ -229,7 +229,7 @@ test_that("npsych_scores errors when label is omitted (defaults to character())"
       scores = c(1, 5),
       range = c(1, 10),
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "label"
   )
@@ -243,7 +243,7 @@ test_that("npsych_scores errors when range is omitted (defaults to numeric())", 
       scores = c(1, 5),
       label = "My Test",
       codes = c(missing = -99),
-      class = "my_test"
+      subclass = "my_test"
     ),
     regexp = "range"
   )
@@ -268,7 +268,7 @@ test_that("npsych_scores allows for empty codes argument", {
     scores = c(1, 5),
     label = "My Test",
     range = c(1, 10),
-    class = "my_test"
+    subclass = "my_test"
   )
 
   expect_equal(

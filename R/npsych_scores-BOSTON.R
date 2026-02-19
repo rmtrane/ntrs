@@ -20,7 +20,7 @@ BOSTON <- function(scores = numeric()) {
       "Verbal refusal" = 98,
       "Not available: UDS form submitted" = -4
     ),
-    class = "BOSTON"
+    subclass = "BOSTON"
   )
 
   ts

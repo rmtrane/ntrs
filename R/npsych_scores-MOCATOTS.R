@@ -17,7 +17,7 @@ MOCATOTS <- function(scores = numeric()) {
       "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
       "Item(s) or whole test not administered" = 88
     ),
-    class = "MOCATOTS"
+    subclass = "MOCATOTS"
   )
 
   ts

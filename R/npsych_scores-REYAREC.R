@@ -14,7 +14,7 @@ REYAREC <- function(scores = numeric()) {
     label = "RAVLT Recognition",
     range = c(0, 100),
     # codes = c("" = ),
-    class = "REYAREC"
+    subclass = "REYAREC"
   )
 
   ts
