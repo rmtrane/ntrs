@@ -1,11 +1,14 @@
 # Test file for get_versions() / get_versions.test_scores()
 
-# Test 1: S3 generic structure ----
+if (!exists("norms", envir = .std_versions)) {
+  .setup_MOCATOTS_versions()
+}
 
+# Test 1: S3 generic structure ----
 test_that("get_versions() is an S3 generic", {
   skip_on_covr()
   expect_true(is.function(get_versions))
-  expect_true(isS3stdGeneric(get_versions))
+  expect_true(utils::isS3stdGeneric(get_versions))
 })
 
 # Test 2: Error handling for non-existent methods ----
@@ -17,10 +20,14 @@ test_that("get_versions() errors when method doesn't exist", {
   # This test requires a fresh environment or clearing .std_versions
   # For now, we test with a method that definitely doesn't exist
 
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(test_obj, "nonexistent_method"),
     "No versions registered for method"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     get_versions(test_obj, "fake_standardization"),
@@ -32,6 +39,8 @@ test_that("get_versions() provides helpful error with available methods", {
   test_obj <- MOCATOTS(c(25, 28, 30))
 
   # Error should mention available methods when some exist
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(test_obj, "nonexistent_method"),
     "Available methods:"
@@ -51,6 +60,8 @@ test_that("get_versions() errors when no versions registered yet", {
   }
 
   # Should error because no versions have been registered
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(new_test_obj, "norms"),
     "No versions registered for test class"
@@ -72,6 +83,8 @@ test_that("get_versions() errors when test_class doesn't exist for method", {
   }
 
   # Method 'norms' exists in .std_versions but not for this test class
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(new_test_obj, "norms"),
     "No versions registered for test class"
@@ -91,6 +104,8 @@ test_that("get_versions() provides helpful error with available test classes", {
   }
 
   # Error should mention available test classes
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(new_test_obj, "norms"),
     "Available test classes:"
@@ -225,10 +240,14 @@ test_that("get_versions() is case-sensitive for method names", {
   test_obj <- MOCATOTS(c(25, 28, 30))
 
   # Should error with wrong case
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(test_obj, "Norms"),
     "No versions registered for method"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     get_versions(test_obj, "REGRESSION"),
@@ -293,6 +312,8 @@ test_that("get_versions() handles test class with no versions gracefully", {
     test_scores
   }
 
+  testthat::local_reproducible_output()
+
   expect_error(
     get_versions(test_obj, "norms"),
     "No versions registered for test class"
@@ -303,6 +324,8 @@ test_that("get_versions() handles test class with no versions gracefully", {
 
 test_that("get_versions() handles method without versions gracefully", {
   rm("defaults", "norms", "regression", envir = .std_versions)
+
+  testthat::local_reproducible_output()
 
   expect_error(
     get_versions(MOCATOTS(), "norms"),

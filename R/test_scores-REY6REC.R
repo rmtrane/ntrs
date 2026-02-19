@@ -13,17 +13,19 @@ REY6REC <- function(scores = numeric()) {
     scores,
     label = "RAVLT Short Delay",
     range = c(0, 15),
-    codes = c("Not assessed, optional" = 88,
+    codes = c(
+      "Not assessed, optional" = 88,
       "Physical problem" = 95,
       "Cognitive/behavior problem" = 96,
       "Other problem" = 97,
       "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4),
+      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
+    ),
     class = "REY6REC"
   )
 
   ts
-  }
+}
 
 #' Setup REY6REC method versions
 #'
@@ -37,7 +39,23 @@ REY6REC <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_REY6REC_versions <- function() {
-# Register regression versions for REY6REC
+  var_name <- NULL
+  # Register norms versions for REYDREC
+  lookup_table <- NpsychBatteryNorms::normative_summaries$ravlt_trials$REY6REC
+  names(lookup_table)[which(
+    names(lookup_table) %in% c("age_group")
+  )] <- c("age")
+
+  register_norms_version(
+    test_class = REY6REC(),
+    version = "ravlt_trials",
+    lookup_table = lookup_table,
+    covariate_prep_funs = list(
+      age = \(x) NpsychBatteryNorms::get_age_group(x, "ravlt_trials")
+    )
+  )
+
+  # Register regression versions for REY6REC
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
     var_name == "REY6REC"
@@ -51,23 +69,23 @@ REY6REC <- function(scores = numeric()) {
   register_regression_version(
     test_class = REY6REC(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(sapply(coefs, \(x) !all(is.na(x)))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
 
@@ -84,29 +102,29 @@ REY6REC <- function(scores = numeric()) {
   register_regression_version(
     test_class = REY6REC(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(sapply(coefs, \(x) !all(is.na(x)))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-## Set the default for %s
-  set_default_method(
-    test_class = REY6REC(),
-    method = "T-score",
-    version = "NA"
-  )
-  }
+  ## Set the default for %s
+  # set_default_method(
+  #   test_class = REY6REC(),
+  #   method = "T-score",
+  #   version = "NA"
+  # )
+}

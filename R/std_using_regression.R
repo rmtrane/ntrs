@@ -4,11 +4,6 @@
 #' A short description...
 #'
 #' @param test_scores A numeric vector of test scores.
-#' @param age A numeric vector for age.
-#' @param sex A character vector for sex.
-#' @param educ A numeric vector for education level.
-#' @param race A character vector for race.
-#' @param version A single string or number indicating the version.
 #' @param ... Arguments passed to the specific method.
 #'
 #' @returns
@@ -17,20 +12,29 @@
 #' @export
 std_using_regression <- function(
   test_scores,
-  age,
-  sex,
-  educ,
-  version,
   ...
 ) {
   UseMethod("std_using_regression")
 }
 
+#' Standardize test scores using regression
+#'
+#' @description
+#' A short description...
+#'
+#' @param test_scores A vector coercible to numeric, representing raw test scores.
+#' @param ... Additional numeric covariates to be included in the regression model. Each covariate must be a numeric vector of length 1 or the same length as `test_scores`,
+#'   and must be named after a coefficient present in the `version` data; see `get_version_data({test_scores}, "regression", {version})$coefs`.
+#' @param version A single string specifying the version of the regression model to use for standardization.
+#'
+#' @returns
+#' A numeric vector of standardized test scores. The function will error if any supplied covariates are not numeric, if required covariates for the specified `version` are missing, or if covariate lengths are mismatched.
+#'
 #' @export
 std_using_regression.test_scores <- function(
   test_scores,
-  version,
-  ...
+  ...,
+  version
 ) {
   raw_scores <- as.numeric(test_scores)
 
@@ -41,6 +45,13 @@ std_using_regression.test_scores <- function(
   )
 
   covars <- rlang::list2(...)
+
+  # Check that all dots are named
+  if (any(names(covars) == "")) {
+    cli::cli_abort(
+      "All additional arguments in ... must be named."
+    )
+  }
 
   covars_not_numeric <- sapply(covars, \(x) !is.numeric(x))
 

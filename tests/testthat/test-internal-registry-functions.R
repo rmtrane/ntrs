@@ -4,15 +4,21 @@
 
 test_that(".validate_registration_params() validates version parameter", {
   # version must be a single character string
+  testthat::local_reproducible_output()
+
   expect_error(
     .validate_registration_params(version = NULL, description = "test"),
     "must be a non-empty character string"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(
     .validate_registration_params(version = 123, description = "test"),
     "must be a non-empty character string"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     .validate_registration_params(
@@ -22,6 +28,8 @@ test_that(".validate_registration_params() validates version parameter", {
     "must be a non-empty character string"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(
     .validate_registration_params(version = character(0), description = "test"),
     "must be a non-empty character string"
@@ -30,15 +38,21 @@ test_that(".validate_registration_params() validates version parameter", {
 
 test_that(".validate_registration_params() validates description parameter", {
   # description must be a character string
+  testthat::local_reproducible_output()
+
   expect_error(
     .validate_registration_params(version = "v1", description = NULL),
     "must be a character string"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(
     .validate_registration_params(version = "v1", description = 123),
     "must be a character string"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     .validate_registration_params(
@@ -47,6 +61,8 @@ test_that(".validate_registration_params() validates description parameter", {
     ),
     "must be a character string"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     .validate_registration_params(version = "v1", description = character(0)),
@@ -75,7 +91,7 @@ test_that(".validate_registration_params() accepts valid parameters", {
 test_that(".method_implemented() generic exists and is S3", {
   skip_on_covr()
   expect_true(is.function(.method_implemented))
-  expect_true(isS3stdGeneric(.method_implemented))
+  expect_true(utils::isS3stdGeneric(.method_implemented))
 })
 
 test_that(".method_implemented.test_scores() detects implemented methods", {
@@ -110,13 +126,15 @@ test_that(".method_implemented.test_scores() searches parent frames", {
 test_that(".register_std_version() generic exists and is S3", {
   skip_on_covr()
   expect_true(is.function(.register_std_version))
-  expect_true(isS3stdGeneric(.register_std_version))
+  expect_true(utils::isS3stdGeneric(.register_std_version))
 })
 
 test_that(".register_std_version.test_scores() rejects unimplemented methods", {
   test_obj <- MOCATOTS(c(25, 28, 30))
 
   # Should error when trying to register a method that doesn't exist
+  testthat::local_reproducible_output()
+
   expect_error(
     .register_std_version(
       test_obj,
@@ -133,13 +151,18 @@ test_that(".register_std_version.test_scores() creates new method environment", 
   test_obj <- MOCATOTS(c(25, 28, 30))
 
   # Create a completely new method name that doesn't exist yet
-  std_using_new_method <- function(test_scores, ...) {
-    UseMethod("std_using_new_method")
-  }
+  assign(
+    "std_using_new_method",
+    function(x) UseMethod("std_using_new_method"),
+    envir = .GlobalEnv
+  )
+  assign("std_using_new_method.test_scores", function(x) x, envir = .GlobalEnv)
 
-  std_using_new_method.test_scores <- function(test_scores, ...) {
-    test_scores
-  }
+  # Clean up after the test regardless of pass/fail
+  withr::defer({
+    rm("std_using_new_method", envir = .GlobalEnv)
+    rm("std_using_new_method.test_scores", envir = .GlobalEnv)
+  })
 
   expect_true(.method_implemented(test_obj, "new_method"))
 
@@ -199,6 +222,8 @@ test_that(".register_std_version.test_scores() registers new versions successful
   test_obj <- MOCATOTS(c(25, 28, 30))
 
   # Should error when trying to register a method that doesn't exist
+  testthat::local_reproducible_output()
+
   expect_error(
     .register_std_version(
       test_obj,
@@ -246,6 +271,8 @@ test_that(".register_std_version.test_scores() prevents duplicate registration b
   )
 
   # Try to register the same version again without overwrite
+  testthat::local_reproducible_output()
+
   expect_error(
     .register_std_version(
       test_obj,

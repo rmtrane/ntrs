@@ -35,6 +35,7 @@ MOCATOTS <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_MOCATOTS_versions <- function() {
+  var_name <- NULL
   # Register norms versions for MOCATOTS
   lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$MOCATOTS
   names(lookup_table)[which(
@@ -86,7 +87,7 @@ MOCATOTS <- function(scores = numeric()) {
   register_regression_version(
     test_class = MOCATOTS(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -119,7 +120,7 @@ MOCATOTS <- function(scores = numeric()) {
   register_regression_version(
     test_class = MOCATOTS(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -147,7 +148,7 @@ MOCATOTS <- function(scores = numeric()) {
     "var_name"
   )]
 
-  coefs <- setNames(
+  coefs <- stats::setNames(
     as.numeric(coefs),
     names(coefs)
   )
@@ -157,7 +158,7 @@ MOCATOTS <- function(scores = numeric()) {
   register_regression_version(
     test_class = MOCATOTS(),
     version = "nacc",
-    coefs = na.omit(coefs),
+    coefs = stats::na.omit(coefs),
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0

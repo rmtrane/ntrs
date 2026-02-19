@@ -13,16 +13,18 @@ DIGIFLEN <- function(scores = numeric()) {
     scores,
     label = "Digit Span Forward - Span Length",
     range = c(0, 8),
-    codes = c("Physical problem" = 95,
+    codes = c(
+      "Physical problem" = 95,
       "Cognitive/behavior problem" = 96,
       "Other problem" = 97,
       "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4),
+      "Not available: UDS form submitted" = -4
+    ),
     class = "DIGIFLEN"
   )
 
   ts
-  }
+}
 
 #' Setup DIGIFLEN method versions
 #'
@@ -36,7 +38,8 @@ DIGIFLEN <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_DIGIFLEN_versions <- function() {
-# Register regression versions for DIGIFLEN
+  var_name <- NULL
+  # Register regression versions for DIGIFLEN
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
     var_name == "DIGIFLEN"
@@ -50,23 +53,23 @@ DIGIFLEN <- function(scores = numeric()) {
   register_regression_version(
     test_class = DIGIFLEN(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
 
@@ -83,26 +86,26 @@ DIGIFLEN <- function(scores = numeric()) {
   register_regression_version(
     test_class = DIGIFLEN(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-coefs <- subset(
+  coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["nacc_legacy"]],
     var_name == "DIGIFLEN"
   )[, setdiff(
@@ -110,7 +113,7 @@ coefs <- subset(
     "var_name"
   )]
 
-  coefs <- setNames(
+  coefs <- stats::setNames(
     as.numeric(coefs),
     names(coefs)
   )
@@ -120,29 +123,29 @@ coefs <- subset(
   register_regression_version(
     test_class = DIGIFLEN(),
     version = "nacc_legacy",
-    coefs = na.omit(coefs),
+    coefs = stats::na.omit(coefs),
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-## Set the default for %s
+  ## Set the default for %s
   set_default_method(
     test_class = DIGIFLEN(),
     method = "regression",
     version = "nacc_legacy"
   )
-  }
+}

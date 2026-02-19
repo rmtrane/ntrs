@@ -13,17 +13,19 @@ NACCMMSE <- function(scores = numeric()) {
     scores,
     label = "MMSE",
     range = c(0, 30),
-    codes = c("Score not calculated; missing at least" = 88,
+    codes = c(
+      "Score not calculated; missing at least" = 88,
       "Physical problem" = 95,
       "Cognitive/behavior problem" = 96,
       "Other problem" = 97,
       "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4),
+      "Not available: UDS form submitted" = -4
+    ),
     class = "NACCMMSE"
   )
 
   ts
-  }
+}
 
 #' Setup NACCMMSE method versions
 #'
@@ -37,7 +39,8 @@ NACCMMSE <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_NACCMMSE_versions <- function() {
-# Register regression versions for NACCMMSE
+  var_name <- NULL
+  # Register regression versions for NACCMMSE
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
     var_name == "NACCMMSE"
@@ -51,23 +54,23 @@ NACCMMSE <- function(scores = numeric()) {
   register_regression_version(
     test_class = NACCMMSE(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
 
@@ -84,26 +87,26 @@ NACCMMSE <- function(scores = numeric()) {
   register_regression_version(
     test_class = NACCMMSE(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-coefs <- subset(
+  coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["nacc_legacy"]],
     var_name == "NACCMMSE"
   )[, setdiff(
@@ -111,7 +114,7 @@ coefs <- subset(
     "var_name"
   )]
 
-  coefs <- setNames(
+  coefs <- stats::setNames(
     as.numeric(coefs),
     names(coefs)
   )
@@ -121,29 +124,29 @@ coefs <- subset(
   register_regression_version(
     test_class = NACCMMSE(),
     version = "nacc_legacy",
-    coefs = na.omit(coefs),
+    coefs = stats::na.omit(coefs),
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-## Set the default for %s
+  ## Set the default for %s
   set_default_method(
     test_class = NACCMMSE(),
     method = "regression",
     version = "nacc_legacy"
   )
-  }
+}

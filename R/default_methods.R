@@ -6,37 +6,40 @@
 #' @param overwrite Logical (default: `FALSE`); should existing default, if it exists, be overwritten?
 #'
 #' @export
-set_default_method <- function(test_class, method, version, overwrite = FALSE) {
+set_default_method <- function(scores_obj, method, version, overwrite = FALSE) {
   UseMethod("set_default_method")
 }
 
 #' @export
 set_default_method.test_scores <- function(
-  test_class,
+  scores_obj,
   method,
   version,
   overwrite = FALSE
 ) {
   # Verify method + version combo exists (will error if not)
-  invisible(get_version_data(test_class, method, version))
+  invisible(get_version_data(scores_obj, method, version))
 
   # Create "defaults" environment if not already done
   if (!exists("defaults", envir = .std_versions, inherits = FALSE)) {
     .std_versions[["defaults"]] <- new.env(parent = emptyenv())
   }
 
-  test_class <- setdiff(class(test_class), "test_scores")
+  scores_class <- setdiff(class(scores_obj), "test_scores")
 
-  # Check if test_class already has a default method
+  # Check if scores_class already has a default method
   if (
-    exists(test_class, envir = .std_versions[["defaults"]], inherits = FALSE)
+    exists(scores_class, envir = .std_versions[["defaults"]], inherits = FALSE)
   ) {
     cur_default <- .std_versions[["defaults"]][[test_class]]
     if (
       cur_default[["method"]] == method && cur_default[["version"]] == version
     ) {
-      cli::cli_alert_info(
-        "Default method and version for {.val {test_class}} already set to {.val {method}} and {.val {version}}."
+      cli::cli_inform(
+        c(
+          "i" = "Default method and version for {.val {test_class}} already set to {.val {method}} and {.val {version}}."
+        ),
+        class = "packageStartupMessage"
       )
 
       return(invisible())
@@ -61,8 +64,11 @@ set_default_method.test_scores <- function(
     "version" = version
   )
 
-  cli::cli_alert_success(
-    "Set {.val {version}} as default for {.field {method}} method on {.val {test_class}}"
+  cli::cli_inform(
+    c(
+      "v" = "Set {.val {version}} as default for {.field {method}} method on {.cls {class(test_class)[1]}}"
+    ),
+    class = "packageStartupMessage"
   )
 
   invisible()
@@ -70,11 +76,11 @@ set_default_method.test_scores <- function(
 
 #' Get the default version for a method/test_class combination
 #'
-#' @param test_class Character string or `test_scores` object with subclass.
+#' @param scores_obj Vector of class `npsych_scores` with subclass.
 #'
 #' @return Character string of default version, or NULL if none set
 #' @export
-get_default_method <- function(test_class) {
+get_default_method <- function(scores_obj) {
   UseMethod("get_default_method")
 }
 

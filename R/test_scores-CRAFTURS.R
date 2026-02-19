@@ -13,16 +13,18 @@ CRAFTURS <- function(scores = numeric()) {
     scores,
     label = "Craft Immediate - Paraphrase",
     range = c(0, 25),
-    codes = c("Physical problem" = 95,
+    codes = c(
+      "Physical problem" = 95,
       "Cognitive/behavior problem" = 96,
       "Other problem" = 97,
       "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4),
+      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
+    ),
     class = "CRAFTURS"
   )
 
   ts
-  }
+}
 
 #' Setup CRAFTURS method versions
 #'
@@ -36,7 +38,8 @@ CRAFTURS <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_CRAFTURS_versions <- function() {
-# Register norms versions for CRAFTURS
+  var_name <- NULL
+  # Register norms versions for CRAFTURS
   lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$CRAFTURS
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
@@ -72,7 +75,7 @@ CRAFTURS <- function(scores = numeric()) {
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
     )
   )
-# Register regression versions for CRAFTURS
+  # Register regression versions for CRAFTURS
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
     var_name == "CRAFTURS"
@@ -86,23 +89,23 @@ CRAFTURS <- function(scores = numeric()) {
   register_regression_version(
     test_class = CRAFTURS(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
 
@@ -119,26 +122,26 @@ CRAFTURS <- function(scores = numeric()) {
   register_regression_version(
     test_class = CRAFTURS(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-coefs <- subset(
+  coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["nacc"]],
     var_name == "CRAFTURS"
   )[, setdiff(
@@ -146,7 +149,7 @@ coefs <- subset(
     "var_name"
   )]
 
-  coefs <- setNames(
+  coefs <- stats::setNames(
     as.numeric(coefs),
     names(coefs)
   )
@@ -156,29 +159,29 @@ coefs <- subset(
   register_regression_version(
     test_class = CRAFTURS(),
     version = "nacc",
-    coefs = na.omit(coefs),
+    coefs = stats::na.omit(coefs),
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
         x[x > 110] <- 110
 
         x
-  },
+      },
       sex = \(x) {
         as.numeric(x == 2)
-  },
+      },
       educ = \(x) {
         x[x < 0] <- 0
         x[x > 31] <- 31
 
         x
-  }
+      }
     )
   )
-## Set the default for %s
+  ## Set the default for %s
   set_default_method(
     test_class = CRAFTURS(),
     method = "regression",
     version = "updated_2025.06"
   )
-  }
+}

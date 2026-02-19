@@ -54,20 +54,20 @@ new_test_scores <- function(
 #' A short description...
 #'
 #' @param scores A numeric vector.
-#' @param label A single string. Optional. Defaults to `short_descriptor` in `rdd`.
-#' @param range A numeric vector of length 2. Optional. Defaults to `range` in `rdd`.
-#' @param codes A character vector. Optional. Defaults to `codes` in `rdd`.
-#' @param class A single string. Optional. Additional classes to add to the resulting class.
+#' @param label A single string.
+#' @param range A numeric vector of length 2.
+#' @param codes A character vector. Optional. Should be a named character vector of the form `c("error_label" = {numeric code})`.
+#' @param class A single string. Optional.
 #'
 #' @returns
 #' A validated `test_scores` object. Will error if validation fails.
 #'
 #' @export
 test_scores <- function(
-  scores,
-  label = rdd[[class]]$short_descriptor,
-  range = rdd[[class]]$range,
-  codes = rdd[[class]]$codes,
+  scores = numeric(),
+  label,
+  range,
+  codes = numeric(),
   class = character()
 ) {
   validate_test_scores(
@@ -120,7 +120,7 @@ validate_test_scores <- function(
     cli::cli_abort("{.arg range} must be a numeric vector of length 2.")
   }
 
-  if (!is.numeric(codes) || is.null(names(codes))) {
+  if (length(codes) > 0 & (!is.numeric(codes) || is.null(names(codes)))) {
     cli::cli_abort("{.arg codes} must be a named numeric vector.")
   }
 

@@ -29,6 +29,8 @@ test_that("validate_test_scores errors when no additional class is present", {
     class = character() # results in class = "test_scores" only
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "class")
 })
 
@@ -42,6 +44,8 @@ test_that("validate_test_scores errors when cls has length > 1", {
     codes = c(missing = -99),
     class = c("foo", "bar")
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(validate_test_scores(x), regexp = "length one")
 })
@@ -60,6 +64,8 @@ test_that("validate_test_scores errors when label is not a character", {
     class = "my_test"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "label")
 })
 
@@ -71,6 +77,8 @@ test_that("validate_test_scores errors when label has length > 1", {
     codes = c(missing = -99),
     class = "my_test"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(validate_test_scores(x), regexp = "label")
 })
@@ -89,6 +97,8 @@ test_that("validate_test_scores errors when range is not numeric", {
     class = "my_test"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "range")
 })
 
@@ -100,6 +110,8 @@ test_that("validate_test_scores errors when range is not length 2", {
     codes = c(missing = -99),
     class = "my_test"
   )
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x_too_long), regexp = "range")
 
   x_too_short <- new_test_scores(
@@ -109,6 +121,8 @@ test_that("validate_test_scores errors when range is not length 2", {
     codes = c(missing = -99),
     class = "my_test"
   )
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x_too_short), regexp = "range")
 })
 
@@ -126,6 +140,8 @@ test_that("validate_test_scores errors when codes is not numeric", {
     class = "my_test"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "codes")
 })
 
@@ -137,6 +153,8 @@ test_that("validate_test_scores errors when codes is unnamed", {
     codes = c(-99, -98), # numeric but no names
     class = "my_test"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(validate_test_scores(x), regexp = "codes")
 })
@@ -203,6 +221,8 @@ test_that("validate_test_scores errors when a score is out of range and not a co
     class = "my_test"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "scores")
 })
 
@@ -216,7 +236,13 @@ test_that("validate_test_scores error message mentions the range and the codes",
   )
 
   # The error should reference the valid range and the code value
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "0")
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "10")
+  testthat::local_reproducible_output()
+
   expect_error(validate_test_scores(x), regexp = "-99")
 })

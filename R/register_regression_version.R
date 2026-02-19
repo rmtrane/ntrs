@@ -88,7 +88,7 @@ register_regression_version.test_scores <- function(
     )
   }
 
-  if (!missingArg(covariate_prep_funs)) {
+  if (!methods::missingArg(covariate_prep_funs)) {
     if (!is.list(covariate_prep_funs)) {
       cli::cli_abort(
         "{.arg covariate_prep_funs} must be a {.cls list}, but is a {.cls {class(covariate_prep_funs)}}."
@@ -111,15 +111,18 @@ register_regression_version.test_scores <- function(
     version = version,
     data = c(
       list(coefs = coefs),
-      if (!missingArg(covariate_prep_funs)) {
+      if (!methods::missingArg(covariate_prep_funs)) {
         list(covariate_prep_funs = covariate_prep_funs)
       }
     ),
     description = description
   )
 
-  cli::cli_alert_success(
-    "Registered {.field regression} version {.val {version}} for {.val {test_class}}"
+  cli::cli_inform(
+    c(
+      "v" = "Registered {.field regression} version {.val {version}} for {.cls {class(test_class)[1]}}"
+    ),
+    class = "packageStartupMessage"
   )
 
   invisible()

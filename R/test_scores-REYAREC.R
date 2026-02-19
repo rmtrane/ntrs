@@ -32,6 +32,7 @@ REYAREC <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_REYAREC_versions <- function() {
+  var_name <- NULL
   # Register regression versions for REYAREC
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
@@ -46,7 +47,7 @@ REYAREC <- function(scores = numeric()) {
   register_regression_version(
     test_class = REYAREC(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(sapply(coefs, \(x) !all(is.na(x)))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -79,7 +80,7 @@ REYAREC <- function(scores = numeric()) {
   register_regression_version(
     test_class = REYAREC(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(sapply(coefs, \(x) !all(is.na(x)))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -99,9 +100,9 @@ REYAREC <- function(scores = numeric()) {
     )
   )
   ## Set the default for %s
-  set_default_method(
-    test_class = REYAREC(),
-    method = "T-score",
-    version = "NA"
-  )
+  # set_default_method(
+  #   test_class = REYAREC(),
+  #   method = "T-score",
+  #   version = "NA"
+  # )
 }

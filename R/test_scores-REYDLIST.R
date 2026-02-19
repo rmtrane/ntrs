@@ -32,76 +32,28 @@ REYDLIST <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_REYDLIST_versions <- function() {
+  var_name <- NULL
+  # Register norms versions for REYDLIST
+  lookup_table <- NpsychBatteryNorms::normative_summaries$ravlt_trials$REYDLIST
+  names(lookup_table)[which(
+    names(lookup_table) %in% c("age_group")
+  )] <- c("age")
+
+  register_norms_version(
+    test_class = REYDLIST(),
+    version = "ravlt_trials",
+    lookup_table = lookup_table,
+    covariate_prep_funs = list(
+      age = \(x) NpsychBatteryNorms::get_age_group(x, "ravlt_trials")
+    )
+  )
+
   # Register regression versions for REYDLIST
-  coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
-    var_name == "REYDLIST"
-  )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
-    "var_name"
-  )]
 
-  names(coefs)[names(coefs) == "education"] <- "educ"
-
-  register_regression_version(
-    test_class = REYDLIST(),
-    version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
-    covariate_prep_funs = list(
-      age = \(x) {
-        x[x < 0] <- 0
-        x[x > 110] <- 110
-
-        x
-      },
-      sex = \(x) {
-        as.numeric(x == 2)
-      },
-      educ = \(x) {
-        x[x < 0] <- 0
-        x[x > 31] <- 31
-
-        x
-      }
-    )
-  )
-
-  coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
-    var_name == "REYDLIST"
-  )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
-    "var_name"
-  )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
-
-  register_regression_version(
-    test_class = REYDLIST(),
-    version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
-    covariate_prep_funs = list(
-      age = \(x) {
-        x[x < 0] <- 0
-        x[x > 110] <- 110
-
-        x
-      },
-      sex = \(x) {
-        as.numeric(x == 2)
-      },
-      educ = \(x) {
-        x[x < 0] <- 0
-        x[x > 31] <- 31
-
-        x
-      }
-    )
-  )
   ## Set the default for %s
-  set_default_method(
-    test_class = REYDLIST(),
-    method = "T-score",
-    version = "NA"
-  )
+  # set_default_method(
+  #   test_class = REYDLIST(),
+  #   method = "T-score",
+  #   version = "NA"
+  # )
 }

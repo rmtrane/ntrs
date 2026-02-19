@@ -4,20 +4,12 @@
 \alias{std_using_norms}
 \title{Standardize \code{test_scores} using norms}
 \usage{
-std_using_norms(test_scores, age, sex, educ, version, ...)
+std_using_norms(test_scores, ...)
 }
 \arguments{
-\item{age}{A numeric value.}
-
-\item{sex}{A single string or numeric value.}
-
-\item{educ}{A numeric value.}
-
-\item{version}{A single string or numeric value.}
+\item{test_scores}{A numeric vector.}
 
 \item{...}{Arguments passed to methods.}
-
-\item{x}{A numeric vector.}
 }
 \value{
 The standardized value of \code{x}, whose exact type depends on the specific S3

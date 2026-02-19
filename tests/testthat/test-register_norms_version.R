@@ -5,6 +5,8 @@
 test_that("register_norms_version() rejects invalid version parameter", {
   valid_lt <- data.frame(m = 50, sd = 10)
 
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -14,6 +16,8 @@ test_that("register_norms_version() rejects invalid version parameter", {
     ),
     "must be a non-empty character string"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -25,6 +29,8 @@ test_that("register_norms_version() rejects invalid version parameter", {
     "must be a non-empty character string"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -34,6 +40,8 @@ test_that("register_norms_version() rejects invalid version parameter", {
     ),
     "must be a non-empty character string"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -49,6 +57,8 @@ test_that("register_norms_version() rejects invalid version parameter", {
 test_that("register_norms_version() rejects invalid description parameter", {
   valid_lt <- data.frame(m = 50, sd = 10)
 
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -59,6 +69,8 @@ test_that("register_norms_version() rejects invalid description parameter", {
     ),
     "must be a character string"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -75,6 +87,8 @@ test_that("register_norms_version() rejects invalid description parameter", {
 # Test 2: lookup_table must be a data.frame ----
 
 test_that("register_norms_version() rejects non-data.frame lookup_table", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -84,6 +98,8 @@ test_that("register_norms_version() rejects non-data.frame lookup_table", {
     ),
     "must be a.*data.frame"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -99,6 +115,8 @@ test_that("register_norms_version() rejects non-data.frame lookup_table", {
     "must be a.*data.frame"
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -113,6 +131,8 @@ test_that("register_norms_version() rejects non-data.frame lookup_table", {
 # Test 3: lookup_table must contain required columns m and sd ----
 
 test_that("register_norms_version() rejects lookup_table missing column m", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -129,6 +149,8 @@ test_that("register_norms_version() rejects lookup_table missing column m", {
 
 test_that("register_norms_version() rejects duplicate rows in grouping columns", {
   # Duplicate when only grouping col is age
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -144,6 +166,8 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
   )
 
   # Duplicate across two grouping cols (age + sex)
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -185,6 +209,8 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
 })
 
 test_that("register_norms_version() rejects lookup_table missing column sd", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -197,6 +223,8 @@ test_that("register_norms_version() rejects lookup_table missing column sd", {
 })
 
 test_that("register_norms_version() rejects lookup_table missing both m and sd", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -212,6 +240,8 @@ test_that("register_norms_version() rejects lookup_table missing both m and sd",
 
 test_that("register_norms_version() rejects lookup_table with disallowed columns", {
   # Single disallowed column
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -223,6 +253,8 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
   )
 
   # Multiple disallowed columns
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -264,6 +296,8 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
 # Test 6: No NA values in any present allowed column ----
 
 test_that("register_norms_version() rejects NA in m column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -276,6 +310,8 @@ test_that("register_norms_version() rejects NA in m column", {
 })
 
 test_that("register_norms_version() rejects NA in sd column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -288,6 +324,8 @@ test_that("register_norms_version() rejects NA in sd column", {
 })
 
 test_that("register_norms_version() rejects NA in grouping column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -306,6 +344,8 @@ test_that("register_norms_version() rejects NA in grouping column", {
 # Test 7: m must be numeric ----
 
 test_that("register_norms_version() rejects non-numeric m column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -315,6 +355,8 @@ test_that("register_norms_version() rejects non-numeric m column", {
     ),
     "must be numeric"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -330,6 +372,8 @@ test_that("register_norms_version() rejects non-numeric m column", {
 # Test 8: sd must be numeric ----
 
 test_that("register_norms_version() rejects non-numeric sd column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -339,6 +383,8 @@ test_that("register_norms_version() rejects non-numeric sd column", {
     ),
     "must be numeric"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -354,6 +400,8 @@ test_that("register_norms_version() rejects non-numeric sd column", {
 # Test 9: sd must be positive ----
 
 test_that("register_norms_version() rejects zero sd", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -366,6 +414,8 @@ test_that("register_norms_version() rejects zero sd", {
 })
 
 test_that("register_norms_version() rejects negative sd", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -378,6 +428,8 @@ test_that("register_norms_version() rejects negative sd", {
 })
 
 test_that("register_norms_version() rejects mixed positive/non-positive sd", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -396,6 +448,8 @@ test_that("register_norms_version() rejects mixed positive/non-positive sd", {
 # Test 10: age, sex, educ must be factors ----
 
 test_that("register_norms_version() rejects non-factor age column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -412,6 +466,8 @@ test_that("register_norms_version() rejects non-factor age column", {
 })
 
 test_that("register_norms_version() rejects non-factor sex column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -428,6 +484,8 @@ test_that("register_norms_version() rejects non-factor sex column", {
 })
 
 test_that("register_norms_version() rejects non-factor educ column", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -445,6 +503,8 @@ test_that("register_norms_version() rejects non-factor educ column", {
 
 # Test 11: covariate_prep_funs must be a list ----
 test_that("register_norms_version() rejects covariate_prep_funs when no covariate columns are present", {
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -459,6 +519,8 @@ test_that("register_norms_version() rejects covariate_prep_funs when no covariat
 test_that("register_norms_version() rejects non-list covariate_prep_funs", {
   valid_lt <- data.frame(age = factor(60), sex = factor(1), m = 50, sd = 10)
 
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -468,6 +530,8 @@ test_that("register_norms_version() rejects non-list covariate_prep_funs", {
     ),
     "must be a.*list"
   )
+
+  testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
@@ -493,6 +557,8 @@ test_that("register_norms_version() rejects non-list covariate_prep_funs", {
 # Test 12: covariate_prep_funs names must be subset of lookup_table columns ----
 test_that("register_norms_version() rejects covariate_prep_funs with names not in lookup_table", {
   valid_lt <- data.frame(age = factor(60), sex = factor(1), m = 50, sd = 10)
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -516,6 +582,8 @@ test_that("register_norms_version() rejects covariate_prep_funs that produce out
     sd = c(3, 4)
   )
 
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -528,9 +596,9 @@ test_that("register_norms_version() rejects covariate_prep_funs that produce out
     "must be a function taking a single argument,.+and the output of"
   )
 
-  if (exists("test_v", envir = .std_versions[["norms"]][["MOCATOTS"]])) {
-    rm("test_v", envir = .std_versions[["norms"]][["MOCATOTS"]])
-  }
+  # if (exists("test_v", envir = .std_versions[["norms"]][["MOCATOTS"]])) {
+  #   rm("test_v", envir = .std_versions[["norms"]][["MOCATOTS"]])
+  # }
 })
 
 # Test 14: Successful registration with valid inputs ----
@@ -609,6 +677,8 @@ test_that("register_norms_version() errors when re-registering without overwrite
   )
 
   # Attempting to re-register without overwrite should error
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),
@@ -673,6 +743,8 @@ test_that("register_norms_version() errors when re-registering without overwrite
   )
 
   # Attempting to re-register without overwrite should error
+  testthat::local_reproducible_output()
+
   expect_error(
     register_norms_version(
       test_class = MOCATOTS(),

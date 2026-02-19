@@ -164,7 +164,7 @@ register_norms_version.test_scores <- function(
   # First, if no covars are present, then covariate_prep_funs should not be provided
   if (
     length(covars_present) == 0 &&
-      !missingArg(covariate_prep_funs) &&
+      !methods::missingArg(covariate_prep_funs) &&
       length(covariate_prep_funs) > 0
   ) {
     cli::cli_abort(
@@ -219,7 +219,7 @@ register_norms_version.test_scores <- function(
     version = version,
     data = c(
       list(lookup_table = lookup_table),
-      if (!missingArg(covariate_prep_funs)) {
+      if (!methods::missingArg(covariate_prep_funs)) {
         list(covariate_prep_funs = covariate_prep_funs)
       }
     ),
@@ -227,8 +227,11 @@ register_norms_version.test_scores <- function(
     overwrite = overwrite
   )
 
-  cli::cli_alert_success(
-    "Registered {.field norms} version {.val {version}} for {.cls {class(test_class)[1]}}"
+  cli::cli_inform(
+    c(
+      "v" = "Registered {.field norms} version {.val {version}} for {.cls {class(test_class)[1]}}"
+    ),
+    class = "packageStartupMessage"
   )
 
   invisible()

@@ -13,7 +13,7 @@ REYTOTAL <- function(scores = numeric()) {
     scores,
     label = "RAVLT Total Learning",
     range = c(0, 75),
-    # codes = c("" = ),
+    codes = numeric(),
     class = "REYTOTAL"
   )
 
@@ -32,6 +32,22 @@ REYTOTAL <- function(scores = numeric()) {
 #'
 #' @keywords internal
 .setup_REYTOTAL_versions <- function() {
+  var_name <- NULL
+  # Register norms versions for REYDREC
+  lookup_table <- NpsychBatteryNorms::normative_summaries$ravlt_trials$REYTOTAL
+  names(lookup_table)[which(
+    names(lookup_table) %in% c("age_group")
+  )] <- c("age")
+
+  register_norms_version(
+    test_class = REYTOTAL(),
+    version = "ravlt_trials",
+    lookup_table = lookup_table,
+    covariate_prep_funs = list(
+      age = \(x) NpsychBatteryNorms::get_age_group(x, "ravlt_trials")
+    )
+  )
+
   # Register regression versions for REYTOTAL
   coefs <- subset(
     NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
@@ -46,7 +62,7 @@ REYTOTAL <- function(scores = numeric()) {
   register_regression_version(
     test_class = REYTOTAL(),
     version = "updated_2024.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -79,7 +95,7 @@ REYTOTAL <- function(scores = numeric()) {
   register_regression_version(
     test_class = REYTOTAL(),
     version = "updated_2025.06",
-    coefs = coefs[, -which(names(coefs) == "delay")],
+    coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covariate_prep_funs = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -99,9 +115,9 @@ REYTOTAL <- function(scores = numeric()) {
     )
   )
   ## Set the default for %s
-  set_default_method(
-    test_class = REYTOTAL(),
-    method = "T-score",
-    version = "NA"
-  )
+  # set_default_method(
+  #   test_class = REYTOTAL(),
+  #   method = "T-score",
+  #   version = "NA"
+  # )
 }
