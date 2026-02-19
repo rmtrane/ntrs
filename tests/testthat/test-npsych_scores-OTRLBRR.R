@@ -1,0 +1,190 @@
+# ---------------------------------------------------------------------------
+# OTRLBRR()
+# ---------------------------------------------------------------------------
+
+test_that("OTRLBRR returns an object inheriting both OTRLBRR and npsych_scores", {
+  result <- OTRLBRR()
+
+  expect_s3_class(result, "OTRLBRR")
+  expect_s3_class(result, "npsych_scores")
+})
+
+test_that("OTRLBRR sets class with OTRLBRR first, npsych_scores second", {
+  result <- OTRLBRR()
+
+  expect_equal(class(result), c("OTRLBRR", "npsych_scores"))
+})
+
+test_that("OTRLBRR returns an object with the correct values", {
+  result <- OTRLBRR(c(0, 0, 77))
+
+  expect_equal(as.numeric(result), c(0, 0, 77))
+})
+
+test_that("OTRLBRR sets label to 'Oral Trailmaking Part B - Errors'", {
+  result <- OTRLBRR()
+
+  expect_equal(attr(result, "label"), "Oral Trailmaking Part B - Errors")
+})
+
+test_that("OTRLBRR sets range to c(0, 77)", {
+  result <- OTRLBRR()
+
+  expect_equal(attr(result, "range"), c(0, 77))
+})
+
+test_that("OTRLBRR sets codes with the correct values", {
+  result <- OTRLBRR()
+  codes <- attr(result, "codes")
+
+  expect_true(88 %in% codes)
+  expect_true(95 %in% codes)
+  expect_true(96 %in% codes)
+  expect_true(97 %in% codes)
+  expect_true(98 %in% codes)
+  expect_true(-4 %in% codes)
+})
+
+test_that("OTRLBRR codes are named", {
+  result <- OTRLBRR()
+
+  expect_false(is.null(names(attr(result, "codes"))))
+})
+
+test_that("OTRLBRR accepts scores at the range boundaries (0 and 77)", {
+  expect_no_error(OTRLBRR(c(0, 77)))
+})
+
+test_that("OTRLBRR accepts valid error code 88", {
+  expect_no_error(OTRLBRR(c(0, 88)))
+})
+
+test_that("OTRLBRR accepts valid error code 95", {
+  expect_no_error(OTRLBRR(c(0, 95)))
+})
+
+test_that("OTRLBRR accepts valid error code 96", {
+  expect_no_error(OTRLBRR(c(0, 96)))
+})
+
+test_that("OTRLBRR accepts valid error code 97", {
+  expect_no_error(OTRLBRR(c(0, 97)))
+})
+
+test_that("OTRLBRR accepts valid error code 98", {
+  expect_no_error(OTRLBRR(c(0, 98)))
+})
+
+test_that("OTRLBRR accepts valid error code -4", {
+  expect_no_error(OTRLBRR(c(0, -4)))
+})
+
+test_that("OTRLBRR errors when scores are out of range and not a code", {
+  testthat::local_reproducible_output()
+
+  expect_error(OTRLBRR(c(0, 78)), regexp = "scores")
+})
+
+test_that("OTRLBRR errors when scores is not numeric", {
+  testthat::local_reproducible_output()
+
+  expect_error(OTRLBRR(c("a", "b")), regexp = "scores")
+})
+
+test_that("OTRLBRR with no arguments returns an empty OTRLBRR object", {
+  result <- OTRLBRR()
+
+  expect_s3_class(result, "OTRLBRR")
+  expect_equal(length(result), 0L)
+})
+
+
+# ---------------------------------------------------------------------------
+# .setup_OTRLBRR_versions()
+#
+# .setup_*_versions() writes to the package-level .std_versions environment
+# and errors on duplicate registration. The function is called once here
+# outside any test_that() block; all tests below only read the registry.
+# ---------------------------------------------------------------------------
+
+rm(list = ls(envir = .std_versions), envir = .std_versions)
+.setup_OTRLBRR_versions()
+
+test_that(".setup_OTRLBRR_versions registers the expected methods", {
+  methods <- list_std_methods(OTRLBRR())
+
+  expect_true("norms" %in% methods)
+  expect_true("regression" %in% methods)
+})
+
+# ---------------------------------------------------------------------------
+# Norms versions
+# ---------------------------------------------------------------------------
+
+test_that(".setup_OTRLBRR_versions registers the 'updated' norms version", {
+  expect_true("updated" %in% list_method_versions(OTRLBRR(), "norms"))
+})
+
+test_that("'updated' norms version data contains a lookup_table with m and sd columns", {
+  data <- get_version_data(OTRLBRR(), "norms", "updated")
+
+  expect_true("lookup_table" %in% names(data))
+  expect_s3_class(data$lookup_table, "data.frame")
+  expect_true("m" %in% names(data$lookup_table))
+  expect_true("sd" %in% names(data$lookup_table))
+})
+
+test_that("'updated' norms version data contains the expected covar_fns", {
+  data <- get_version_data(OTRLBRR(), "norms", "updated")
+
+  expect_true("covar_fns" %in% names(data))
+  expect_true("age" %in% names(data$covar_fns))
+  expect_true("sex" %in% names(data$covar_fns))
+})
+
+# ---------------------------------------------------------------------------
+# Regression versions
+# ---------------------------------------------------------------------------
+
+test_that(".setup_OTRLBRR_versions registers the 'updated_2024.06' regression version", {
+  expect_true(
+    "updated_2024.06" %in% list_method_versions(OTRLBRR(), "regression")
+  )
+})
+
+test_that(".setup_OTRLBRR_versions registers the 'updated_2025.06' regression version", {
+  expect_true(
+    "updated_2025.06" %in% list_method_versions(OTRLBRR(), "regression")
+  )
+})
+
+test_that("regression version data contains coefs with rmse", {
+  for (version in c("updated_2024.06", "updated_2025.06")) {
+    data <- get_version_data(OTRLBRR(), "regression", version)
+
+    expect_true("coefs" %in% names(data), info = version)
+    expect_true("rmse" %in% names(data$coefs), info = version)
+  }
+})
+
+test_that("regression version data contains covar_fns for age, sex, and educ", {
+  for (version in c("updated_2024.06", "updated_2025.06")) {
+    data <- get_version_data(OTRLBRR(), "regression", version)
+
+    expect_true("covar_fns" %in% names(data), info = version)
+    expect_true("age" %in% names(data$covar_fns), info = version)
+    expect_true("sex" %in% names(data$covar_fns), info = version)
+    expect_true("educ" %in% names(data$covar_fns), info = version)
+  }
+})
+
+# ---------------------------------------------------------------------------
+# Default method
+# ---------------------------------------------------------------------------
+
+test_that(".setup_OTRLBRR_versions sets the default method to 'regression' / 'updated_2025.06'", {
+  default <- get_std_defaults(OTRLBRR())
+
+  expect_equal(default$method, "regression")
+  expect_equal(default$version, "updated_2025.06")
+})

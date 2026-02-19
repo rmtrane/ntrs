@@ -4,18 +4,18 @@
 \alias{get_version_data}
 \title{Get version data}
 \usage{
-get_version_data(test_class, method = "default", version = NULL)
+get_version_data(scores, method = NULL, version = NULL)
 }
 \arguments{
-\item{test_class}{A single string specifying the test class.}
+\item{scores}{A single string specifying the test class.}
 
 \item{method}{A single string specifying the method.}
 
 \item{version}{A single string. If \code{"default"} (default), the function will attempt to retrieve the default version for the given method and test class.}
 }
 \value{
-The object representing the requested version data. The function will error if \code{version} is \code{"default"} and no default version is set,
-or if the specified \code{version} (or the resolved default version) does not exist for the given \code{method} and \code{test_class}.
+The object representing the requested version data. The function will error if \code{version} is not \code{NULL} when \code{method = NULL},
+or if the specified \code{version} (or the resolved default version) does not exist for the given \code{method} and \code{npsych_scores}.
 }
 \description{
 A short description...

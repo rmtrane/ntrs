@@ -5,16 +5,16 @@
 \title{Register a norms-based standardization version}
 \usage{
 register_norms_version(
-  test_class,
+  scores,
   version,
   lookup_table,
-  covariate_prep_funs,
+  covar_fns,
   description = "",
   overwrite = FALSE
 )
 }
 \arguments{
-\item{test_class}{A \code{test_scores} object, such as \code{MOCATOTS()}.}
+\item{scores}{A \code{npsych_scores} object, such as \code{MOCATOTS()}.}
 
 \item{version}{Character string identifying this version (e.g., \code{"nacc"},
 \code{"updated"}).}
@@ -25,7 +25,7 @@ register_norms_version(
 \code{sex}, \code{educ}) must be factors, and all rows must be unique with respect
 to these grouping columns. No \code{NA} values are allowed.}
 
-\item{covariate_prep_funs}{A named list of functions that prepare covariates
+\item{covar_fns}{A named list of functions that prepare covariates
 for lookup. Names must be a subset of the columns in \code{lookup_table}. Each
 function takes a numeric vector and returns a factor whose sorted unique
 levels match those in the corresponding \code{lookup_table} column. Validation

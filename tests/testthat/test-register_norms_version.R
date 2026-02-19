@@ -1,4 +1,4 @@
-# Test file for register_norms_version() / register_norms_version.test_scores()
+# Test file for register_norms_version() / register_norms_version.npsych_scores()
 
 # Test 1: Delegation to .validate_registration_params() ----
 
@@ -9,10 +9,10 @@ test_that("register_norms_version() rejects invalid version parameter", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = NULL,
       lookup_table = valid_lt,
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a non-empty character string"
   )
@@ -21,10 +21,10 @@ test_that("register_norms_version() rejects invalid version parameter", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = 123,
       lookup_table = valid_lt,
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a non-empty character string"
   )
@@ -33,10 +33,10 @@ test_that("register_norms_version() rejects invalid version parameter", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "",
       lookup_table = valid_lt,
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a non-empty character string"
   )
@@ -45,10 +45,10 @@ test_that("register_norms_version() rejects invalid version parameter", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = c("v1", "v2"),
       lookup_table = valid_lt,
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a non-empty character string"
   )
@@ -61,10 +61,10 @@ test_that("register_norms_version() rejects invalid description parameter", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "v1",
       lookup_table = valid_lt,
-      covariate_prep_funs = list(),
+      covar_fns = list(),
       description = NULL
     ),
     "must be a character string"
@@ -74,10 +74,10 @@ test_that("register_norms_version() rejects invalid description parameter", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "v1",
       lookup_table = valid_lt,
-      covariate_prep_funs = list(),
+      covar_fns = list(),
       description = 123
     ),
     "must be a character string"
@@ -91,10 +91,10 @@ test_that("register_norms_version() rejects non-data.frame lookup_table", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = list(m = 50, sd = 10),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a.*data.frame"
   )
@@ -103,14 +103,14 @@ test_that("register_norms_version() rejects non-data.frame lookup_table", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = matrix(
         c(50, 10),
         ncol = 2,
         dimnames = list(NULL, c("m", "sd"))
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a.*data.frame"
   )
@@ -119,10 +119,10 @@ test_that("register_norms_version() rejects non-data.frame lookup_table", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = c(m = 50, sd = 10),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be a.*data.frame"
   )
@@ -135,10 +135,10 @@ test_that("register_norms_version() rejects lookup_table missing column m", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(sd = 10),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "missing required columns"
   )
@@ -153,14 +153,14 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         age = factor(c("60-69", "60-69")),
         m = c(25, 26),
         sd = c(3, 4)
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must unique rows"
   )
@@ -170,7 +170,7 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         age = factor(c("60-69", "60-69")),
@@ -178,7 +178,7 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
         m = c(25, 26),
         sd = c(3, 4)
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must unique rows"
   )
@@ -186,7 +186,7 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
   # No error when grouping cols differ
   expect_no_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_dup_ok",
       description = "unique groups",
       lookup_table = data.frame(
@@ -194,7 +194,7 @@ test_that("register_norms_version() rejects duplicate rows in grouping columns",
         m = c(25, 26),
         sd = c(3, 4)
       ),
-      covariate_prep_funs = list(
+      covar_fns = list(
         age = function(x) {
           cut(
             x,
@@ -213,10 +213,10 @@ test_that("register_norms_version() rejects lookup_table missing column sd", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "missing required columns"
   )
@@ -227,10 +227,10 @@ test_that("register_norms_version() rejects lookup_table missing both m and sd",
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(age = factor("60-69")),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "missing required columns"
   )
@@ -244,10 +244,10 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = 10, race = factor("White")),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "not allowed"
   )
@@ -257,7 +257,7 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         m = 50,
@@ -265,7 +265,7 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
         race = factor("White"),
         delay = factor("short")
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "not allowed"
   )
@@ -273,7 +273,7 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
   # Allowed optional columns should not trigger error
   expect_no_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_allowed_cols",
       description = "all optional cols",
       lookup_table = data.frame(
@@ -284,7 +284,7 @@ test_that("register_norms_version() rejects lookup_table with disallowed columns
         m = 25,
         sd = 3
       ),
-      covariate_prep_funs = list(
+      covar_fns = list(
         age = function(x) factor("60-69"),
         sex = function(x) factor("Male"),
         educ = function(x) factor("12-15")
@@ -300,10 +300,10 @@ test_that("register_norms_version() rejects NA in m column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = NA_real_, sd = 10),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "contains.*NA.*values"
   )
@@ -314,10 +314,10 @@ test_that("register_norms_version() rejects NA in sd column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = NA_real_),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "contains.*NA.*values"
   )
@@ -328,14 +328,14 @@ test_that("register_norms_version() rejects NA in grouping column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         age = factor(NA),
         m = 50,
         sd = 10
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "contains.*NA.*values"
   )
@@ -348,10 +348,10 @@ test_that("register_norms_version() rejects non-numeric m column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = "fifty", sd = 10),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be numeric"
   )
@@ -360,10 +360,10 @@ test_that("register_norms_version() rejects non-numeric m column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = factor("50"), sd = 10),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be numeric"
   )
@@ -376,10 +376,10 @@ test_that("register_norms_version() rejects non-numeric sd column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = "ten"),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be numeric"
   )
@@ -388,10 +388,10 @@ test_that("register_norms_version() rejects non-numeric sd column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = factor("10")),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be numeric"
   )
@@ -404,10 +404,10 @@ test_that("register_norms_version() rejects zero sd", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = 0),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "only positive values"
   )
@@ -418,10 +418,10 @@ test_that("register_norms_version() rejects negative sd", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = -5),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "only positive values"
   )
@@ -432,14 +432,14 @@ test_that("register_norms_version() rejects mixed positive/non-positive sd", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         age = factor(c("60-69", "70-79")),
         m = c(25, 26),
         sd = c(3, 0)
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "only positive values"
   )
@@ -452,14 +452,14 @@ test_that("register_norms_version() rejects non-factor age column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         age = c("60-69", "70-79"),
         m = c(25, 26),
         sd = c(3, 4)
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be factors"
   )
@@ -470,14 +470,14 @@ test_that("register_norms_version() rejects non-factor sex column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         sex = c(1, 2),
         m = c(25, 26),
         sd = c(3, 4)
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be factor"
   )
@@ -488,45 +488,45 @@ test_that("register_norms_version() rejects non-factor educ column", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(
         educ = c("12-15", "16-20"),
         m = c(25, 26),
         sd = c(3, 4)
       ),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "must be factor"
   )
 })
 
-# Test 11: covariate_prep_funs must be a list ----
-test_that("register_norms_version() rejects covariate_prep_funs when no covariate columns are present", {
+# Test 11: covar_fns must be a list ----
+test_that("register_norms_version() rejects covar_fns when no covariate columns are present", {
   testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = data.frame(m = 50, sd = 10),
-      covariate_prep_funs = list(age = function(x) x)
+      covar_fns = list(age = function(x) x)
     ),
     "should not be provided when no covariate columns"
   )
 })
 
-test_that("register_norms_version() rejects non-list covariate_prep_funs", {
+test_that("register_norms_version() rejects non-list covar_fns", {
   valid_lt <- data.frame(age = factor(60), sex = factor(1), m = 50, sd = 10)
 
   testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v1",
       lookup_table = valid_lt,
-      covariate_prep_funs = "not a list"
+      covar_fns = "not a list"
     ),
     "must be a.*list"
   )
@@ -535,36 +535,36 @@ test_that("register_norms_version() rejects non-list covariate_prep_funs", {
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v2",
       lookup_table = valid_lt,
-      covariate_prep_funs = matrix(1:4, ncol = 2)
+      covar_fns = matrix(1:4, ncol = 2)
     ),
     "must be a.*list"
   )
 
   expect_message(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v3",
       lookup_table = valid_lt,
-      covariate_prep_funs = list(age = function(x) factor(60))
+      covar_fns = list(age = function(x) factor(60))
     ),
     "Registered.+norms.+version.+test_v3.+for.+MOCATOTS.+"
   )
 })
 
-# Test 12: covariate_prep_funs names must be subset of lookup_table columns ----
-test_that("register_norms_version() rejects covariate_prep_funs with names not in lookup_table", {
+# Test 12: covar_fns names must be subset of lookup_table columns ----
+test_that("register_norms_version() rejects covar_fns with names not in lookup_table", {
   valid_lt <- data.frame(age = factor(60), sex = factor(1), m = 50, sd = 10)
   testthat::local_reproducible_output()
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = valid_lt,
-      covariate_prep_funs = list(race = function(x) factor("White"))
+      covar_fns = list(race = function(x) factor("White"))
     ),
     "must have names that are a subset of the columns"
   )
@@ -574,8 +574,8 @@ test_that("register_norms_version() rejects covariate_prep_funs with names not i
   }
 })
 
-# Test 13: covariate_prep_funs functions must produce appropriate outputs ----
-test_that("register_norms_version() rejects covariate_prep_funs that produce outputs not matching lookup_table values", {
+# Test 13: covar_fns functions must produce appropriate outputs ----
+test_that("register_norms_version() rejects covar_fns that produce outputs not matching lookup_table values", {
   valid_lt <- data.frame(
     age = factor(c("60-69", "70-79")),
     m = c(25, 26),
@@ -586,10 +586,10 @@ test_that("register_norms_version() rejects covariate_prep_funs that produce out
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       lookup_table = valid_lt,
-      covariate_prep_funs = list(age = function(x) {
+      covar_fns = list(age = function(x) {
         factor(c("60-69", "70-79", "80-89"))
       })
     ),
@@ -634,17 +634,17 @@ test_that("register_norms_version() successfully registers norms version with va
 
   expect_no_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_v",
       description = "Test norms version",
       lookup_table = valid_lt,
-      covariate_prep_funs = covar_prep_funs
+      covar_fns = covar_prep_funs
     )
   )
 
   # Check that the version is registered
   expect_contains(
-    get_versions(MOCATOTS(), "norms"),
+    list_method_versions(MOCATOTS(), "norms"),
     "test_v"
   )
 
@@ -655,7 +655,7 @@ test_that("register_norms_version() successfully registers norms version with va
     test_v_data,
     list(
       lookup_table = valid_lt,
-      covariate_prep_funs = covar_prep_funs
+      covar_fns = covar_prep_funs
     )
   )
 
@@ -670,10 +670,10 @@ test_that("register_norms_version() errors when re-registering without overwrite
 
   # Register initial version
   register_norms_version(
-    test_class = MOCATOTS(),
+    scores = MOCATOTS(),
     version = "test_overwrite",
     lookup_table = valid_lt,
-    covariate_prep_funs = list()
+    covar_fns = list()
   )
 
   # Attempting to re-register without overwrite should error
@@ -681,10 +681,10 @@ test_that("register_norms_version() errors when re-registering without overwrite
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_overwrite",
       lookup_table = data.frame(m = 55, sd = 12),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "already exists for.*overwrite =.+TRUE"
   )
@@ -702,19 +702,19 @@ test_that("register_norms_version() warns and succeeds when re-registering with 
 
   # Register initial version
   register_norms_version(
-    test_class = MOCATOTS(),
+    scores = MOCATOTS(),
     version = "test_overwrite2",
     lookup_table = valid_lt,
-    covariate_prep_funs = list()
+    covar_fns = list()
   )
 
   # Re-registering with overwrite = TRUE should warn but succeed
   expect_warning(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_overwrite2",
       lookup_table = data.frame(m = 55, sd = 12),
-      covariate_prep_funs = list(),
+      covar_fns = list(),
       overwrite = TRUE
     ),
     "Overwriting existing version"
@@ -736,10 +736,10 @@ test_that("register_norms_version() errors when re-registering without overwrite
 
   # Register initial version
   register_norms_version(
-    test_class = MOCATOTS(),
+    scores = MOCATOTS(),
     version = "test_overwrite",
     lookup_table = valid_lt,
-    covariate_prep_funs = list()
+    covar_fns = list()
   )
 
   # Attempting to re-register without overwrite should error
@@ -747,10 +747,10 @@ test_that("register_norms_version() errors when re-registering without overwrite
 
   expect_error(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_overwrite",
       lookup_table = data.frame(m = 55, sd = 12),
-      covariate_prep_funs = list()
+      covar_fns = list()
     ),
     "already exists.+overwrite.+=.+TRUE"
   )
@@ -764,19 +764,19 @@ test_that("register_norms_version() warns and succeeds when re-registering with 
 
   # Register initial version
   register_norms_version(
-    test_class = MOCATOTS(),
+    scores = MOCATOTS(),
     version = "test_overwrite2",
     lookup_table = valid_lt,
-    covariate_prep_funs = list()
+    covar_fns = list()
   )
 
   # Re-registering with overwrite = TRUE should warn but succeed
   expect_warning(
     register_norms_version(
-      test_class = MOCATOTS(),
+      scores = MOCATOTS(),
       version = "test_overwrite2",
       lookup_table = data.frame(m = 55, sd = 12),
-      covariate_prep_funs = list(),
+      covar_fns = list(),
       overwrite = TRUE
     ),
     "Overwriting existing version"

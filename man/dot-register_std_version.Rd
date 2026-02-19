@@ -5,7 +5,7 @@
 \title{Register a standardization method version for a test score class}
 \usage{
 .register_std_version(
-  test_class,
+  scores,
   method,
   version,
   data,
@@ -14,8 +14,7 @@
 )
 }
 \arguments{
-\item{test_class}{A test_scores object whose class determines which
-registration method to use}
+\item{scores}{An \code{npsych_scores} object}
 
 \item{method}{Character string naming the standardization method (e.g.,
 "norms", "regression"). Must correspond to an implemented \verb{std_using_*()}

@@ -1,9 +1,9 @@
-#' Standardize `test_scores` using norms
+#' Standardize `npsych_scores` using norms
 #'
 #' @description
 #' A short description...
 #'
-#' @param test_scores A numeric vector.
+#' @param scores A numeric vector.
 #' @param ... Arguments passed to methods.
 #'
 #' @returns
@@ -11,7 +11,7 @@
 #' method called.
 #'
 #' @export
-std_using_norms <- function(test_scores, ...) {
+std_using_norms <- function(scores, ...) {
   UseMethod("std_using_norms")
 }
 
@@ -20,25 +20,26 @@ std_using_norms <- function(test_scores, ...) {
 #' @description
 #' A short description...
 #'
-#' @param test_scores A numeric vector of raw test scores.
+#' @param scores A numeric vector of raw test scores.
 #' @param ... Additional numeric vectors representing covariates, for example `age`, `educ`, `sex`.
-#'   These must be of length one or the same length as `test_scores`, and named as columns in the
-#'   `lookup_table` for the specified `version`; see `get_version_data({test_scores}, "norms", {version})$lookup_table`.
+#'   These must be of length one or the same length as `npsych_scores`, and named as columns in the
+#'   `lookup_table` for the specified `version`; use `get_version_data({npsych_scores}, "norms", {version})$lookup_table`
+#'   to inspect the table.
 #' @param version A single string specifying the version of the norms to use.
 #'
 #' @returns
 #' A numeric vector of standardized scores. The function will error if `version` is not registered, if provided covariates are not numeric, if required covariates are missing based on the `lookup_table` for the specified `version`, or if covariate lengths are mismatched.
 #'
 #' @export
-std_using_norms.test_scores <- function(
-  test_scores,
+std_using_norms.npsych_scores <- function(
+  scores,
   ...,
   version
 ) {
-  raw_scores <- as.numeric(test_scores)
+  raw_scores <- as.numeric(scores)
 
   ## Get version data (will fail if version not registered).
-  version_data <- get_version_data(test_scores, "norms", version)
+  version_data <- get_version_data(scores, "norms", version)
 
   ## Pull out lookup table
   lookup_table <- version_data$lookup_table
@@ -63,21 +64,21 @@ std_using_norms.test_scores <- function(
   }
 
   mismatched_length <- names(covars)[
-    !sapply(covars, length) %in% c(1, length(test_scores))
+    !sapply(covars, length) %in% c(1, length(scores))
   ]
 
   if (length(mismatched_length) > 0) {
     cli::cli_abort(
-      "{.arg {mismatched_length}} {?is/are} of length {lengths(covars[mismatched_length])}, but must be of length one or same as {.arg test_scores} ({.val {length(test_scores)}})"
+      "{.arg {mismatched_length}} {?is/are} of length {lengths(covars[mismatched_length])}, but must be of length one or same as {.arg scores} ({.val {length(scores)}})"
     )
   }
 
   ## Apply covariate prep functions
-  covariate_prep_funs <- version_data$covariate_prep_funs
+  covar_fns <- version_data$covar_fns
 
   covars <- purrr::imap(covars, \(covar, covar_nm) {
-    if (covar_nm %in% names(covariate_prep_funs)) {
-      return(covariate_prep_funs[[covar_nm]](covar))
+    if (covar_nm %in% names(covar_fns)) {
+      return(covar_fns[[covar_nm]](covar))
     }
 
     covar
@@ -85,7 +86,7 @@ std_using_norms.test_scores <- function(
 
   ## Create data.frame that we will match means and sd to
   match_to <- cbind(
-    raw_scores = as.numeric(test_scores),
+    raw_scores = as.numeric(scores),
     data.frame(covars)
   )
 

@@ -2,12 +2,12 @@
 % Please edit documentation in R/std_using_norms.R
 \name{std_using_norms}
 \alias{std_using_norms}
-\title{Standardize \code{test_scores} using norms}
+\title{Standardize \code{npsych_scores} using norms}
 \usage{
-std_using_norms(test_scores, ...)
+std_using_norms(scores, ...)
 }
 \arguments{
-\item{test_scores}{A numeric vector.}
+\item{scores}{A numeric vector.}
 
 \item{...}{Arguments passed to methods.}
 }

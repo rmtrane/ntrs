@@ -4,10 +4,10 @@
 \alias{std_using_regression}
 \title{Standardize using regression}
 \usage{
-std_using_regression(test_scores, ...)
+std_using_regression(scores, ...)
 }
 \arguments{
-\item{test_scores}{A numeric vector of test scores.}
+\item{scores}{A numeric vector of test scores.}
 
 \item{...}{Arguments passed to the specific method.}
 }

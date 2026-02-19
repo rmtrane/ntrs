@@ -1,6 +1,6 @@
 #' Register a norms-based standardization version
 #'
-#' @param test_class A `test_scores` object, such as `MOCATOTS()`.
+#' @param scores A `npsych_scores` object, such as `MOCATOTS()`.
 #' @param version Character string identifying this version (e.g., `"nacc"`,
 #'   `"updated"`).
 #' @param lookup_table Data frame containing norms. Required columns are
@@ -8,7 +8,7 @@
 #'   (sample size), `age`, `sex`, and `educ`. The grouping columns (`age`,
 #'   `sex`, `educ`) must be factors, and all rows must be unique with respect
 #'   to these grouping columns. No `NA` values are allowed.
-#' @param covariate_prep_funs A named list of functions that prepare covariates
+#' @param covar_fns A named list of functions that prepare covariates
 #'   for lookup. Names must be a subset of the columns in `lookup_table`. Each
 #'   function takes a numeric vector and returns a factor whose sorted unique
 #'   levels match those in the corresponding `lookup_table` column. Validation
@@ -23,10 +23,10 @@
 #'
 #' @export
 register_norms_version <- function(
-  test_class,
+  scores,
   version,
   lookup_table,
-  covariate_prep_funs,
+  covar_fns,
   description = "",
   overwrite = FALSE
 ) {
@@ -34,11 +34,11 @@ register_norms_version <- function(
 }
 
 #' @export
-register_norms_version.test_scores <- function(
-  test_class,
+register_norms_version.npsych_scores <- function(
+  scores,
   version,
   lookup_table,
-  covariate_prep_funs,
+  covar_fns,
   description = "",
   overwrite = FALSE
 ) {
@@ -159,36 +159,36 @@ register_norms_version.test_scores <- function(
     }
   }
 
-  # Check covariate_prep_funs
+  # Check covar_fns
 
-  # First, if no covars are present, then covariate_prep_funs should not be provided
+  # First, if no covars are present, then covar_fns should not be provided
   if (
     length(covars_present) == 0 &&
-      !methods::missingArg(covariate_prep_funs) &&
-      length(covariate_prep_funs) > 0
+      !methods::missingArg(covar_fns) &&
+      length(covar_fns) > 0
   ) {
     cli::cli_abort(
-      "{.arg covariate_prep_funs} should not be provided when no covariate columns ({.field age}, {.field sex}, {.field educ}) are present in {.arg lookup_table}."
+      "{.arg covar_fns} should not be provided when no covariate columns ({.field age}, {.field sex}, {.field educ}) are present in {.arg lookup_table}."
     )
   }
 
   # Is it a list?
-  if (!is.list(covariate_prep_funs)) {
+  if (!is.list(covar_fns)) {
     cli::cli_abort(
-      "{.arg covariate_prep_funs} must be a {.cls list}, but is a {.cls {class(covariate_prep_funs)}}."
+      "{.arg covar_fns} must be a {.cls list}, but is a {.cls {class(covar_fns)}}."
     )
   }
 
-  names_mismatches <- setdiff(names(covariate_prep_funs), names(lookup_table))
+  names_mismatches <- setdiff(names(covar_fns), names(lookup_table))
 
   if (length(names_mismatches) > 0) {
     cli::cli_abort(
-      "{.arg covariate_prep_funs} must have names that are a subset of the columns in {.arg lookup_table}. {.val {names_mismatches}} are not present in {.arg lookup_table}."
+      "{.arg covar_fns} must have names that are a subset of the columns in {.arg lookup_table}. {.val {names_mismatches}} are not present in {.arg lookup_table}."
     )
   }
 
   # Check that all prep functions give appropriate outcomes
-  for (fun_nm in names(covariate_prep_funs)) {
+  for (fun_nm in names(covar_fns)) {
     fun_x <- switch(
       fun_nm,
       "age" = 0:110,
@@ -196,7 +196,7 @@ register_norms_version.test_scores <- function(
       "educ" = 0:36
     )
 
-    observed <- sort(unique(covariate_prep_funs[[fun_nm]](fun_x)))
+    observed <- sort(unique(covar_fns[[fun_nm]](fun_x)))
     target <- sort(unique(lookup_table[[fun_nm]]))
 
     if (!identical(observed, target)) {
@@ -207,20 +207,20 @@ register_norms_version.test_scores <- function(
         "educ" = "0:36"
       )
       cli::cli_abort(
-        "{.arg covariate_prep_funs${fun_nm}} must be a function taking a single argument, and the output of {.code sort(unique(covariate_prep_funs${fun_nm}({fun_x})} must be identical to {.code sort(unique(lookup_table${fun_nm}))}."
+        "{.arg covar_fns${fun_nm}} must be a function taking a single argument, and the output of {.code sort(unique(covar_fns${fun_nm}({fun_x})} must be identical to {.code sort(unique(lookup_table${fun_nm}))}."
       )
     }
   }
 
   # Register
   .register_std_version(
-    test_class = test_class,
+    scores = scores,
     method = "norms",
     version = version,
     data = c(
       list(lookup_table = lookup_table),
-      if (!methods::missingArg(covariate_prep_funs)) {
-        list(covariate_prep_funs = covariate_prep_funs)
+      if (!methods::missingArg(covar_fns)) {
+        list(covar_fns = covar_fns)
       }
     ),
     description = description,
@@ -229,7 +229,7 @@ register_norms_version.test_scores <- function(
 
   cli::cli_inform(
     c(
-      "v" = "Registered {.field norms} version {.val {version}} for {.cls {class(test_class)[1]}}"
+      "v" = "Registered {.field norms} version {.val {version}} for {.cls {class(scores)[1]}}"
     ),
     class = "packageStartupMessage"
   )

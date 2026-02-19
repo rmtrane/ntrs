@@ -1,12 +1,12 @@
 #' Register a regression-based standardization version
 #'
-#' @param test_class A `test_scores` object, such as `MOCATOTS()`.
+#' @param scores A `npsych_scores` object, such as `MOCATOTS()`.
 #' @param version Character string identifying this version.
 #' @param coefs A named numeric vector or data frame of regression coefficients.
 #'   Must include `rmse`. Allowed names are `intercept`, `age`, `sex`, `educ`,
 #'   `race`, `delay`, and `rmse`. If a data frame, no column may consist
 #'   entirely of missing values.
-#' @param covariate_prep_funs Optional named list of functions that prepare
+#' @param covar_fns Optional named list of functions that prepare
 #'   covariates. Names must be a subset of `names(coefs)`.
 #' @param description Optional character string describing this version.
 #'
@@ -15,21 +15,21 @@
 #'
 #' @export
 register_regression_version <- function(
-  test_class,
+  scores,
   version,
   coefs,
-  covariate_prep_funs,
+  covar_fns,
   description = ""
 ) {
   UseMethod("register_regression_version")
 }
 
 #' @export
-register_regression_version.test_scores <- function(
-  test_class,
+register_regression_version.npsych_scores <- function(
+  scores,
   version,
   coefs,
-  covariate_prep_funs,
+  covar_fns,
   description = ""
 ) {
   # Validate common parameters
@@ -88,31 +88,31 @@ register_regression_version.test_scores <- function(
     )
   }
 
-  if (!methods::missingArg(covariate_prep_funs)) {
-    if (!is.list(covariate_prep_funs)) {
+  if (!methods::missingArg(covar_fns)) {
+    if (!is.list(covar_fns)) {
       cli::cli_abort(
-        "{.arg covariate_prep_funs} must be a {.cls list}, but is a {.cls {class(covariate_prep_funs)}}."
+        "{.arg covar_fns} must be a {.cls list}, but is a {.cls {class(covar_fns)}}."
       )
     }
 
-    mismatch_funs <- setdiff(names(covariate_prep_funs), names(coefs))
+    mismatch_funs <- setdiff(names(covar_fns), names(coefs))
 
     if (length(mismatch_funs) > 0) {
       cli::cli_abort(
-        "{.arg names(covariate_prep_funs)} must be a subset of {.code names(coefs)}. {.val {mismatch_funs}} not found in {.code names(coefs)}."
+        "{.arg names(covar_fns)} must be a subset of {.code names(coefs)}. {.val {mismatch_funs}} not found in {.code names(coefs)}."
       )
     }
   }
 
   # Register
   .register_std_version(
-    test_class = test_class,
+    scores = scores,
     method = "regression",
     version = version,
     data = c(
       list(coefs = coefs),
-      if (!methods::missingArg(covariate_prep_funs)) {
-        list(covariate_prep_funs = covariate_prep_funs)
+      if (!methods::missingArg(covar_fns)) {
+        list(covar_fns = covar_fns)
       }
     ),
     description = description
@@ -120,7 +120,7 @@ register_regression_version.test_scores <- function(
 
   cli::cli_inform(
     c(
-      "v" = "Registered {.field regression} version {.val {version}} for {.cls {class(test_class)[1]}}"
+      "v" = "Registered {.field regression} version {.val {version}} for {.cls {class(scores)[1]}}"
     ),
     class = "packageStartupMessage"
   )

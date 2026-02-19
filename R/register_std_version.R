@@ -8,8 +8,7 @@
 #' function stores the standardization data in a nested environment structure
 #' organized by method, test class, and version.
 #'
-#' @param test_class A test_scores object whose class determines which
-#'   registration method to use
+#' @param scores An `npsych_scores` object
 #' @param method Character string naming the standardization method (e.g.,
 #'   "norms", "regression"). Must correspond to an implemented `std_using_*()`
 #'   generic function.
@@ -29,7 +28,7 @@
 #'
 #' @keywords internal
 .register_std_version <- function(
-  test_class,
+  scores,
   method,
   version,
   data,
@@ -39,17 +38,17 @@
   UseMethod(".register_std_version")
 }
 
-#' @describeIn .register_std_version Method for test_scores objects
+#' @describeIn .register_std_version Method for npsych_scores objects
 #'
 #' This method validates that the specified standardization method is
 #' implemented for the test class, creates the necessary nested environment
 #' structure if needed, and stores the version data with metadata.
 #'
 #' The function stores data in a three-level nested environment:
-#' `.std_versions[[method]][[test_class]][[version]]`, where each version
+#' `.std_versions[[method]][[scores_class]][[version]]`, where each version
 #' entry contains:
 #' \itemize{
-#'   \item `test_class` - The specific test class name
+#'   \item `scores_class` - The specific `npsych_scores` class name
 #'   \item `method` - The standardization method name
 #'   \item `version` - The version identifier
 #'   \item `data` - The standardization data
@@ -59,57 +58,71 @@
 #' @exportS3Method NpsychBatteryNormsS3::.register_std_version
 #'
 #' @keywords internal
-.register_std_version.test_scores <- function(
-  test_class,
+.register_std_version.npsych_scores <- function(
+  scores,
   method,
   version,
   data,
   description,
   overwrite = FALSE
 ) {
-  # Check that method exists for test_class
-  if (!.method_implemented(test_class, method)) {
+  scores_class <- setdiff(class(scores), "npsych_scores")
+
+  # Check that method exists for scores_class
+  if (!.method_implemented(scores, method)) {
     cli::cli_abort(c(
-      "x" = "Method {.val {method}} not implemented for {.value {test_class}}."
+      "x" = "Method {.val {method}} not implemented for {.value {scores_class}}."
     ))
   }
-
-  test_class <- setdiff(class(test_class), "test_scores")
 
   # Create method environment if needed
   if (!exists(method, envir = .std_versions, inherits = FALSE)) {
     .std_versions[[method]] <- new.env(parent = emptyenv())
   }
 
-  # Create test_class environment if needed
-  if (!exists(test_class, envir = .std_versions[[method]], inherits = FALSE)) {
-    .std_versions[[method]][[test_class]] <- new.env(parent = emptyenv())
+  # Create scores_class environment if needed
+  if (
+    !exists(scores_class, envir = .std_versions[[method]], inherits = FALSE)
+  ) {
+    .std_versions[[method]][[scores_class]] <- new.env(parent = emptyenv())
   }
 
   # Check if version already exists
   if (
     exists(
       version,
-      envir = .std_versions[[method]][[test_class]],
+      envir = .std_versions[[method]][[scores_class]],
       inherits = FALSE
     )
   ) {
     if (overwrite) {
       cli::cli_warn(c(
         "Overwriting existing version",
-        "i" = "Version {.val {version}} already exists for {.val {method}} method on {.val {test_class}}",
+        "i" = "Version {.val {version}} already exists for {.val {method}} method on {.val {scores_class}}",
         "i" = "The previous version will be replaced"
       ))
     } else {
       cli::cli_abort(c(
-        "Version {.val {version}} already exists for {.val {method}} method on {.val {test_class}}. To overwrite, call with {.arg overwrite = TRUE}."
+        "Version {.val {version}} already exists for {.val {method}} method on {.val {scores_class}}. To overwrite, call with {.arg overwrite = TRUE}."
       ))
     }
   }
 
   # Store version
-  .std_versions[[method]][[test_class]][[version]] <- list(
-    test_class = test_class,
+  # assign(
+  #   x = version,
+  #   value = list(
+  #     scores_class = scores_class,
+  #     method = method,
+  #     version = version,
+  #     data = data,
+  #     description = description
+  #   ),
+  #   envir = .std_versions[[method]][[scores_class]]
+  # )
+
+  .std_versions[[method]][[scores_class]][[version]] <- list(
+    scores_class = scores_class,
     method = method,
     version = version,
     data = data,
