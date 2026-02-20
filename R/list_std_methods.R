@@ -63,7 +63,8 @@ list_std_methods.npsych_scores <- function(scores) {
   generic_name <- paste0("std_using_", method)
 
   fn <- tryCatch(match.fun(generic_name), error = \(e) NULL)
-  if (is.null(fn) || !utils::isS3stdGeneric(fn)) {
+
+  if (is.null(fn) || !sloop::is_s3_generic(generic_name)) {
     return(FALSE)
   }
 

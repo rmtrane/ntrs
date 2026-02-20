@@ -1,5 +1,5 @@
 # Registry Environments
-.std_versions <- new.env(parent = emptyenv())
+.std_versions <- local(new.env(parent = emptyenv()))
 
 #' Register a standardization method version for a test score class
 #'

@@ -1,4 +1,4 @@
-.std_defaults <- new.env(parent = emptyenv())
+.std_defaults <- local(new.env(parent = emptyenv()))
 
 #' Set the default standardization method (and version) an `npsych_scores` subclass
 #'

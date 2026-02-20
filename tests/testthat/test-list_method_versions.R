@@ -325,13 +325,26 @@ test_that("list_method_versions() handles test class with no versions gracefully
 # Test 10: No method edge case ----
 
 test_that("list_method_versions() handles method without versions gracefully", {
-  ## Remove all methods
-  rm(list = ls(.std_versions), envir = .std_versions)
+  saved_keys <- ls(.std_versions)
+  saved_envs <- mget(saved_keys, envir = .std_versions)
 
-  ## Rerun setup
+  # Wipe the registry
+  rm(list = saved_keys, envir = .std_versions)
+
+  # Restore by putting the saved references back — no re-registration needed
   withr::defer({
-    suppressMessages(NpsychBatteryNormsS3:::.onLoad())
+    rm(list = ls(.std_versions), envir = .std_versions)
+    for (nm in names(saved_envs)) {
+      assign(nm, saved_envs[[nm]], envir = .std_versions)
+    }
   })
+
+  # rm(list = ls(.std_versions), envir = .std_versions)
+
+  # ## Rerun setup
+  # withr::defer({
+  #   suppressMessages(NpsychBatteryNormsS3:::.onLoad())
+  # })
 
   testthat::local_reproducible_output()
 
