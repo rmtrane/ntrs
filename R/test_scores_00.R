@@ -135,35 +135,6 @@ test_scores <- function(
   )
 }
 
-#' Register a test score class
-#'
-#' @description
-#' A short description...
-#' #' @param class_name A single character string.
-#'
-#' @returns
-#' `class_name`, invisibly. An error is thrown if `class_name` is not a
-#' single character string.
-#'
-#' @export
-register_test_score_class <- function(class_name) {
-  if (!is.character(class_name)) {
-    cli::cli_abort(
-      "{.arg class_name} must be a character string, not of class {.cls {class(class_name)}}"
-    )
-  }
-
-  if (length(class_name) != 1L) {
-    cli::cli_abort(
-      "{.arg class_name} must be of length 1, but is of length {length(class_name)}."
-    )
-  }
-
-  .test_score_classes[[class_name]] <- TRUE
-
-  invisible(class_name)
-}
-
 #' Remove error codes
 #'
 #' @description
