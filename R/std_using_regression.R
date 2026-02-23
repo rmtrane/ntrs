@@ -68,7 +68,7 @@ std_using_regression.npsych_scores <- function(
 
   if (length(covars_missing)) {
     cli::cli_abort(
-      "{.arg {covars_missing}} are missing, but needed to standardize using {.val norms} when version is {.val {version}}."
+      "{.arg {covars_missing}} are missing, but needed to standardize using {.val regression} when version is {.val {version}}."
     )
   }
 
@@ -85,13 +85,20 @@ std_using_regression.npsych_scores <- function(
   ## Apply covariate prep functions
   covar_fns <- version_data$covar_fns
 
-  covars <- purrr::imap(covars, \(covar, covar_nm) {
-    if (covar_nm %in% names(covar_fns)) {
-      return(covar_fns[[covar_nm]](covar))
-    }
+  covars <- sapply(
+    names(covars),
+    \(covar_nm) {
+      covar <- covars[[covar_nm]]
 
-    covar
-  })
+      if (covar_nm %in% names(covar_fns)) {
+        return(covar_fns[[covar_nm]](covar))
+      }
+
+      covar
+    },
+    simplify = FALSE,
+    USE.NAMES = TRUE
+  )
 
   ## Create X matrix
   X <- cbind(

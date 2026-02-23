@@ -94,7 +94,7 @@ test_that("std_using_norms() errors on unregistered version", {
 
 test_that("std_using_norms() returns a numeric vector", {
   result <- std_using_norms(
-    MOCATOTS(25),
+    scores = MOCATOTS(25),
     age = 60,
     version = "test_norms_stn_001"
   )

@@ -76,13 +76,20 @@ std_using_norms.npsych_scores <- function(
   ## Apply covariate prep functions
   covar_fns <- version_data$covar_fns
 
-  covars <- purrr::imap(covars, \(covar, covar_nm) {
-    if (covar_nm %in% names(covar_fns)) {
-      return(covar_fns[[covar_nm]](covar))
-    }
+  covars <- sapply(
+    names(covars),
+    \(covar_nm) {
+      covar <- covars[[covar_nm]]
 
-    covar
-  })
+      if (covar_nm %in% names(covar_fns)) {
+        return(covar_fns[[covar_nm]](covar))
+      }
+
+      covar
+    },
+    simplify = FALSE,
+    USE.NAMES = TRUE
+  )
 
   ## Create data.frame that we will match means and sd to
   match_to <- cbind(

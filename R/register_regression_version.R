@@ -91,7 +91,8 @@ register_regression_version.npsych_scores <- function(
     )
   }
 
-  if (!methods::missingArg(covar_fns)) {
+  # if (!methods::missingArg(covar_fns)) {
+  if (!rlang::is_missing(covar_fns)) {
     if (!is.list(covar_fns)) {
       cli::cli_abort(
         "{.arg covar_fns} must be a {.cls list}, but is a {.cls {class(covar_fns)}}."
@@ -114,7 +115,8 @@ register_regression_version.npsych_scores <- function(
     version = version,
     data = c(
       list(coefs = coefs),
-      if (!methods::missingArg(covar_fns)) {
+      # if (!methods::missingArg(covar_fns)) {
+      if (!rlang::is_missing(covar_fns)) {
         list(covar_fns = covar_fns)
       }
     ),
