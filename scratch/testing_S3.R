@@ -1,9 +1,9 @@
 ## Main goals:
 ## - be able to "tag" columns as test scores
-## - use data.table or tidyverse (via across) to std all test_scores columns easily.
-## - get all methods available for a test_scores object
+## - use data.table or tidyverse (via across) to std all npsych_scores columns easily.
+## - get all methods available for a npsych_scores object
 ##     - should include S3 generics, both those defined internally in the package, in third party packages, and those defined by the user.
-## - get all versions available for a test_scores object, for a given method
+## - get all versions available for a npsych_scores object, for a given method
 
 ## Testing S3
 devtools::load_all()
@@ -11,18 +11,18 @@ devtools::load_all()
 ## Create MOCATOTS score vector
 moca_scores <- MOCATOTS(c(15, 28, 19))
 
-get_default_method(moca_scores)
-get_default_method(MOCATOTS())
+get_std_defaults(moca_scores)
+get_std_defaults(MOCATOTS())
 
 ## Check std methods availabe
-get_std_methods(MOCATOTS())
+list_std_methods(MOCATOTS())
 
 ## Check versions available
-get_versions(moca_scores, "regression")
-get_versions(MOCATOTS(), "regression")
+list_method_versions(moca_scores, "regression")
+list_method_versions(MOCATOTS(), "regression")
 
-get_default_method("MOCATOTS")
-get_default_method(moca_scores)
+get_std_defaults("MOCATOTS")
+get_std_defaults(moca_scores)
 
 std_using_norms(
   x = moca_scores,
@@ -35,7 +35,7 @@ std_using_norms(
 do.call(
   "std_using_regression",
   args = list(
-    test_scores = moca_scores,
+    npsych_scores = moca_scores,
     age = 62,
     sex = "m",
     educ = 15,
@@ -46,7 +46,7 @@ do.call(
 
 
 std_using_regression(
-  test_scores = moca_scores,
+  npsych_scores = moca_scores,
   age = 62,
   sex = 1,
   educ = 15,

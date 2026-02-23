@@ -4,22 +4,12 @@
 \alias{std_using_regression}
 \title{Standardize using regression}
 \usage{
-std_using_regression(test_scores, age, sex, educ, version, ...)
+std_using_regression(scores, ...)
 }
 \arguments{
-\item{test_scores}{A numeric vector of test scores.}
-
-\item{age}{A numeric vector for age.}
-
-\item{sex}{A character vector for sex.}
-
-\item{educ}{A numeric vector for education level.}
-
-\item{version}{A single string or number indicating the version.}
+\item{scores}{A numeric vector of test scores.}
 
 \item{...}{Arguments passed to the specific method.}
-
-\item{race}{A character vector for race.}
 }
 \value{
 The result of the dispatched method for \code{std_using_regression}.

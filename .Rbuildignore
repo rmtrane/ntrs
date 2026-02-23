@@ -1,2 +1,4 @@
-^NpsychBatteryNormsS3\.Rproj$
-^\.Rproj\.user$
+^scratch/*
+^LICENSE.md$
+^CLAUDE.md$
+\~$

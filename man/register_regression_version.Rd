@@ -5,15 +5,16 @@
 \title{Register a regression-based standardization version}
 \usage{
 register_regression_version(
-  test_class,
+  scores,
   version,
   coefs,
-  covariate_prep_funs,
-  description = ""
+  covar_fns,
+  description = "",
+  overwrite = FALSE
 )
 }
 \arguments{
-\item{test_class}{A \code{test_scores} object, such as \code{MOCATOTS()}.}
+\item{scores}{A \code{npsych_scores} object, such as \code{MOCATOTS()}.}
 
 \item{version}{Character string identifying this version.}
 
@@ -22,10 +23,12 @@ Must include \code{rmse}. Allowed names are \code{intercept}, \code{age}, \code{
 \code{race}, \code{delay}, and \code{rmse}. If a data frame, no column may consist
 entirely of missing values.}
 
-\item{covariate_prep_funs}{Optional named list of functions that prepare
+\item{covar_fns}{Optional named list of functions that prepare
 covariates. Names must be a subset of \code{names(coefs)}.}
 
 \item{description}{Optional character string describing this version.}
+
+\item{overwrite}{Logical indicating whether to overwrite an existing version with the same name. Defaults to \code{FALSE}.}
 }
 \value{
 Called for its side effect of registering the version in the
