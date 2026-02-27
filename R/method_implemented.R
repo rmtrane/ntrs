@@ -30,7 +30,7 @@
 #' This method uses `utils::getS3method()` and `exists(..., envir = .GlobalEnv)` to check whether a
 #' `std_using_<method>()` S3 method exists for the specific test class.
 #'
-#' @exportS3Method NpsychBatteryNormsS3::.method_implemented
+#' @exportS3Method ntrs::.method_implemented
 #'
 #' @rdname .method_implemented
 #'

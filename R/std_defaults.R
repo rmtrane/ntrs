@@ -77,16 +77,15 @@ get_std_defaults <- function(scores) {
   UseMethod("get_std_defaults")
 }
 
-#' Get standard defaults for npsych_scores
-#'
-#' @description
-#' A short description...
+
+#' Get standard defaults for `npsych_scores` object
 #'
 #' @param scores An object of class `npsych_scores`.
 #'
 #' @returns
-#' The standard defaults associated with the specific class of the `scores` object.
-#' The function will raise an error if no default method is set for the `scores_class`.
+#' If a default method exists for the object's class, the corresponding
+#' defaults from `.std_defaults`. Otherwise, `NULL` is returned with an
+#' informational message.
 #'
 #' @rdname get_std_defaults
 #'
@@ -95,9 +94,10 @@ get_std_defaults.npsych_scores <- function(scores) {
   scores_class <- setdiff(class(scores), "npsych_scores")
 
   if (!exists(scores_class, envir = .std_defaults, inherits = FALSE)) {
-    cli::cli_abort(
+    cli::cli_alert_info(
       "No default method set for {.cls {scores_class}}."
     )
+    return(NULL)
   }
 
   .std_defaults[[scores_class]]

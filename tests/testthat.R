@@ -7,7 +7,7 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(NpsychBatteryNormsS3)
+library(ntrs)
 library(rlang)
 
-test_check("NpsychBatteryNormsS3")
+test_check("ntrs")

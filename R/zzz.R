@@ -1,6 +1,6 @@
 .onLoad <- function(libname, pkgname) {
   ## Run all .setup_CLASS_versions()
-  ns <- getNamespace("NpsychBatteryNormsS3")
+  ns <- getNamespace("ntrs")
 
   invisible(lapply(
     grep(pattern = "^\\.setup_.+_versions", x = names(ns), value = T),

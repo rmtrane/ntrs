@@ -343,7 +343,7 @@ test_that("list_method_versions() handles method without versions gracefully", {
 
   # ## Rerun setup
   # withr::defer({
-  #   suppressMessages(NpsychBatteryNormsS3:::.onLoad())
+  #   suppressMessages(ntrs:::.onLoad())
   # })
 
   testthat::local_reproducible_output()

@@ -1,4 +1,4 @@
-Package: NpsychBatteryNormsS3
+Package: ntrs
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
@@ -15,8 +15,12 @@ Imports:
     purrr,
     rlang,
     sloop,
-    methods
+    methods,
+    S7
 Suggests: 
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
+Depends: 
+    R (>= 3.5)
+LazyData: true

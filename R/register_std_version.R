@@ -58,7 +58,7 @@
 #'
 #' @rdname .register_std_version
 #'
-#' @exportS3Method NpsychBatteryNormsS3::.register_std_version
+#' @exportS3Method ntrs::.register_std_version
 #'
 #' @keywords internal
 .register_std_version.npsych_scores <- function(

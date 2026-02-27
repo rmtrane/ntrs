@@ -23,7 +23,7 @@ list_npsych_scores <- function() {
   from_s3 <- {
     all_fns <- c(
       # Loaded package namespaces and interanl
-      unlist(lapply(c(loadedNamespaces(), "NpsychBatteryNormsS3"), \(ns) {
+      unlist(lapply(c(loadedNamespaces(), "ntrs"), \(ns) {
         tryCatch(ls(getNamespace(ns)), error = \(e) character(0))
       })),
       # Global environment (user-defined methods)
