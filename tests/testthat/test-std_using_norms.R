@@ -50,7 +50,6 @@ test_that("std_using_norms() errors when a covariate is not numeric", {
 })
 
 # Test 3: missing required covariates are caught ----
-
 test_that("std_using_norms() errors when a required covariate is missing", {
   testthat::local_reproducible_output()
   expect_error(
@@ -63,7 +62,6 @@ test_that("std_using_norms() errors when a required covariate is missing", {
 })
 
 # Test 4: mismatched covariate length is caught ----
-
 test_that("std_using_norms() errors when covariate length mismatches scores", {
   testthat::local_reproducible_output()
   expect_error(
@@ -269,4 +267,62 @@ test_that("std_using_norms() returns correct length with vectorised real norms",
 
   expect_length(result, 3L)
   expect_true(all(is.finite(result)))
+})
+
+# Test 14: unneccessary covariates are ignored with messages ----
+
+test_that("std_using_norms() ignores unneccessary covariates with a message", {
+  testthat::local_reproducible_output()
+
+  expect_warning(
+    res <- std_using_norms(
+      MOCATOTS(25),
+      age = 70,
+      sex = 1,
+      educ = 16,
+      race = 1, # not needed for 'nacc' version
+      version = "nacc"
+    ),
+    regexp = "is not needed to standardize using"
+  )
+
+  expect_equal(
+    res,
+    std_using_norms(
+      MOCATOTS(25),
+      age = 70,
+      sex = 1,
+      educ = 16,
+      version = "nacc"
+    )
+  )
+})
+
+# Test 15: make sure covariates are simply passed through for version without covar_fns ----
+
+test_that("std_using_norms() passes covariates through when version has no covar_fns", {
+  # Register a norms version without covar_fns
+  suppressMessages(
+    register_norms_version(
+      scores = MOCATOTS(),
+      version = "test_no_covar_fns_001",
+      lookup_table = data.frame(age = factor(60), m = 25, sd = 2),
+      covar_fns = list(),
+      overwrite = TRUE
+    )
+  )
+
+  withr::defer(
+    rm("test_no_covar_fns_001", envir = .std_versions[["norms"]]),
+    envir = .GlobalEnv
+  )
+
+  expect_equal(
+    std_using_norms(
+      MOCATOTS(c(25, 27)),
+      age = 60,
+      version = "test_no_covar_fns_001"
+    ),
+    c(0, 1)
+  )
 })

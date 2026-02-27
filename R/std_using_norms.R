@@ -73,6 +73,17 @@ std_using_norms.npsych_scores <- function(
     )
   }
 
+  ## Drop covars supplied that are not needed
+  covars_not_needed <- setdiff(names(covars), covars_needed)
+
+  if (length(covars_not_needed)) {
+    cli::cli_warn(
+      "{.arg {covars_not_needed}} {?is/are} not needed to standardize using {.val norms} when version is {.val {version}} and will be ignored."
+    )
+
+    covars <- covars[setdiff(names(covars), covars_not_needed)]
+  }
+
   ## Apply covariate prep functions
   covar_fns <- version_data$covar_fns
 

@@ -32,6 +32,18 @@ test_that("std_data() errors when methods is not a list", {
   )
 })
 
+test_that("std_data() errors when there are unnamed arguments in ...", {
+  testthat::local_reproducible_output()
+
+  df <- data.frame(x = 1:3)
+  df$moca <- MOCATOTS(c(25, 26, 27))
+
+  expect_error(
+    std_data(df, age = c(70, 75, 80), "unnamed_arg"),
+    "All arguments in ... must be named"
+  )
+})
+
 # ---------------------------------------------------------------------------
 # No npsych_scores columns
 # ---------------------------------------------------------------------------
@@ -133,7 +145,9 @@ test_that("std_data() returns a data.table when input is a data.table", {
   )
 
   dt <- data.table::data.table(
-    age = c(72, 75), sex = c(1, 2), educ = c(16, 12)
+    age = c(72, 75),
+    sex = c(1, 2),
+    educ = c(16, 12)
   )
   dt[, moca := MOCATOTS(c(25, 28))]
 
@@ -159,8 +173,13 @@ test_that("std_data() only standardizes columns listed in .cols", {
   df$moca <- MOCATOTS(c(25, 28))
   df$animals <- ANIMALS(c(20, 22))
 
-  result <- std_data(df, .cols = "moca",
-                     age = df$age, sex = df$sex, educ = df$educ)
+  result <- std_data(
+    df,
+    .cols = "moca",
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
+  )
 
   expect_true("z_moca" %in% names(result))
   expect_false("z_animals" %in% names(result))
@@ -174,8 +193,11 @@ test_that("std_data() uses methods argument to override defaults", {
   local_restore_default("MOCATOTS")
 
   suppressMessages(
-    set_std_defaults(MOCATOTS(), method = "regression",
-                     version = "updated_2025.06")
+    set_std_defaults(
+      MOCATOTS(),
+      method = "regression",
+      version = "updated_2025.06"
+    )
   )
 
   df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
@@ -184,11 +206,18 @@ test_that("std_data() uses methods argument to override defaults", {
   result <- std_data(
     df,
     methods = list(MOCATOTS = c(method = "norms", version = "nacc")),
-    age = df$age, sex = df$sex, educ = df$educ
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
   )
 
-  expected <- std_using_norms(df$moca, age = df$age, sex = df$sex,
-                              educ = df$educ, version = "nacc")
+  expected <- std_using_norms(
+    df$moca,
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ,
+    version = "nacc"
+  )
 
   expect_equal(result$z_moca, expected)
 })
@@ -211,7 +240,9 @@ test_that("std_data() warns when methods contains unknown class names", {
     std_data(
       df,
       methods = list(NONEXISTENT = c(method = "norms", version = "nacc")),
-      age = df$age, sex = df$sex, educ = df$educ
+      age = df$age,
+      sex = df$sex,
+      educ = df$educ
     ),
     "NONEXISTENT"
   )
@@ -231,8 +262,13 @@ test_that("std_data() respects custom prefix", {
   df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
   df$moca <- MOCATOTS(c(25, 28))
 
-  result <- std_data(df, prefix = "std_",
-                     age = df$age, sex = df$sex, educ = df$educ)
+  result <- std_data(
+    df,
+    prefix = "std_",
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
+  )
 
   expect_true("std_moca" %in% names(result))
   expect_false("z_moca" %in% names(result))

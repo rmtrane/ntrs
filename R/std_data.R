@@ -3,7 +3,7 @@
 #' @description
 #' Finds every column in `data` that inherits from `npsych_scores`,
 #' standardizes it via [std()], and adds the result as a new column with a
-#' `"z_"` prefix (e.g., `MOCATOTS` -> `z_MOCATOTS`).
+#' `"z_"` prefix (e.g., `MOCATOTS` → `z_MOCATOTS`).
 #'
 #' Each score class can use a different method/version combination.
 #' Classes not mentioned in `methods` fall back to their registered
@@ -20,12 +20,14 @@
 #'   ```
 #'   methods = list(
 #'     MOCATOTS = c(method = "regression", version = "nacc"),
-#'     ANIMALS  = c(method = "norms", version = "updated_2025.06")
+#'     ANIMALS  = c(method = "norms")
 #'   )
 #'   ```
 #' @param ... Named covariates shared across all score columns (e.g.,
 #'   `age`, `sex`, `educ`). These are passed to every [std()] call and
-#'   must be supplied explicitly.
+#'   must be supplied explicitly. Values can be bare column names
+#'   referencing columns in `data` (e.g., `age = age`) or explicit
+#'   vectors (e.g., `age = c(72, 65, 80)`).
 #' @param prefix A single string prepended to each score column name to
 #'   form the new column name. Defaults to `"z_"`.
 #' @param .cols An optional character vector of `npsych_scores` **column
@@ -40,7 +42,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' # All columns use their registered defaults
+#' # Bare column names — evaluated against data
+#' std_data(my_data, age = age, sex = sex, educ = educ)
+#'
+#' # Explicit vectors work too
 #' std_data(my_data, age = my_data$age, sex = my_data$sex, educ = my_data$educ)
 #'
 #' # Override method/version for specific test classes
@@ -50,7 +55,7 @@
 #'     MOCATOTS = c(method = "norms", version = "nacc"),
 #'     ANIMALS  = c(method = "regression", version = "updated_2025.06")
 #'   ),
-#'   age = my_data$age, sex = my_data$sex, educ = my_data$educ
+#'   age = age, sex = sex, educ = educ
 #' )
 #' }
 #'
@@ -122,8 +127,19 @@ std_data <- function(
     }
   }
 
-  # ---- Collect covariates from ... ----
-  covars <- rlang::list2(...)
+  # ---- Evaluate covariates: support bare column names via tidy eval ----
+  dots <- rlang::enquos(...)
+
+  if (length(dots) > 0L && (is.null(names(dots)) || any(names(dots) == ""))) {
+    cli::cli_abort("All covariates in {.arg ...} must be named.")
+  }
+
+  data_mask <- rlang::as_data_mask(data)
+  caller_env <- rlang::caller_env()
+
+  covars <- lapply(dots, function(quo) {
+    rlang::eval_tidy(quo, data = data_mask, env = caller_env)
+  })
 
   # ---- New column names ----
   new_nms <- paste0(prefix, npsych_cols)
@@ -132,7 +148,6 @@ std_data <- function(
   data[,
     (new_nms) := lapply(.SD, function(scores_col) {
       scores_class <- setdiff(class(scores_col), "npsych_scores")
-
       col_spec <- methods[[scores_class]]
       col_method <- col_spec[["method"]]
       col_version <- col_spec[["version"]]

@@ -66,11 +66,11 @@ REYAREC <- function(scores = numeric()) {
       },
       race = \(x) {
         as.numeric(
-          my_fcase(
-            x == 1,
-            "White",
-            x == 99,
-            NA,
+          data.table::fcase(
+            x == 1  ,
+            "White" ,
+            x == 99 ,
+            NA      ,
             default = "Other"
           ) ==
             "Other"

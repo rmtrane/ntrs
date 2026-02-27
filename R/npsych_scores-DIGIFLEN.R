@@ -72,11 +72,11 @@ DIGIFLEN <- function(scores = numeric()) {
       },
       race = \(x) {
         as.numeric(
-          my_fcase(
-            x == 1,
-            "White",
-            x == 99,
-            NA,
+          data.table::fcase(
+            x == 1  ,
+            "White" ,
+            x == 99 ,
+            NA      ,
             default = "Other"
           ) ==
             "Other"
@@ -117,11 +117,11 @@ DIGIFLEN <- function(scores = numeric()) {
       },
       race = \(x) {
         as.numeric(
-          my_fcase(
-            x == 1,
-            "White",
-            x == 99,
-            NA,
+          data.table::fcase(
+            x == 1  ,
+            "White" ,
+            x == 99 ,
+            NA      ,
             default = "Other"
           ) ==
             "Other"
@@ -147,7 +147,7 @@ DIGIFLEN <- function(scores = numeric()) {
   register_regression_version(
     scores = DIGIFLEN(),
     version = "nacc_legacy",
-    coefs = stats::na.omit(coefs),
+    coefs = c(stats::na.omit(coefs)),
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0

@@ -208,6 +208,61 @@ for (spec in npsych_scores_specs) {
     )
   }
 
+  # =========================================================================
+  # Standardization tests (exercises covar_fns)
+  # =========================================================================
+
+  mid_score <- floor(mean(spec$range))
+  reg_test_covars <- list(age = 70, sex = 1, educ = 16, race = 1, delay = 0)
+  norms_test_covars <- list(age = 70, educ = 16, sex = 1)
+
+  if (has_regression) {
+    for (ver in spec$regression_versions) {
+      test_that(
+        # fmt: skip
+        paste0(nm, " std_using_regression returns numeric for version '", ver, "'"),
+        {
+          scores <- factory(rep(mid_score, 2))
+          version_data <- get_version_data(scores, "regression", ver)
+          covars_needed <- setdiff(
+            names(version_data$coefs),
+            c("intercept", "rmse")
+          )
+          test_covars <- reg_test_covars[
+            intersect(names(reg_test_covars), covars_needed)
+          ]
+
+          result <- do.call(
+            std_using_regression,
+            c(list(scores = scores, version = ver), test_covars)
+          )
+          expect_type(result, "double")
+          expect_length(result, length(scores))
+        }
+      )
+    }
+  }
+
+  if (has_norms) {
+    for (ver in spec$norms_versions) {
+      test_that(
+        paste0(nm, " std_using_norms returns numeric for version '", ver, "'"),
+        {
+          scores <- factory(rep(mid_score, 2))
+          test_covars <- norms_test_covars[spec$norms_covars]
+          test_covars <- lapply(test_covars, \(x) rep(x, length(scores)))
+
+          result <- do.call(
+            std_using_norms,
+            c(list(scores = scores, version = ver), test_covars)
+          )
+          expect_type(result, "double")
+          expect_length(result, length(scores))
+        }
+      )
+    }
+  }
+
   # --- Default tests ---
   if (!is.null(spec$default)) {
     test_that(

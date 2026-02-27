@@ -1,4 +1,5 @@
 ^scratch/*
 ^LICENSE.md$
 ^CLAUDE.md$
+^\.claude/*
 \~$
