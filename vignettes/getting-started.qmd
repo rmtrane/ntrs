@@ -1,0 +1,161 @@
+---
+title: "Getting Started"
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+suppressPackageStartupMessages(
+  library(NpsychBatteryNormsS3)
+)
+```
+
+## Overview
+
+NpsychBatteryNormsS3 provides an S3-based interface for standardizing
+neuropsychological test scores. The typical workflow is:
+
+1. Create score objects using factory functions (e.g., `MOCATOTS()`, `ANIMALS()`)
+2. Standardize scores with `std()` or batch-standardize a data frame with `std_data()`
+
+## Creating score objects
+
+Each neuropsychological test has a dedicated factory function that wraps raw
+numeric scores with metadata (valid range, error codes, etc.):
+
+```{r}
+moca <- MOCATOTS(c(25, 28, 30))
+moca
+```
+
+To see all available tests:
+
+```{r}
+list_npsych_scores()
+```
+
+## Discovering standardization options
+
+Before standardizing, you can check which methods and versions are available
+for a given test:
+```{r}
+list_std_methods(moca)
+
+list_method_versions(moca, "norms")
+
+list_method_versions(moca, "regression")
+```
+
+Each test has registered defaults so you don't need to specify a method every
+time:
+
+```{r}
+get_std_defaults(moca)
+```
+
+These can be changed globally with `set_std_defaults()`:
+
+```{r}
+set_std_defaults(
+  moca,
+  method = "norms",
+  version = "nacc",
+  overwrite = TRUE
+)
+
+get_std_defaults(moca)
+```
+
+Do note that changes to the default will not be saved from session to session, so you may want to set them in your `.Rprofile` if you want them to persist.
+
+## Standardizing a single score vector
+
+Use `std()` to convert raw scores to z-scores. Covariates (age, sex,
+education, etc.) are passed as named arguments:
+
+```{r}
+z <- std(moca, age = 72, sex = 1, educ = 16)
+z
+
+set_std_defaults(
+  moca,
+  method = "regression",
+  version = "updated_2025.06",
+  overwrite = TRUE
+)
+
+z_reg <- std(moca, age = 72, sex = 1, educ = 16, race = 1)
+z_reg
+```
+
+To override the default method or version, specify them explicitly:
+
+```{r}
+z_norms <- std(
+  moca,
+  method = "norms",
+  version = "updated",
+  age = 72,
+  sex = 1,
+  educ = 16
+)
+z_norms
+```
+
+## Batch standardization with `std_data()`
+
+When you have a data frame with multiple test score columns, `std_data()`
+standardizes all of them at once:
+
+```{r}
+df <- data.frame(
+  age = c(72, 75, 68),
+  sex = c(1, 2, 1),
+  educ = c(16, 14, 12),
+  race = c(1, 2, 1),
+  moca = MOCATOTS(c(25, 28, 22)),
+  animals = ANIMALS(c(18, 20, 16))
+)
+
+result <- std_data(
+  df,
+  age = age,
+  sex = sex,
+  educ = educ,
+  race = race
+)
+
+result
+```
+
+You can override the method/version per test class:
+
+```{r}
+result2 <- std_data(
+  df,
+  methods = list(
+    MOCATOTS = c(method = "norms", version = "nacc")
+  ),
+  age = age,
+  sex = sex,
+  educ = educ,
+  race = race
+)
+
+result2
+```
+
+## Changing defaults
+
+If you prefer a different default method for your session, use
+`set_std_defaults()`:
+
+```{r}
+#| eval: false
+set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+
+# Subsequent calls use the new default
+std(MOCATOTS(c(25, 28)), age = 72, sex = 1, educ = 16)
+```

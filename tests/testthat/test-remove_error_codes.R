@@ -53,7 +53,7 @@ test_that("remove_error_codes replaces all values when all are codes", {
   )
   result <- remove_error_codes(x)
 
-  expect_equal(result, c(NA_integer_, NA_integer_, NA_integer_))
+  expect_equal(result, c(NA_real_, NA_real_, NA_real_))
 })
 
 test_that("remove_error_codes leaves valid scores untouched when no codes are present", {

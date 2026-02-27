@@ -9,6 +9,7 @@
 #' @param covar_fns Optional named list of functions that prepare
 #'   covariates. Names must be a subset of `names(coefs)`.
 #' @param description Optional character string describing this version.
+#' @param overwrite Logical indicating whether to overwrite an existing version with the same name. Defaults to `FALSE`.
 #'
 #' @return Called for its side effect of registering the version in the
 #'   internal `.std_versions` registry. Returns `invisible()`.
@@ -19,7 +20,8 @@ register_regression_version <- function(
   version,
   coefs,
   covar_fns,
-  description = ""
+  description = "",
+  overwrite = FALSE
 ) {
   UseMethod("register_regression_version")
 }
@@ -30,7 +32,8 @@ register_regression_version.npsych_scores <- function(
   version,
   coefs,
   covar_fns,
-  description = ""
+  description = "",
+  overwrite = FALSE
 ) {
   # Validate common parameters
   .validate_registration_params(version, description)
@@ -88,7 +91,8 @@ register_regression_version.npsych_scores <- function(
     )
   }
 
-  if (!methods::missingArg(covar_fns)) {
+  # if (!methods::missingArg(covar_fns)) {
+  if (!rlang::is_missing(covar_fns)) {
     if (!is.list(covar_fns)) {
       cli::cli_abort(
         "{.arg covar_fns} must be a {.cls list}, but is a {.cls {class(covar_fns)}}."
@@ -111,11 +115,13 @@ register_regression_version.npsych_scores <- function(
     version = version,
     data = c(
       list(coefs = coefs),
-      if (!methods::missingArg(covar_fns)) {
+      # if (!methods::missingArg(covar_fns)) {
+      if (!rlang::is_missing(covar_fns)) {
         list(covar_fns = covar_fns)
       }
     ),
-    description = description
+    description = description,
+    overwrite = overwrite
   )
 
   cli::cli_inform(

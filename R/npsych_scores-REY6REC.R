@@ -85,6 +85,18 @@ REY6REC <- function(scores = numeric()) {
         x[x > 31] <- 31
 
         x
+      },
+      race = \(x) {
+        as.numeric(
+          data.table::fcase(
+            x == 1  ,
+            "White" ,
+            x == 99 ,
+            NA      ,
+            default = "Other"
+          ) ==
+            "Other"
+        )
       }
     )
   )

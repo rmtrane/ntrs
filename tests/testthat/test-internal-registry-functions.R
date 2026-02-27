@@ -112,15 +112,6 @@ test_that(".method_implemented.npsych_scores() detects non-implemented methods",
   expect_false(.method_implemented(test_obj, "fake_standardization"))
 })
 
-test_that(".method_implemented.npsych_scores() searches parent frames", {
-  # Create a npsych_scores object
-  test_obj <- MOCATOTS(c(25, 28, 30))
-
-  # Test with a method that is NOT implemented
-  expect_false(.method_implemented(test_obj, "nonexistent_method"))
-  expect_false(.method_implemented(test_obj, "fake_standardization"))
-})
-
 # .register_std_version() tests ----
 
 test_that(".register_std_version() generic exists and is S3", {

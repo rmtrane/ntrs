@@ -9,7 +9,8 @@ register_regression_version(
   version,
   coefs,
   covar_fns,
-  description = ""
+  description = "",
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ entirely of missing values.}
 covariates. Names must be a subset of \code{names(coefs)}.}
 
 \item{description}{Optional character string describing this version.}
+
+\item{overwrite}{Logical indicating whether to overwrite an existing version with the same name. Defaults to \code{FALSE}.}
 }
 \value{
 Called for its side effect of registering the version in the

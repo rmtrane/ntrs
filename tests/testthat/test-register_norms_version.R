@@ -741,70 +741,34 @@ test_that("register_norms_version() warns and succeeds when re-registering with 
   rm("test_overwrite2", envir = .std_versions[["norms"]][["MOCATOTS"]])
 })
 
-# Test 15: overwrite parameter is passed through ----
+# Test 16: lookup_table with n column ----
 
-test_that("register_norms_version() errors when re-registering without overwrite = TRUE", {
-  valid_lt <- data.frame(m = 50, sd = 10)
+test_that("register_norms_version() accepts lookup_table with an n column", {
+  lt_with_n <- data.frame(
+    age = factor(c("young", "old"), levels = c("young", "old")),
+    m = c(26, 24),
+    sd = c(2, 3),
+    n = c(100, 150)
+  )
 
-  # Register initial version
+  age_fn <- function(x) {
+    factor(ifelse(x < 70, "young", "old"), levels = c("young", "old"))
+  }
+
   suppressMessages(
     register_norms_version(
       scores = MOCATOTS(),
-      version = "test_overwrite",
-      lookup_table = valid_lt,
-      covar_fns = list()
+      version = "test_with_n",
+      lookup_table = lt_with_n,
+      covar_fns = list(age = age_fn)
     )
   )
 
-  # Attempting to re-register without overwrite should error
-  testthat::local_reproducible_output()
+  result <- get_version_data(MOCATOTS(), "norms", "test_with_n")
 
-  expect_error(
-    suppressMessages(register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_overwrite",
-      lookup_table = data.frame(m = 55, sd = 12),
-      covar_fns = list()
-    )),
-    "already exists.+overwrite.+=.+TRUE"
-  )
+  expect_true("n" %in% names(result$lookup_table))
+  expect_equal(result$lookup_table$n, c(100, 150))
 
   # Clean up
-  rm("test_overwrite", envir = .std_versions[["norms"]][["MOCATOTS"]])
-})
-
-test_that("register_norms_version() warns and succeeds when re-registering with overwrite = TRUE", {
-  valid_lt <- data.frame(m = 50, sd = 10)
-
-  # Register initial version
-  suppressMessages(
-    register_norms_version(
-      scores = MOCATOTS(),
-      version = "test_overwrite2",
-      lookup_table = valid_lt,
-      covar_fns = list()
-    )
-  )
-
-  # Re-registering with overwrite = TRUE should warn but succeed
-  expect_warning(
-    suppressMessages(
-      register_norms_version(
-        scores = MOCATOTS(),
-        version = "test_overwrite2",
-        lookup_table = data.frame(m = 55, sd = 12),
-        covar_fns = list(),
-        overwrite = TRUE
-      )
-    ),
-    "Overwriting existing version"
-  )
-
-  # Verify the data was actually updated
-  new_data <- get_version_data(MOCATOTS(), "norms", "test_overwrite2")
-  expect_equal(new_data$lookup_table$m, 55)
-  expect_equal(new_data$lookup_table$sd, 12)
-
-  # Clean up
-  rm("test_overwrite2", envir = .std_versions[["norms"]][["MOCATOTS"]])
+  rm("test_with_n", envir = .std_versions[["norms"]][["MOCATOTS"]])
 })

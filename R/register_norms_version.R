@@ -164,7 +164,8 @@ register_norms_version.npsych_scores <- function(
   # First, if no covars are present, then covar_fns should not be provided
   if (
     length(covars_present) == 0 &&
-      !methods::missingArg(covar_fns) &&
+      # !methods::missingArg(covar_fns) &&
+      !rlang::is_missing(covar_fns) &&
       length(covar_fns) > 0
   ) {
     cli::cli_abort(
@@ -219,7 +220,8 @@ register_norms_version.npsych_scores <- function(
     version = version,
     data = c(
       list(lookup_table = lookup_table),
-      if (!methods::missingArg(covar_fns)) {
+      # if (!methods::missingArg(covar_fns)) {
+      if (!rlang::is_missing(covar_fns)) {
         list(covar_fns = covar_fns)
       }
     ),

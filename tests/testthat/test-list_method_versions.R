@@ -339,13 +339,6 @@ test_that("list_method_versions() handles method without versions gracefully", {
     }
   })
 
-  # rm(list = ls(.std_versions), envir = .std_versions)
-
-  # ## Rerun setup
-  # withr::defer({
-  #   suppressMessages(ntrs:::.onLoad())
-  # })
-
   testthat::local_reproducible_output()
 
   expect_error(

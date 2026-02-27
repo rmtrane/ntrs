@@ -21,8 +21,9 @@ list_std_methods.npsych_scores <- function(scores) {
 
   # Source 1: the version registry
   from_registry <- {
-    with_npsych_scores <- lapply(as.list(.std_versions), ls) |>
-      sapply(\(x) cls %in% x)
+    with_npsych_scores <- lapply(as.list(.std_versions), ls)
+
+    with_npsych_scores <- sapply(with_npsych_scores, \(x) cls %in% x)
 
     if (length(with_npsych_scores) > 0) {
       names(which(with_npsych_scores))

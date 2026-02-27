@@ -105,6 +105,18 @@ DIGFORSL <- function(scores = numeric()) {
         x[x > 31] <- 31
 
         x
+      },
+      race = \(x) {
+        as.numeric(
+          data.table::fcase(
+            x == 1  ,
+            "White" ,
+            x == 99 ,
+            NA      ,
+            default = "Other"
+          ) ==
+            "Other"
+        )
       }
     )
   )
@@ -138,6 +150,18 @@ DIGFORSL <- function(scores = numeric()) {
         x[x > 31] <- 31
 
         x
+      },
+      race = \(x) {
+        as.numeric(
+          data.table::fcase(
+            x == 1  ,
+            "White" ,
+            x == 99 ,
+            NA      ,
+            default = "Other"
+          ) ==
+            "Other"
+        )
       }
     )
   )
@@ -159,7 +183,7 @@ DIGFORSL <- function(scores = numeric()) {
   register_regression_version(
     scores = DIGFORSL(),
     version = "nacc",
-    coefs = stats::na.omit(coefs),
+    coefs = c(stats::na.omit(coefs)),
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0

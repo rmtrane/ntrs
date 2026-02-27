@@ -181,3 +181,62 @@ test_that(".is_valid_std_method() errors when method is not a non-empty characte
     "non-empty character string"
   )
 })
+
+
+test_that("list_std_methods() works as intended when no versions are registered", {
+  saved_keys <- ls(.std_versions)
+  saved_envs <- mget(saved_keys, envir = .std_versions)
+
+  # Wipe the registry
+  rm(list = saved_keys, envir = .std_versions)
+
+  # Restore by putting the saved references back — no re-registration needed
+  withr::defer({
+    rm(list = ls(.std_versions), envir = .std_versions)
+    for (nm in names(saved_envs)) {
+      assign(nm, saved_envs[[nm]], envir = .std_versions)
+    }
+  })
+
+  assign(
+    "new_class",
+    function(scores = numeric()) {
+      npsych_scores(
+        scores,
+        label = "New Class",
+        range = c(0, 10),
+        codes = numeric(),
+        subclass = "new_class"
+      )
+    },
+    envir = .GlobalEnv
+  )
+
+  assign(
+    "std_using_new_method",
+    function(scores) {
+      UseMethod("std_using_new_method")
+    },
+    envir = .GlobalEnv
+  )
+
+  assign(
+    "std_using_new_method.new_class",
+    function(scores) {
+      "specific method"
+    },
+    envir = .GlobalEnv
+  )
+
+  withr::defer(rm(
+    list = c(
+      "new_class",
+      "std_using_new_method",
+      "std_using_new_method.new_class"
+    ),
+    envir = .GlobalEnv
+  ))
+
+  result <- list_std_methods(new_class())
+  expect_equal(result, "new_method")
+})
