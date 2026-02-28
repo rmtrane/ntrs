@@ -1,3 +1,7 @@
+#' @include new_npsych_scores.R
+NULL
+
+
 #' DIGIF Test Scores
 #'
 #' @description Create a `DIGIF` object to hold DIGIF scores.
@@ -8,23 +12,18 @@
 #' An object of class `DIGIF`.
 #'
 #' @export
-DIGIF <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Digit Span Forward - Total",
-    range = c(0, 12),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "DIGIF"
+DIGIF <- new_npsych_scores(
+  "DIGIF",
+  label = "Digit Span Forward - Total",
+  range = c(0, 12),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup DIGIF method versions
 #'

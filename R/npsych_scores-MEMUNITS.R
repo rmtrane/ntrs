@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' MEMUNITS Test Scores
 #'
 #' @description Create a `MEMUNITS` object to hold MEMUNITS scores.
@@ -8,23 +11,18 @@
 #' An object of class `MEMUNITS`.
 #'
 #' @export
-MEMUNITS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Logical Memory, Delayed",
-    range = c(0, 25),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "MEMUNITS"
+MEMUNITS <- new_npsych_scores(
+  "MEMUNITS",
+  label = "Logical Memory, Delayed",
+  range = c(0, 25),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup MEMUNITS method versions
 #'

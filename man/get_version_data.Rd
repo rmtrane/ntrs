@@ -7,16 +7,23 @@
 get_version_data(scores, method = NULL, version = NULL)
 }
 \arguments{
-\item{scores}{A single string specifying the test class.}
+\item{scores}{An \code{npsych_scores} object (e.g., \code{MOCATOTS()}).}
 
-\item{method}{A single string specifying the method. If \code{NULL} (default), the function will attempt to retrieve the default version for the given method and test class.}
+\item{method}{A single string specifying the standardization method
+(e.g., \code{"norms"}, \code{"regression"}). If \code{NULL} (default), the default
+method for the scores class is used.}
 
-\item{version}{A single string. If \code{NULL} (default), the function will attempt to retrieve the default version for the given method and test class.}
+\item{version}{A single string specifying the version name. If \code{NULL}
+(default), the default version for the resolved method is used. Must be
+\code{NULL} when \code{method} is \code{NULL}.}
 }
 \value{
-The object representing the requested version data. The function will error if \code{version} is not \code{NULL} when \code{method = NULL},
-or if the specified \code{version} (or the resolved default version) does not exist for the given \code{method} and \code{npsych_scores}.
+The registered standardization data for the requested
+method/version combination. Errors if the specified (or resolved default)
+version does not exist.
 }
 \description{
-A short description...
+Retrieve the standardization data for a specific method and version of a
+test score class from the \code{.std_versions} registry. When \code{method} and/or
+\code{version} are \code{NULL}, defaults are resolved via \code{\link[=get_std_defaults]{get_std_defaults()}}.
 }

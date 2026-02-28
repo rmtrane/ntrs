@@ -1,3 +1,23 @@
+#' Neuropsychological Test Scores
+#'
+#' @description
+#' Create an `npsych_scores` object, a validated numeric vector representing
+#' neuropsychological test scores. This is the parent class for all
+#' test-specific subclasses (e.g., `MOCATOTS`, `TRAILA`).
+#'
+#' @param scores Numeric vector of test scores. Values must fall within
+#'   `range` or match one of the `codes`, or be `NA`.
+#' @param label A single character string identifying the test (e.g., `"MoCA"`).
+#' @param range A numeric vector of length 2 giving the minimum and maximum
+#'   valid scores.
+#' @param codes A named numeric vector of error/special codes
+#'   (e.g., `c("Not administered" = 88)`). Defaults to an empty numeric vector.
+#'
+#' @returns
+#' An S7 object of class `npsych_scores`, inheriting from `class_double`,
+#' with properties `label`, `range`, and `codes`.
+#'
+#' @export
 npsych_scores <- S7::new_class(
   "npsych_scores",
   parent = S7::class_double,
@@ -6,9 +26,6 @@ npsych_scores <- S7::new_class(
     range = S7::class_double,
     codes = S7::class_double
   ),
-  constructor = function(scores, label, range, codes = double()) {
-    S7::new_object(scores, label = label, range = range, codes = codes)
-  },
   validator = function(self) {
     scores <- S7::S7_data(self)
 
@@ -85,7 +102,7 @@ if (FALSE) {
 #'
 #' @export
 remove_error_codes <- function(x) {
-  if (!inherits(x, "npsych_scores")) {
+  if (!S7::S7_inherits(x, npsych_scores)) {
     cli::cli_abort("{.arg x} must be a {.cls npsych_scores} object.")
   }
 

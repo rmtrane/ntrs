@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' BOSTON Test Scores
 #'
 #' @description Create a `BOSTON` object to hold BOSTON scores.
@@ -8,23 +11,18 @@
 #' An object of class `BOSTON`.
 #'
 #' @export
-BOSTON <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Boston Naming Test",
-    range = c(0, 30),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "BOSTON"
+BOSTON <- new_npsych_scores(
+  "BOSTON",
+  label = "Boston Naming Test",
+  range = c(0, 30),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup BOSTON method versions
 #'

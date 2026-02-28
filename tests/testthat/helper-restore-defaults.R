@@ -3,7 +3,7 @@
 local_restore_default <- function(scores_class, env = parent.frame()) {
   defaults_env <- get(
     ".std_defaults",
-    envir = asNamespace("NpsychBatteryNormsS3")
+    envir = asNamespace("ntrs")
   )
 
   prior_exists <- exists(scores_class, envir = defaults_env, inherits = FALSE)

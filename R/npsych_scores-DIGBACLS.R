@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' DIGBACLS Test Scores
 #'
 #' @description Create a `DIGBACLS` object to hold DIGBACLS scores.
@@ -8,23 +11,18 @@
 #' An object of class `DIGBACLS`.
 #'
 #' @export
-DIGBACLS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Number Span Backward - Span Length",
-    range = c(0, 8),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "DIGBACLS"
+DIGBACLS <- new_npsych_scores(
+  "DIGBACLS",
+  label = "Number Span Backward - Span Length",
+  range = c(0, 8),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup DIGBACLS method versions
 #'

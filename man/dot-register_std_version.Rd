@@ -2,46 +2,26 @@
 % Please edit documentation in R/register_std_version.R
 \name{.register_std_version}
 \alias{.register_std_version}
-\title{Register a standardization method version for a test score class}
+\title{Register a standardization version}
 \usage{
-.register_std_version(
-  scores,
-  method,
-  version,
-  data,
-  description = "",
-  overwrite = FALSE
-)
+.register_std_version(version_obj, overwrite = FALSE)
 }
 \arguments{
-\item{scores}{An \code{npsych_scores} object}
+\item{version_obj}{An S7 object inheriting from \link{std_version}. Contains all
+version metadata (\code{scores_class}, \code{method_name}, \code{version_id}) and the
+method-specific data (e.g., \code{lookup_table} or \code{coefs}).}
 
-\item{method}{Character string naming the standardization method (e.g.,
-"norms", "regression"). Must correspond to an implemented \verb{std_using_*()}
-generic function.}
-
-\item{version}{Character string identifying this version of the method
-(e.g., "updated", "nacc", "v2024"). Used to retrieve this specific
-standardization data later.}
-
-\item{data}{A list containing the standardization data (e.g., norm tables,
-regression coefficients, lookup tables). Structure depends on the method.}
-
-\item{description}{Character string describing this version (e.g., "Updated
-norms from 2024 cohort"). Used for documentation and user information.}
-
-\item{overwrite}{Logical. If \code{TRUE}, allows overwriting an existing version.
-If \code{FALSE} (default), attempting to register an existing version throws an
-error.}
+\item{overwrite}{Logical. If \code{TRUE}, allows overwriting an existing version
+with a warning. If \code{FALSE} (default), attempting to register an existing
+version throws an error.}
 }
 \value{
 Invisible \code{NULL}. Called for side effects (storing data in
 \code{.std_versions} environment).
 }
 \description{
-Internal S3 generic for registering versions of standardization methods
-(e.g., norms, regression models) for specific test score classes. This
-function stores the standardization data in a nested environment structure
-organized by method, test class, and version.
+Stores a \link{std_version} object (e.g., \link{norms_version}, \link{regression_version})
+in the \code{.std_versions} registry, organized by method, scores class, and
+version ID.
 }
 \keyword{internal}

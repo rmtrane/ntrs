@@ -13,8 +13,8 @@ for (spec in npsych_scores_specs) {
     paste0(nm, " returns an object inheriting both ", nm, " and npsych_scores"),
     {
       result <- factory()
-      expect_s3_class(result, nm)
-      expect_s3_class(result, "npsych_scores")
+      S7::check_is_S7(result)
+      expect_equal(S7::S7_class(result)@name, nm)
     }
   )
 
@@ -22,7 +22,14 @@ for (spec in npsych_scores_specs) {
     paste0(nm, " sets class with ", nm, " first, npsych_scores second"),
     {
       result <- factory()
-      expect_equal(class(result), c(nm, "npsych_scores"))
+      expect_equal(
+        class(result),
+        c(
+          paste("ntrs", c(nm, "npsych_scores"), sep = "::"),
+          "double",
+          "S7_object"
+        )
+      )
     }
   )
 
@@ -85,7 +92,8 @@ for (spec in npsych_scores_specs) {
 
   test_that(paste0(nm, " with no arguments returns an empty ", nm, " object"), {
     result <- factory()
-    expect_s3_class(result, nm)
+    S7::check_is_S7(result)
+    expect_equal(S7::S7_class(result)@name, nm)
     expect_equal(length(result), 0L)
   })
 
@@ -141,10 +149,12 @@ for (spec in npsych_scores_specs) {
         ),
         {
           data <- get_version_data(factory(), "norms", ver)
-          expect_true("lookup_table" %in% names(data))
-          expect_s3_class(data$lookup_table, "data.frame")
-          expect_true("m" %in% names(data$lookup_table))
-          expect_true("sd" %in% names(data$lookup_table))
+          expect_true("lookup_table" %in% names(S7::props(data)))
+
+          expect_s3_class(data@lookup_table, "data.frame")
+
+          expect_true("m" %in% names(data@lookup_table))
+          expect_true("sd" %in% names(data@lookup_table))
         }
       )
 
@@ -157,9 +167,9 @@ for (spec in npsych_scores_specs) {
         ),
         {
           data <- get_version_data(factory(), "norms", ver)
-          expect_true("covar_fns" %in% names(data))
+          expect_true("covar_fns" %in% names(S7::props(data)))
           for (cv in spec$norms_covars) {
-            expect_true(cv %in% names(data$covar_fns), info = cv)
+            expect_true(cv %in% names(data@covar_fns), info = cv)
           }
         }
       )
@@ -186,8 +196,8 @@ for (spec in npsych_scores_specs) {
     test_that(paste0(nm, " regression version data contains coefs with rmse"), {
       for (ver in spec$regression_versions) {
         data <- get_version_data(factory(), "regression", ver)
-        expect_true("coefs" %in% names(data), info = ver)
-        expect_true("rmse" %in% names(data$coefs), info = ver)
+        expect_true("coefs" %in% names(S7::props(data)), info = ver)
+        expect_true("rmse" %in% names(data@coefs), info = ver)
       }
     })
 
@@ -199,10 +209,10 @@ for (spec in npsych_scores_specs) {
       {
         for (ver in spec$regression_versions) {
           data <- get_version_data(factory(), "regression", ver)
-          expect_true("covar_fns" %in% names(data), info = ver)
-          expect_true("age" %in% names(data$covar_fns), info = ver)
-          expect_true("sex" %in% names(data$covar_fns), info = ver)
-          expect_true("educ" %in% names(data$covar_fns), info = ver)
+          expect_true("covar_fns" %in% names(S7::props(data)), info = ver)
+          expect_true("age" %in% names(data@covar_fns), info = ver)
+          expect_true("sex" %in% names(data@covar_fns), info = ver)
+          expect_true("educ" %in% names(data@covar_fns), info = ver)
         }
       }
     )
@@ -225,7 +235,7 @@ for (spec in npsych_scores_specs) {
           scores <- factory(rep(mid_score, 2))
           version_data <- get_version_data(scores, "regression", ver)
           covars_needed <- setdiff(
-            names(version_data$coefs),
+            names(version_data@coefs),
             c("intercept", "rmse")
           )
           test_covars <- reg_test_covars[

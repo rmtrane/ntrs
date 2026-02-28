@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' OTRAILB Test Scores
 #'
 #' @description Create a `OTRAILB` object to hold OTRAILB scores.
@@ -8,24 +11,19 @@
 #' An object of class `OTRAILB`.
 #'
 #' @export
-OTRAILB <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Oral Trailmaking Part B - Completion Time",
-    range = c(0, 300),
-    codes = c(
-      "Not assessed, optional" = 888,
-      "Physical problem" = 995,
-      "Cognitive/behavior problem" = 996,
-      "Other problem" = 997,
-      "Verbal refusal" = 998,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "OTRAILB"
+OTRAILB <- new_npsych_scores(
+  "OTRAILB",
+  label = "Oral Trailmaking Part B - Completion Time",
+  range = c(0, 300),
+  codes = c(
+    "Not assessed, optional" = 888,
+    "Physical problem" = 995,
+    "Cognitive/behavior problem" = 996,
+    "Other problem" = 997,
+    "Verbal refusal" = 998,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup OTRAILB method versions
 #'

@@ -33,19 +33,32 @@
 #' }
 #'
 #' @export
-std <- function(scores, method = NULL, version = NULL, ...) {
-  UseMethod("std")
-}
+std <- S7::new_generic("std", "scores")
 
 #' @rdname std
 #'
 #' @importFrom data.table .SD :=
 #'
 #' @export
-std.npsych_scores <- function(scores, method = NULL, version = NULL, ...) {
+S7::method(std, npsych_scores) <- function(
+  scores,
+  method = NULL,
+  version = NULL,
+  ...
+) {
   # Resolve defaults when method/version are NULL
   if (is.null(method)) {
     defaults <- get_std_defaults(scores)
+
+    if (is.null(defaults)) {
+      scores_class <- S7::S7_class(scores)@name
+
+      cli::cli_abort(c(
+        "x" = "No default method registered for {.cls {scores_class}}.",
+        "i" = "Register a default via {.fun set_std_defaults()}."
+      ))
+    }
+
     method <- defaults$method
 
     if (is.null(version) && "version" %in% names(defaults)) {

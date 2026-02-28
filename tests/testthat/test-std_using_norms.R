@@ -29,10 +29,10 @@ suppressMessages(
   )
 )
 
-# Test 1: S3 generic ----
+# Test 1: S7 generic ----
 
 test_that("std_using_norms() is an S3 generic", {
-  expect_true(sloop::is_s3_generic("std_using_norms"))
+  expect_no_error(S7::check_is_S7(std_using_norms))
 })
 
 # Test 2: non-numeric covariates are rejected ----
@@ -307,14 +307,16 @@ test_that("std_using_norms() passes covariates through when version has no covar
       scores = MOCATOTS(),
       version = "test_no_covar_fns_001",
       lookup_table = data.frame(age = factor(60), m = 25, sd = 2),
-      covar_fns = list(),
+      covar_fns = list(age = \(x) factor(x)),
       overwrite = TRUE
     )
   )
 
   withr::defer(
-    rm("test_no_covar_fns_001", envir = .std_versions[["norms"]]),
-    envir = .GlobalEnv
+    rm(
+      "test_no_covar_fns_001",
+      envir = .std_versions[["norms"]]
+    )
   )
 
   expect_equal(

@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' UDSVERLC Test Scores
 #'
 #' @description Create a `UDSVERLC` object to hold UDSVERLC scores.
@@ -8,23 +11,19 @@
 #' An object of class `UDSVERLC`.
 #'
 #' @export
-UDSVERLC <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "L Words",
-    range = c(0, 40),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "UDSVERLC"
+UDSVERLC <- new_npsych_scores(
+  "UDSVERLC",
+  label = "L Words",
+  range = c(0, 40),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
+)
 
-  ts
-}
 
 #' Setup UDSVERLC method versions
 #'

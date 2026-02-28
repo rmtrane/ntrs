@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' CRAFTURS Test Scores
 #'
 #' @description Create a `CRAFTURS` object to hold CRAFTURS scores.
@@ -8,23 +11,18 @@
 #' An object of class `CRAFTURS`.
 #'
 #' @export
-CRAFTURS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Craft Immediate - Paraphrase",
-    range = c(0, 25),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "CRAFTURS"
+CRAFTURS <- new_npsych_scores(
+  "CRAFTURS",
+  label = "Craft Immediate - Paraphrase",
+  range = c(0, 25),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup CRAFTURS method versions
 #'

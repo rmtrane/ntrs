@@ -32,7 +32,7 @@ suppressMessages(
 # Test 1: S3 generic ----
 
 test_that("std_using_regression() is an S3 generic", {
-  expect_true(sloop::is_s3_generic("std_using_regression"))
+  expect_no_error(S7::check_is_S7(std_using_regression))
 })
 
 # Test 2: unnamed dots are rejected ----

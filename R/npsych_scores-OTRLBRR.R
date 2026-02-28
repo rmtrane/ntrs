@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' OTRLBRR Test Scores
 #'
 #' @description Create a `OTRLBRR` object to hold OTRLBRR scores.
@@ -8,24 +11,19 @@
 #' An object of class `OTRLBRR`.
 #'
 #' @export
-OTRLBRR <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Oral Trailmaking Part B - Errors",
-    range = c(0, 77),
-    codes = c(
-      "Not assessed, optional" = 88,
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "OTRLBRR"
+OTRLBRR <- new_npsych_scores(
+  "OTRLBRR",
+  label = "Oral Trailmaking Part B - Errors",
+  range = c(0, 77),
+  codes = c(
+    "Not assessed, optional" = 88,
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup OTRLBRR method versions
 #'

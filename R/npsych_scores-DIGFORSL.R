@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' DIGFORSL Test Scores
 #'
 #' @description Create a `DIGFORSL` object to hold DIGFORSL scores.
@@ -8,23 +11,18 @@
 #' An object of class `DIGFORSL`.
 #'
 #' @export
-DIGFORSL <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Number Span Forward - Span Length",
-    range = c(0, 9),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "DIGFORSL"
+DIGFORSL <- new_npsych_scores(
+  "DIGFORSL",
+  label = "Number Span Forward - Span Length",
+  range = c(0, 9),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup DIGFORSL method versions
 #'

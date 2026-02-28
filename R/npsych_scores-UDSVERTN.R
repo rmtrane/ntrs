@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' UDSVERTN Test Scores
 #'
 #' @description Create a `UDSVERTN` object to hold UDSVERTN scores.
@@ -8,23 +11,19 @@
 #' An object of class `UDSVERTN`.
 #'
 #' @export
-UDSVERTN <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "F+L Words",
-    range = c(0, 80),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "UDSVERTN"
+UDSVERTN <- new_npsych_scores(
+  "UDSVERTN",
+  label = "F+L Words",
+  range = c(0, 80),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
+)
 
-  ts
-}
 
 #' Setup UDSVERTN method versions
 #'

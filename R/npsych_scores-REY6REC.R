@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' REY6REC Test Scores
 #'
 #' @description Create a `REY6REC` object to hold REY6REC scores.
@@ -8,24 +11,19 @@
 #' An object of class `REY6REC`.
 #'
 #' @export
-REY6REC <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "RAVLT Short Delay",
-    range = c(0, 15),
-    codes = c(
-      "Not assessed, optional" = 88,
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "REY6REC"
+REY6REC <- new_npsych_scores(
+  "REY6REC",
+  label = "RAVLT Short Delay",
+  range = c(0, 15),
+  codes = c(
+    "Not assessed, optional" = 88,
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup REY6REC method versions
 #'

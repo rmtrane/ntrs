@@ -11,9 +11,7 @@
 #' method called.
 #'
 #' @export
-std_using_norms <- function(scores, ...) {
-  UseMethod("std_using_norms")
-}
+std_using_norms <- S7::new_generic("std_using_norms", "scores")
 
 #' Standardize test scores using norms
 #'
@@ -31,18 +29,14 @@ std_using_norms <- function(scores, ...) {
 #' A numeric vector of standardized scores. The function will error if `version` is not registered, if provided covariates are not numeric, if required covariates are missing based on the `lookup_table` for the specified `version`, or if covariate lengths are mismatched.
 #'
 #' @export
-std_using_norms.npsych_scores <- function(
-  scores,
-  ...,
-  version
-) {
+S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
   raw_scores <- as.numeric(scores)
 
   ## Get version data (will fail if version not registered).
-  version_data <- get_version_data(scores, "norms", version)
+  version_obj <- get_version_data(scores, "norms", version)
 
   ## Pull out lookup table
-  lookup_table <- version_data$lookup_table
+  lookup_table <- version_obj@lookup_table
 
   ## Check covariates
   covars <- rlang::list2(...)
@@ -85,7 +79,7 @@ std_using_norms.npsych_scores <- function(
   }
 
   ## Apply covariate prep functions
-  covar_fns <- version_data$covar_fns
+  covar_fns <- version_obj@covar_fns
 
   covars <- sapply(
     names(covars),

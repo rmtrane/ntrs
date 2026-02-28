@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' UDSBENTC Test Scores
 #'
 #' @description Create a `UDSBENTC` object to hold UDSBENTC scores.
@@ -8,23 +11,18 @@
 #' An object of class `UDSBENTC`.
 #'
 #' @export
-UDSBENTC <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Benson Figure Copy",
-    range = c(0, 17),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "UDSBENTC"
+UDSBENTC <- new_npsych_scores(
+  "UDSBENTC",
+  label = "Benson Figure Copy",
+  range = c(0, 17),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup UDSBENTC method versions
 #'

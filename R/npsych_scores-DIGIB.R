@@ -1,3 +1,7 @@
+#' @include new_npsych_scores.R
+NULL
+
+
 #' DIGIB Test Scores
 #'
 #' @description Create a `DIGIB` object to hold DIGIB scores.
@@ -8,23 +12,18 @@
 #' An object of class `DIGIB`.
 #'
 #' @export
-DIGIB <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Digit Span Backward - Total",
-    range = c(0, 12),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "DIGIB"
+DIGIB <- new_npsych_scores(
+  "DIGIB",
+  label = "Digit Span Backward - Total",
+  range = c(0, 12),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup DIGIB method versions
 #'

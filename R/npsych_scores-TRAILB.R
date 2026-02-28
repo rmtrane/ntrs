@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' TRAILB Test Scores
 #'
 #' @description Create a `TRAILB` object to hold TRAILB scores.
@@ -8,23 +11,19 @@
 #' An object of class `TRAILB`.
 #'
 #' @export
-TRAILB <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Trailmaking Part B",
-    range = c(0, 300),
-    codes = c(
-      "Physical problem" = 995,
-      "Cognitive/behavior problem" = 996,
-      "Other problem" = 997,
-      "Verbal refusal" = 998,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "TRAILB"
+TRAILB <- new_npsych_scores(
+  "TRAILB",
+  label = "Trailmaking Part B",
+  range = c(0, 300),
+  codes = c(
+    "Physical problem" = 995,
+    "Cognitive/behavior problem" = 996,
+    "Other problem" = 997,
+    "Verbal refusal" = 998,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
+)
 
-  ts
-}
 
 #' Setup TRAILB method versions
 #'

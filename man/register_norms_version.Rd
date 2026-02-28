@@ -9,38 +9,34 @@ register_norms_version(
   version,
   lookup_table,
   covar_fns,
-  description = "",
-  overwrite = FALSE
+  overwrite = FALSE,
+  description = ""
 )
 }
 \arguments{
-\item{scores}{A \code{npsych_scores} object, such as \code{MOCATOTS()}.}
+\item{scores}{A \code{npsych_scores} object, such as \code{MOCATOTS()}. Used to
+determine the scores class for registration.}
 
 \item{version}{Character string identifying this version (e.g., \code{"nacc"},
 \code{"updated"}).}
 
-\item{lookup_table}{Data frame containing norms. Required columns are
-\code{m} (mean) and \code{sd} (standard deviation). Optional columns are \code{n}
-(sample size), \code{age}, \code{sex}, and \code{educ}. The grouping columns (\code{age},
-\code{sex}, \code{educ}) must be factors, and all rows must be unique with respect
-to these grouping columns. No \code{NA} values are allowed.}
+\item{lookup_table}{Data frame containing norms. Must include columns \code{m}
+(mean) and \code{sd} (standard deviation), may include \code{n}(sample size).
+Additional columns are treated as covariate grouping variables and must
+have matching entries in \code{covar_fns}. See \link{norms_version} for validation
+details.}
 
-\item{covar_fns}{A named list of functions that prepare covariates
-for lookup. Names must be a subset of the columns in \code{lookup_table}. Each
-function takes a numeric vector and returns a factor whose sorted unique
-levels match those in the corresponding \code{lookup_table} column. Validation
-uses \code{identical()} on \code{sort(unique(...))} with domain-specific test
-vectors: \code{0:110} for \code{age}, \code{c(1, 2)} for \code{sex}, and \code{0:36} for \code{educ}.}
+\item{covar_fns}{A named list of functions that transform raw covariate
+inputs to match the levels in \code{lookup_table}. Names must match the
+non-statistic columns (everything but \code{m}, \code{sd}, \code{n}) in \code{lookup_table}.}
 
 \item{description}{Optional character string describing this version.}
-
-\item{overwrite}{Logical. If \code{TRUE}, an existing version with the same name
-will be overwritten. Defaults to \code{FALSE}.}
 }
 \value{
-Called for its side effect of registering the version in the
-internal \code{.std_versions} registry. Returns \code{invisible()}.
+Invisible \code{NULL}. Called for its side effect of registering the
+version in the internal \code{.std_versions} registry.
 }
 \description{
-Register a norms-based standardization version
+Creates a \link{norms_version} object and registers it in the \code{.std_versions}
+registry via \code{\link[=.register_std_version]{.register_std_version()}}.
 }

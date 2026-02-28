@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' REYDREC Test Scores
 #'
 #' @description Create a `REYDREC` object to hold REYDREC scores.
@@ -8,24 +11,19 @@
 #' An object of class `REYDREC`.
 #'
 #' @export
-REYDREC <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "RAVLT Long Delay",
-    range = c(0, 15),
-    codes = c(
-      "Not assessed, optional" = 88,
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "REYDREC"
+REYDREC <- new_npsych_scores(
+  "REYDREC",
+  label = "RAVLT Long Delay",
+  range = c(0, 15),
+  codes = c(
+    "Not assessed, optional" = 88,
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup REYDREC method versions
 #'

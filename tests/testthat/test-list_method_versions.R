@@ -1,12 +1,5 @@
 # Test file for list_method_versions() / get_versions.npsych_scores()
 
-# Test 1: S3 generic structure ----
-test_that("list_method_versions() is an S3 generic", {
-  skip_on_covr()
-  expect_true(is.function(list_method_versions))
-  expect_true(utils::isS3stdGeneric(list_method_versions))
-})
-
 # Test 2: Error handling for non-existent methods ----
 
 test_that("list_method_versions() errors when method doesn't exist", {
@@ -45,15 +38,13 @@ test_that("list_method_versions() provides helpful error with available methods"
 
 test_that("list_method_versions() errors when no versions registered yet", {
   # Create a new test class that hasn't been set up yet
-  new_test_obj <- structure(
-    c(10, 20, 30),
-    class = c("BrandNewTestClass", "npsych_scores")
+  new_test <- new_npsych_scores(
+    name = "BrandNewTestClass",
+    label = "Brand New Test Class",
+    range = c(0, 30)
   )
 
-  # Define std_using method for this class
-  std_using_norms.BrandNewTestClass <- function(scores, ...) {
-    scores
-  }
+  new_test_obj <- new_test(c(10, 20, 30))
 
   # Should error because no versions have been registered
   testthat::local_reproducible_output()
@@ -66,44 +57,24 @@ test_that("list_method_versions() errors when no versions registered yet", {
 
 # Test 3: Error handling for non-existent test classes ----
 
-test_that("list_method_versions() errors when scores doesn't exist for method", {
+test_that("list_method_versions() errors when scores doesn't exist for method with helpful error", {
   # Create a new test class
-  new_test_obj <- structure(
+  new_scores <- npsych_scores(
     c(10, 20, 30),
-    class = c("UnregisteredTestClass", "npsych_scores")
+    label = "New Scores",
+    range = c(0, 30)
   )
-
-  # Define std_using method
-  std_using_norms.UnregisteredTestClass <- function(scores, ...) {
-    scores
-  }
 
   # Method 'norms' exists in .std_versions but not for this test class
   testthat::local_reproducible_output()
 
   expect_error(
-    list_method_versions(new_test_obj, "norms"),
+    list_method_versions(new_scores, "norms"),
     "No versions registered for test class"
   )
-})
-
-test_that("list_method_versions() provides helpful error with available test classes", {
-  # Create a new test class
-  new_test_obj <- structure(
-    c(10, 20, 30),
-    class = c("UnregisteredTestClass2", "npsych_scores")
-  )
-
-  # Define std_using method
-  std_using_norms.UnregisteredTestClass2 <- function(scores, ...) {
-    scores
-  }
-
-  # Error should mention available test classes
-  testthat::local_reproducible_output()
 
   expect_error(
-    list_method_versions(new_test_obj, "norms"),
+    list_method_versions(new_scores, "norms"),
     "Available test classes:"
   )
 })
@@ -263,15 +234,18 @@ test_that("list_method_versions() correctly distinguishes between test classes",
   # Create two different test class objects
   test_obj1 <- MOCATOTS(c(25, 28, 30))
 
-  test_obj2 <- structure(
-    c(10, 20, 30),
-    class = c("AnotherTestClass", "npsych_scores")
+  new_scores <- new_npsych_scores(
+    name = "new_scores",
+    label = "New Scores",
+    range = c(0, 30)
   )
 
-  # Define std_using method for second class
-  std_using_norms.AnotherTestClass <- function(scores, ...) {
-    scores
-  }
+  new_scores_obj <- new_scores(c(10, 20, 30))
+
+  # # Define std_using method for second class
+  # S7::method(std_using_norms, new_scores) <- function(scores, ...) {
+  #   scores
+  # }
 
   # Register a version for the second class
   lookup_table <- data.frame(
@@ -281,7 +255,7 @@ test_that("list_method_versions() correctly distinguishes between test classes",
   )
 
   suppressMessages(register_norms_version(
-    scores = test_obj2,
+    scores = new_scores_obj,
     version = "another_class_version",
     lookup_table = lookup_table,
     covar_fns = list(
@@ -289,9 +263,16 @@ test_that("list_method_versions() correctly distinguishes between test classes",
     )
   ))
 
+  withr::defer({
+    rm(
+      "new_scores",
+      envir = .std_versions[["norms"]]
+    )
+  })
+
   # get_versions should return different results for each class
   versions1 <- list_method_versions(test_obj1, "norms")
-  versions2 <- list_method_versions(test_obj2, "norms")
+  versions2 <- list_method_versions(new_scores_obj, "norms")
 
   expect_true("nacc" %in% versions1)
   expect_false("nacc" %in% versions2)
@@ -305,19 +286,18 @@ test_that("list_method_versions() handles test class with no versions gracefully
   # This scenario should be caught by earlier validation
   # but we test the behavior at the boundary
 
-  test_obj <- structure(
-    c(10, 20, 30),
-    class = c("EmptyVersionsTestClass", "npsych_scores")
+  new_scores <- new_npsych_scores(
+    name = "new_scores",
+    label = "New Scores",
+    range = c(0, 30)
   )
 
-  std_using_norms.EmptyVersionsTestClass <- function(scores, ...) {
-    scores
-  }
+  new_scores_obj <- new_scores(c(10, 20, 30))
 
   testthat::local_reproducible_output()
 
   expect_error(
-    list_method_versions(test_obj, "norms"),
+    list_method_versions(new_scores_obj, "norms"),
     "No versions registered for test class"
   )
 })

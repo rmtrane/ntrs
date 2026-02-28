@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' ANIMALS Test Scores
 #'
 #' @description Create a `ANIMALS` object to hold ANIMALS scores.
@@ -8,23 +11,19 @@
 #' An object of class `ANIMALS`.
 #'
 #' @export
-ANIMALS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Animal Fluency",
-    range = c(0, 77),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "ANIMALS"
+ANIMALS <- new_npsych_scores(
+  "ANIMALS",
+  label = "Animal Fluency",
+  range = c(0, 77),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
+)
 
-  ts
-}
 
 #' Setup ANIMALS method versions
 #'

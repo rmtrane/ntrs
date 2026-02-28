@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' CRAFTVRS Test Scores
 #'
 #' @description Create a `CRAFTVRS` object to hold CRAFTVRS scores.
@@ -8,23 +11,18 @@
 #' An object of class `CRAFTVRS`.
 #'
 #' @export
-CRAFTVRS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Craft Immediate - Verbatim",
-    range = c(0, 44),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "CRAFTVRS"
+CRAFTVRS <- new_npsych_scores(
+  "CRAFTVRS",
+  label = "Craft Immediate - Verbatim",
+  range = c(0, 44),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup CRAFTVRS method versions
 #'

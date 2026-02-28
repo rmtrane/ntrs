@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' REYTOTAL Test Scores
 #'
 #' @description Create a `REYTOTAL` object to hold REYTOTAL scores.
@@ -8,17 +11,13 @@
 #' An object of class `REYTOTAL`.
 #'
 #' @export
-REYTOTAL <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "RAVLT Total Learning",
-    range = c(0, 75),
-    codes = numeric(),
-    subclass = "REYTOTAL"
-  )
+REYTOTAL <- new_npsych_scores(
+  "REYTOTAL",
+  label = "RAVLT Total Learning",
+  range = c(0, 75),
+  codes = numeric()
+)
 
-  ts
-}
 
 #' Setup REYTOTAL method versions
 #'

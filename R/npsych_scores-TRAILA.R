@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' TRAILA Test Scores
 #'
 #' @description Create a `TRAILA` object to hold TRAILA scores.
@@ -8,23 +11,18 @@
 #' An object of class `TRAILA`.
 #'
 #' @export
-TRAILA <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Trailmaking Part A",
-    range = c(0, 150),
-    codes = c(
-      "Physical problem" = 995,
-      "Cognitive/behavior problem" = 996,
-      "Other problem" = 997,
-      "Verbal refusal" = 998,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "TRAILA"
+TRAILA <- new_npsych_scores(
+  "TRAILA",
+  label = "Trailmaking Part A",
+  range = c(0, 150),
+  codes = c(
+    "Physical problem" = 995,
+    "Cognitive/behavior problem" = 996,
+    "Other problem" = 997,
+    "Verbal refusal" = 998,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup TRAILA method versions
 #'

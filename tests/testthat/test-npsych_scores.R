@@ -1,168 +1,81 @@
 # ---------------------------------------------------------------------------
-# Happy path
+# Happy path: base class
 # ---------------------------------------------------------------------------
 
-test_that("npsych_scores returns an object with the correct values", {
+test_that("npsych_scores creates a valid object", {
   result <- npsych_scores(
-    scores = c(1, 5, 10),
+    c(1, 5, 10),
     label = "My Test",
     range = c(1, 10),
-    codes = c(missing = -99),
-    subclass = "my_test"
+    codes = c(missing = -99)
   )
 
+  expect_true(S7::S7_inherits(result, npsych_scores))
   expect_equal(as.numeric(result), c(1, 5, 10))
 })
 
-test_that("npsych_scores returns an object inheriting npsych_scores", {
+test_that("npsych_scores properties are accessible via @", {
   result <- npsych_scores(
-    scores = c(1, 5, 10),
+    c(1, 5, 10),
     label = "My Test",
     range = c(1, 10),
-    codes = c(missing = -99),
-    subclass = "my_test"
+    codes = c(missing = -99)
   )
 
-  expect_s3_class(result, "npsych_scores")
-})
-
-test_that("npsych_scores sets class with custom class first, npsych_scores second", {
-  result <- npsych_scores(
-    scores = c(1, 5, 10),
-    label = "My Test",
-    range = c(1, 10),
-    codes = c(missing = -99),
-    subclass = "my_test"
-  )
-
-  expect_equal(class(result), c("my_test", "npsych_scores"))
-})
-
-test_that("npsych_scores attaches attributes correctly", {
-  result <- npsych_scores(
-    scores = c(1, 5, 10),
-    label = "My Test",
-    range = c(1, 10),
-    codes = c(missing = -99),
-    subclass = "my_test"
-  )
-
-  expect_equal(attr(result, "label"), "My Test")
-  expect_equal(attr(result, "range"), c(1, 10))
-  expect_equal(attr(result, "codes"), c(missing = -99))
+  expect_equal(result@label, "My Test")
+  expect_equal(result@range, c(1, 10))
+  expect_equal(result@codes, c(missing = -99))
 })
 
 test_that("npsych_scores accepts error codes as valid scores", {
   expect_no_error(
     npsych_scores(
-      scores = c(1, 5, -99),
+      c(1, 5, -99),
       label = "My Test",
       range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = "my_test"
+      codes = c(missing = -99)
     )
   )
 })
 
+test_that("npsych_scores accepts NA as valid scores", {
+  expect_no_error(
+    npsych_scores(
+      c(1, NA, 10),
+      label = "My Test",
+      range = c(1, 10),
+      codes = c(missing = -99)
+    )
+  )
+})
 
-# ---------------------------------------------------------------------------
-# Equivalence with new_npsych_scores + validate_npsych_scores
-# ---------------------------------------------------------------------------
-
-test_that("npsych_scores produces the same result as new_npsych_scores + validate_npsych_scores", {
-  args <- list(
-    scores = c(1, 5, 10),
+test_that("npsych_scores allows empty codes argument", {
+  result <- npsych_scores(
+    c(1, 5),
     label = "My Test",
-    range = c(1, 10),
-    codes = c(missing = -99),
-    class = "my_test"
+    range = c(1, 10)
   )
 
-  result_combined <- validate_npsych_scores(
-    new_npsych_scores(
-      args$scores,
-      args$label,
-      args$range,
-      args$codes,
-      args$class
-    )
-  )
-  result_public <- npsych_scores(
-    scores = args$scores,
-    label = args$label,
-    range = args$range,
-    codes = args$codes,
-    subclass = args$class
-  )
-
-  expect_equal(result_public, result_combined)
+  expect_equal(as.numeric(result), c(1, 5))
+  expect_equal(result@label, "My Test")
+  expect_equal(result@range, c(1, 10))
+  expect_equal(result@codes, numeric())
 })
 
 
 # ---------------------------------------------------------------------------
-# Errors inherited from new_npsych_scores
+# Validation errors
 # ---------------------------------------------------------------------------
-
-test_that("npsych_scores errors when scores is not numeric", {
-  testthat::local_reproducible_output()
-
-  expect_error(
-    npsych_scores(
-      scores = c("a", "b"),
-      label = "My Test",
-      range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = "my_test"
-    ),
-    regexp = "scores"
-  )
-})
-
-test_that("npsych_scores errors when class is not a character vector", {
-  testthat::local_reproducible_output()
-
-  expect_error(
-    npsych_scores(
-      scores = c(1, 5),
-      label = "My Test",
-      range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = 123
-    ),
-    regexp = "class"
-  )
-})
-
-
-# ---------------------------------------------------------------------------
-# Errors inherited from validate_npsych_scores
-# ---------------------------------------------------------------------------
-
-test_that("npsych_scores errors when class is empty", {
-  testthat::local_reproducible_output()
-
-  expect_error(
-    npsych_scores(
-      scores = c(1, 5),
-      label = "My Test",
-      range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = character()
-    ),
-    regexp = "class"
-  )
-})
 
 test_that("npsych_scores errors when scores are out of range and not a code", {
   testthat::local_reproducible_output()
 
   expect_error(
     npsych_scores(
-      scores = c(1, 999),
+      c(1, 999),
       label = "My Test",
       range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = "my_test"
+      codes = c(missing = -99)
     ),
     regexp = "scores"
   )
@@ -173,11 +86,10 @@ test_that("npsych_scores errors when label is not a single string", {
 
   expect_error(
     npsych_scores(
-      scores = c(1, 5),
+      c(1, 5),
       label = c("foo", "bar"),
       range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = "my_test"
+      codes = c(missing = -99)
     ),
     regexp = "label"
   )
@@ -188,11 +100,10 @@ test_that("npsych_scores errors when range is not a numeric vector of length 2",
 
   expect_error(
     npsych_scores(
-      scores = c(1, 5),
+      c(1, 5),
       label = "My Test",
       range = c(1, 10, 20),
-      codes = c(missing = -99),
-      subclass = "my_test"
+      codes = c(missing = -99)
     ),
     regexp = "range"
   )
@@ -203,11 +114,10 @@ test_that("npsych_scores errors when codes is unnamed", {
 
   expect_error(
     npsych_scores(
-      scores = c(1, 5),
+      c(1, 5),
       label = "My Test",
       range = c(1, 10),
-      codes = c(-99, -98),
-      subclass = "my_test"
+      codes = c(-99, -98)
     ),
     regexp = "codes"
   )
@@ -215,82 +125,58 @@ test_that("npsych_scores errors when codes is unnamed", {
 
 
 # ---------------------------------------------------------------------------
-# Default argument behaviour (empty vectors)
-# Each omitted argument flows through as an empty vector and should trigger
-# a specific validation error, confirming the defaults are intentionally
-# "must be supplied" rather than silently usable.
+# Validation errors: new_npsych_scores factory
 # ---------------------------------------------------------------------------
 
-test_that("npsych_scores errors when label is omitted (defaults to character())", {
+test_that("new_npsych_scores errors when name is empty", {
   testthat::local_reproducible_output()
 
   expect_error(
-    npsych_scores(
-      scores = c(1, 5),
-      range = c(1, 10),
-      codes = c(missing = -99),
-      subclass = "my_test"
+    new_npsych_scores(
+      "",
+      label = "My Test",
+      range = c(1, 10)
+    ),
+    regexp = "name"
+  )
+})
+
+test_that("new_npsych_scores errors when label is not a single string", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    new_npsych_scores(
+      "bad_test",
+      label = c("foo", "bar"),
+      range = c(1, 10)
     ),
     regexp = "label"
   )
 })
 
-test_that("npsych_scores errors when range is omitted (defaults to numeric())", {
+test_that("new_npsych_scores errors when range is not length 2", {
   testthat::local_reproducible_output()
 
   expect_error(
-    npsych_scores(
-      scores = c(1, 5),
+    new_npsych_scores(
+      "bad_test",
       label = "My Test",
-      codes = c(missing = -99),
-      subclass = "my_test"
+      range = c(1, 10, 20)
     ),
     regexp = "range"
   )
 })
 
-test_that("npsych_scores errors when class is omitted (defaults to character())", {
+test_that("new_npsych_scores errors when codes is unnamed", {
   testthat::local_reproducible_output()
 
   expect_error(
-    npsych_scores(
-      scores = c(1, 5),
+    new_npsych_scores(
+      "bad_test",
       label = "My Test",
       range = c(1, 10),
-      codes = c(missing = -99)
+      codes = c(-99, -98)
     ),
-    regexp = "class"
-  )
-})
-
-test_that("npsych_scores allows for empty codes argument", {
-  new_ts <- npsych_scores(
-    scores = c(1, 5),
-    label = "My Test",
-    range = c(1, 10),
-    subclass = "my_test"
-  )
-
-  expect_equal(
-    as.numeric(new_ts),
-    c(1, 5)
-  )
-  expect_equal(
-    attr(new_ts, "label"),
-    "My Test"
-  )
-  expect_equal(
-    attr(new_ts, "range"),
-    c(1, 10)
-  )
-
-  expect_equal(
-    class(new_ts),
-    c("my_test", "npsych_scores")
-  )
-
-  expect_equal(
-    attr(new_ts, "codes"),
-    numeric()
+    regexp = "codes"
   )
 })

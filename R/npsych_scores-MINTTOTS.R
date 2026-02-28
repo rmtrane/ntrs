@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' MINTTOTS Test Scores
 #'
 #' @description Create a `MINTTOTS` object to hold MINTTOTS scores.
@@ -8,23 +11,18 @@
 #' An object of class `MINTTOTS`.
 #'
 #' @export
-MINTTOTS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "MINT",
-    range = c(0, 32),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "MINTTOTS"
+MINTTOTS <- new_npsych_scores(
+  "MINTTOTS",
+  label = "MINT",
+  range = c(0, 32),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup MINTTOTS method versions
 #'

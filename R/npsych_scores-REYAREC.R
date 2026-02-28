@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' REYAREC Test Scores
 #'
 #' @description Create a `REYAREC` object to hold REYAREC scores.
@@ -8,17 +11,11 @@
 #' An object of class `REYAREC`.
 #'
 #' @export
-REYAREC <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "RAVLT Recognition",
-    range = c(0, 100),
-    # codes = c("" = ),
-    subclass = "REYAREC"
-  )
-
-  ts
-}
+REYAREC <- new_npsych_scores(
+  "REYAREC",
+  label = "RAVLT Recognition",
+  range = c(0, 100)
+)
 
 #' Setup REYAREC method versions
 #'

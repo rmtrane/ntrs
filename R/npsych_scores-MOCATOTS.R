@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' MOCATOTS Test Scores
 #'
 #' @description Create a `MOCATOTS` object to hold MoCA scores.
@@ -8,20 +11,15 @@
 #' An object of class `MOCATOTS`.
 #'
 #' @export
-MOCATOTS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "MoCA",
-    range = c(0, 30),
-    codes = c(
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
-      "Item(s) or whole test not administered" = 88
-    ),
-    subclass = "MOCATOTS"
+MOCATOTS <- new_npsych_scores(
+  "MOCATOTS",
+  label = "MoCA",
+  range = c(0, 30),
+  codes = c(
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
+    "Item(s) or whole test not administered" = 88
   )
-
-  ts
-}
+)
 
 #' Setup MOCATOTS method versions
 #'
@@ -36,8 +34,10 @@ MOCATOTS <- function(scores = numeric()) {
 #' @keywords internal
 .setup_MOCATOTS_versions <- function() {
   var_name <- NULL
+
   # Register norms versions for MOCATOTS
   lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$MOCATOTS
+
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
   )] <- c("age", "educ")

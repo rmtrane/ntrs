@@ -1,3 +1,7 @@
+#' @include new_npsych_scores.R
+NULL
+
+
 #' DIGFORCT Test Scores
 #'
 #' @description Create a `DIGFORCT` object to hold DIGFORCT scores.
@@ -8,23 +12,18 @@
 #' An object of class `DIGFORCT`.
 #'
 #' @export
-DIGFORCT <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Number Span Forward - Total",
-    range = c(0, 14),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "DIGFORCT"
+DIGFORCT <- new_npsych_scores(
+  "DIGFORCT",
+  label = "Number Span Forward - Total",
+  range = c(0, 14),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup DIGFORCT method versions
 #'

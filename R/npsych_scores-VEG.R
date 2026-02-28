@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' VEG Test Scores
 #'
 #' @description Create a `VEG` object to hold VEG scores.
@@ -8,23 +11,19 @@
 #' An object of class `VEG`.
 #'
 #' @export
-VEG <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Vegetable Fluency",
-    range = c(0, 77),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "VEG"
+VEG <- new_npsych_scores(
+  "VEG",
+  label = "Vegetable Fluency",
+  range = c(0, 77),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
+)
 
-  ts
-}
 
 #' Setup VEG method versions
 #'

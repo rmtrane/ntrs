@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' CRAFTDRE Test Scores
 #'
 #' @description Create a `CRAFTDRE` object to hold CRAFTDRE scores.
@@ -8,23 +11,18 @@
 #' An object of class `CRAFTDRE`.
 #'
 #' @export
-CRAFTDRE <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Craft Delay - Paraphrase",
-    range = c(0, 25),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "CRAFTDRE"
+CRAFTDRE <- new_npsych_scores(
+  "CRAFTDRE",
+  label = "Craft Delay - Paraphrase",
+  range = c(0, 25),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup CRAFTDRE method versions
 #'

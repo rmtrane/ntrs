@@ -11,12 +11,12 @@
 # S3 generic structure
 # ---------------------------------------------------------------------------
 
-test_that("std() is an S3 generic", {
-  expect_true(sloop::is_s3_generic("std"))
+test_that("std() is an S7 generic", {
+  expect_no_error(S7::check_is_S7(std))
 })
 
-test_that("std.npsych_scores method exists", {
-  expect_true(sloop::is_s3_method("std.npsych_scores"))
+test_that("method(std, npsych_scores) exists", {
+  expect_no_error(S7::method(std, npsych_scores))
 })
 
 # ---------------------------------------------------------------------------
@@ -142,7 +142,7 @@ test_that("std() errors when no defaults are set and method is NULL", {
 
   expect_error(
     std(REYTOTAL(c(10, 20))),
-    "No default method set"
+    "No default method registered"
   )
 })
 

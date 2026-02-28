@@ -10,12 +10,7 @@
 #' The result of the dispatched method for `std_using_regression`.
 #'
 #' @export
-std_using_regression <- function(
-  scores,
-  ...
-) {
-  UseMethod("std_using_regression")
-}
+std_using_regression <- S7::new_generic("std_using_regression", "scores")
 
 #' Standardize test scores using regression
 #'
@@ -31,14 +26,14 @@ std_using_regression <- function(
 #' A numeric vector of standardized test scores. The function will error if any supplied covariates are not numeric, if required covariates for the specified `version` are missing, or if covariate lengths are mismatched.
 #'
 #' @export
-std_using_regression.npsych_scores <- function(
+S7::method(std_using_regression, npsych_scores) <- function(
   scores,
   ...,
   version
 ) {
   raw_scores <- remove_error_codes(scores)
 
-  version_data <- get_version_data(
+  version_obj <- get_version_data(
     scores,
     method = "regression",
     version = version
@@ -61,7 +56,7 @@ std_using_regression.npsych_scores <- function(
     )
   }
 
-  coefs <- version_data$coefs
+  coefs <- version_obj@coefs
 
   covars_needed <- setdiff(names(coefs), c("intercept", "rmse"))
   covars_missing <- setdiff(covars_needed, names(covars))
@@ -83,7 +78,7 @@ std_using_regression.npsych_scores <- function(
   }
 
   ## Apply covariate prep functions
-  covar_fns <- version_data$covar_fns
+  covar_fns <- version_obj@covar_fns
 
   covars <- sapply(
     names(covars),

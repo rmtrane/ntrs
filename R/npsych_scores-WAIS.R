@@ -1,3 +1,7 @@
+#' @include new_npsych_scores.R
+NULL
+
+
 #' WAIS Test Scores
 #'
 #' @description Create a `WAIS` object to hold WAIS scores.
@@ -8,23 +12,18 @@
 #' An object of class `WAIS`.
 #'
 #' @export
-WAIS <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "WAIS-R Digit Symbol",
-    range = c(0, 93),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "WAIS"
+WAIS <- new_npsych_scores(
+  "WAIS",
+  label = "WAIS-R Digit Symbol",
+  range = c(0, 93),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup WAIS method versions
 #'

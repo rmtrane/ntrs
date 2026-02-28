@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' LOGIMEM Test Scores
 #'
 #' @description Create a `LOGIMEM` object to hold LOGIMEM scores.
@@ -8,23 +11,18 @@
 #' An object of class `LOGIMEM`.
 #'
 #' @export
-LOGIMEM <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Logical Memory, Immediate",
-    range = c(0, 25),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "LOGIMEM"
+LOGIMEM <- new_npsych_scores(
+  "LOGIMEM",
+  label = "Logical Memory, Immediate",
+  range = c(0, 25),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup LOGIMEM method versions
 #'

@@ -28,7 +28,7 @@ test_that("std_data() errors when methods is not a list", {
 
   expect_error(
     std_data(df, methods = "norms"),
-    "must be a named"
+    "must be a"
   )
 })
 
@@ -40,7 +40,7 @@ test_that("std_data() errors when there are unnamed arguments in ...", {
 
   expect_error(
     std_data(df, age = c(70, 75, 80), "unnamed_arg"),
-    "All arguments in ... must be named"
+    "must be named"
   )
 })
 

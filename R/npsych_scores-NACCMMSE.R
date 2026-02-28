@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' NACCMMSE Test Scores
 #'
 #' @description Create a `NACCMMSE` object to hold NACCMMSE scores.
@@ -8,24 +11,19 @@
 #' An object of class `NACCMMSE`.
 #'
 #' @export
-NACCMMSE <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "MMSE",
-    range = c(0, 30),
-    codes = c(
-      "Score not calculated; missing at least" = 88,
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "NACCMMSE"
+NACCMMSE <- new_npsych_scores(
+  "NACCMMSE",
+  label = "MMSE",
+  range = c(0, 30),
+  codes = c(
+    "Score not calculated; missing at least" = 88,
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup NACCMMSE method versions
 #'

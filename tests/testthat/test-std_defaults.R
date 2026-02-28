@@ -9,51 +9,28 @@
 # get_std_defaults() — error when no default set
 # ---------------------------------------------------------------------------
 
-test_that("get_std_defaults() errors when no default has been set for the class", {
-  assign(
-    "bare_class",
-    function(scores = numeric()) {
-      npsych_scores(
-        scores,
-        label = "Bare",
-        range = c(0, 10),
-        codes = numeric(),
-        subclass = "bare_class"
-      )
-    },
-    envir = .GlobalEnv
+test_that("get_std_defaults() returns NULL when no default has been set for the class", {
+  bare_cls <- new_npsych_scores(
+    "bare_class_defaults_test",
+    label = "Bare",
+    range = c(0, 10)
   )
-  withr::defer(rm("bare_class", envir = .GlobalEnv))
 
-  testthat::local_reproducible_output()
+  result <- suppressMessages(get_std_defaults(bare_cls()))
 
-  expect_error(
-    get_std_defaults(bare_class()),
-    "No default method set"
-  )
+  expect_null(result)
 })
 
-test_that("get_std_defaults() error message names the class", {
-  assign(
-    "named_bare_class",
-    function(scores = numeric()) {
-      npsych_scores(
-        scores,
-        label = "Named Bare",
-        range = c(0, 10),
-        codes = numeric(),
-        subclass = "named_bare_class"
-      )
-    },
-    envir = .GlobalEnv
+test_that("get_std_defaults() message names the class when no default set", {
+  bare_cls <- new_npsych_scores(
+    "named_bare_defaults_test",
+    label = "Named Bare",
+    range = c(0, 10)
   )
-  withr::defer(rm("named_bare_class", envir = .GlobalEnv))
 
-  testthat::local_reproducible_output()
-
-  expect_error(
-    get_std_defaults(named_bare_class()),
-    "named_bare_class"
+  expect_message(
+    get_std_defaults(bare_cls()),
+    "named_bare_defaults_test"
   )
 })
 
@@ -250,7 +227,7 @@ test_that("defaults are stored per subclass, not shared across classes", {
 
   defaults_env <- get(
     ".std_defaults",
-    envir = asNamespace("NpsychBatteryNormsS3")
+    envir = asNamespace("ntrs")
   )
 
   mocatots_default <- get_std_defaults(MOCATOTS())
@@ -267,6 +244,6 @@ test_that("defaults are stored per subclass, not shared across classes", {
       )
     )
   } else {
-    expect_error(get_std_defaults(ANIMALS()), "No default method set")
+    expect_null(suppressMessages(get_std_defaults(ANIMALS())))
   }
 })

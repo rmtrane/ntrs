@@ -62,8 +62,8 @@
 #' @export
 std_data <- function(
   data,
-  methods = list(),
   ...,
+  methods = list(),
   prefix = "z_",
   .cols = NULL
 ) {
@@ -73,15 +73,20 @@ std_data <- function(
     )
   }
 
+  if (any(names(rlang::list2(...)) == "")) {
+    cli::cli_abort("All covariates in {.arg ...} must be named.")
+  }
+
   # ---- Convert to data.table; remember whether to revert ----
   input_is_dt <- data.table::is.data.table(data)
+
   if (!input_is_dt) {
     data <- data.table::as.data.table(data)
   }
 
   # ---- Identify npsych_scores columns ----
   npsych_cols <- names(data)[
-    vapply(data, inherits, logical(1), what = "npsych_scores")
+    vapply(data, S7::S7_inherits, logical(1), class = npsych_scores)
   ]
 
   if (length(npsych_cols) == 0L) {
@@ -106,7 +111,7 @@ std_data <- function(
   # ---- Build class → column map ----
   col_classes <- vapply(
     data[, npsych_cols, with = FALSE],
-    function(x) setdiff(class(x), "npsych_scores"),
+    function(x) S7::S7_class(x)@name,
     character(1)
   )
 
@@ -125,6 +130,14 @@ std_data <- function(
         "{.arg methods} contains class name{?s} not matching any {.cls npsych_scores} column in {.arg data}: {.val {unknown_classes}}."
       )
     }
+  }
+
+  if (length(methods) == 0L) {
+    methods <- sapply(
+      npsych_cols,
+      \(x) list(method = NULL, version = NULL),
+      simplify = FALSE
+    )
   }
 
   # ---- Evaluate covariates: support bare column names via tidy eval ----
@@ -147,7 +160,7 @@ std_data <- function(
   # ---- Standardize using .SD / .SDcols ----
   data[,
     (new_nms) := lapply(.SD, function(scores_col) {
-      scores_class <- setdiff(class(scores_col), "npsych_scores")
+      scores_class <- S7::S7_class(scores_col)@name
       col_spec <- methods[[scores_class]]
       col_method <- col_spec[["method"]]
       col_version <- col_spec[["version"]]

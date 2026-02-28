@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' OTRAILA Test Scores
 #'
 #' @description Create a `OTRAILA` object to hold OTRAILA scores.
@@ -8,24 +11,19 @@
 #' An object of class `OTRAILA`.
 #'
 #' @export
-OTRAILA <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Oral Trailmaking Part A - Completion Time",
-    range = c(0, 100),
-    codes = c(
-      "Not assessed, optional" = 888,
-      "Physical problem" = 995,
-      "Cognitive/behavior problem" = 996,
-      "Other problem" = 997,
-      "Verbal refusal" = 998,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "OTRAILA"
+OTRAILA <- new_npsych_scores(
+  "OTRAILA",
+  label = "Oral Trailmaking Part A - Completion Time",
+  range = c(0, 100),
+  codes = c(
+    "Not assessed, optional" = 888,
+    "Physical problem" = 995,
+    "Cognitive/behavior problem" = 996,
+    "Other problem" = 997,
+    "Verbal refusal" = 998,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup OTRAILA method versions
 #'

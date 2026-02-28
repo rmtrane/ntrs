@@ -2,27 +2,23 @@
 
 #' Set the default standardization method (and version) an `npsych_scores` subclass
 #'
-#' @param scores Numeric vector of class `npsych_scores`
-#' @param method Character string: "norms" or "regression"
+#' @param scores S7 object of class `npsych_scores` with subclass.
+#' @param method Character string, for example "norms" or "regression"
 #' @param version Character string identifying the version to set as default
 #' @param overwrite Logical (default: `FALSE`); should existing default, if it exists, be overwritten?
 #'
 #' @export
 set_std_defaults <- function(scores, method, version, overwrite = FALSE) {
-  UseMethod("set_std_defaults")
-}
+  if (!S7::S7_inherits(scores, npsych_scores)) {
+    cli::cli_abort(
+      "{.arg scores} must be an object of class {.cls npsych_scores}, but is {.cls {class(scores)}}."
+    )
+  }
 
-#' @export
-set_std_defaults.npsych_scores <- function(
-  scores,
-  method,
-  version,
-  overwrite = FALSE
-) {
   # Verify method + version combo exists (will error if not)
   invisible(get_version_data(scores, method, version))
 
-  scores_class <- setdiff(class(scores), "npsych_scores")
+  scores_class <- S7::S7_class(scores)@name
 
   # Check if scores_class already has a default method
   if (exists(scores_class, envir = .std_defaults, inherits = FALSE)) {
@@ -68,30 +64,19 @@ set_std_defaults.npsych_scores <- function(
 
 #' Get standardization defaults `npsych_scores`
 #'
-#' @param scores Vector of class `npsych_scores` with subclass.
+#' @param scores S7 object of class `npsych_scores` with subclass.
 #'
 #' @return Character string with default method and version (when applicable)
 #'
 #' @export
 get_std_defaults <- function(scores) {
-  UseMethod("get_std_defaults")
-}
+  if (!S7::S7_inherits(scores, npsych_scores)) {
+    cli::cli_abort(
+      "{.arg scores} must be an object of class {.cls npsych_scores}, but is {.cls {class(scores)}}."
+    )
+  }
 
-
-#' Get standard defaults for `npsych_scores` object
-#'
-#' @param scores An object of class `npsych_scores`.
-#'
-#' @returns
-#' If a default method exists for the object's class, the corresponding
-#' defaults from `.std_defaults`. Otherwise, `NULL` is returned with an
-#' informational message.
-#'
-#' @rdname get_std_defaults
-#'
-#' @export
-get_std_defaults.npsych_scores <- function(scores) {
-  scores_class <- setdiff(class(scores), "npsych_scores")
+  scores_class <- S7::S7_class(scores)@name
 
   if (!exists(scores_class, envir = .std_defaults, inherits = FALSE)) {
     cli::cli_alert_info(

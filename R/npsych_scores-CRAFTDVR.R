@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' CRAFTDVR Test Scores
 #'
 #' @description Create a `CRAFTDVR` object to hold CRAFTDVR scores.
@@ -8,23 +11,18 @@
 #' An object of class `CRAFTDVR`.
 #'
 #' @export
-CRAFTDVR <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Craft Delay - Verbatim",
-    range = c(0, 44),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
-    ),
-    subclass = "CRAFTDVR"
+CRAFTDVR <- new_npsych_scores(
+  "CRAFTDVR",
+  label = "Craft Delay - Verbatim",
+  range = c(0, 44),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
-
-  ts
-}
+)
 
 #' Setup CRAFTDVR method versions
 #'

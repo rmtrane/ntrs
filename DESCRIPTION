@@ -14,8 +14,6 @@ Imports:
     data.table,
     NpsychBatteryNorms,
     rlang,
-    sloop,
-    methods,
     S7
 Suggests: 
     testthat (>= 3.0.0),
@@ -25,3 +23,59 @@ Config/testthat/edition: 3
 Depends: 
     R (>= 3.5)
 LazyData: true
+Collate: 
+    'get_version_data.R'
+    'list_method_versions.R'
+    'list_npsych_scores.R'
+    'list_std_methods.R'
+    'npsych_scores-class.R'
+    'new_npsych_scores.R'
+    'std_version-class.R'
+    'norms_version-class.R'
+    'npsych_scores-ANIMALS.R'
+    'npsych_scores-BOSTON.R'
+    'npsych_scores-CRAFTDRE.R'
+    'npsych_scores-CRAFTDVR.R'
+    'npsych_scores-CRAFTURS.R'
+    'npsych_scores-CRAFTVRS.R'
+    'npsych_scores-DIGBACCT.R'
+    'npsych_scores-DIGBACLS.R'
+    'npsych_scores-DIGFORCT.R'
+    'npsych_scores-DIGFORSL.R'
+    'npsych_scores-DIGIB.R'
+    'npsych_scores-DIGIBLEN.R'
+    'npsych_scores-DIGIF.R'
+    'npsych_scores-DIGIFLEN.R'
+    'npsych_scores-LOGIMEM.R'
+    'npsych_scores-MEMUNITS.R'
+    'npsych_scores-MINTTOTS.R'
+    'npsych_scores-MOCATOTS.R'
+    'npsych_scores-NACCMMSE.R'
+    'npsych_scores-OTRAILA.R'
+    'npsych_scores-OTRAILB.R'
+    'npsych_scores-OTRLARR.R'
+    'npsych_scores-OTRLBRR.R'
+    'npsych_scores-REY6REC.R'
+    'npsych_scores-REYAREC.R'
+    'npsych_scores-REYDLIST.R'
+    'npsych_scores-REYDREC.R'
+    'npsych_scores-REYTOTAL.R'
+    'npsych_scores-TRAILA.R'
+    'npsych_scores-TRAILB.R'
+    'npsych_scores-UDSBENTC.R'
+    'npsych_scores-UDSBENTD.R'
+    'npsych_scores-UDSVERFC.R'
+    'npsych_scores-UDSVERLC.R'
+    'npsych_scores-UDSVERTN.R'
+    'npsych_scores-VEG.R'
+    'npsych_scores-WAIS.R'
+    'register_norms_version.R'
+    'register_regression_version.R'
+    'register_std_version.R'
+    'regression_version-class.R'
+    'std.R'
+    'std_data.R'
+    'std_defaults.R'
+    'std_using_norms.R'
+    'std_using_regression.R'
+    'zzz.R'

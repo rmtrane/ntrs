@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' DIGIBLEN Test Scores
 #'
 #' @description Create a `DIGIBLEN` object to hold DIGIBLEN scores.
@@ -8,23 +11,18 @@
 #' An object of class `DIGIBLEN`.
 #'
 #' @export
-DIGIBLEN <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "Digit Span Backward - Span Length",
-    range = c(0, 8),
-    codes = c(
-      "Physical problem" = 95,
-      "Cognitive/behavior problem" = 96,
-      "Other problem" = 97,
-      "Verbal refusal" = 98,
-      "Not available: UDS form submitted" = -4
-    ),
-    subclass = "DIGIBLEN"
+DIGIBLEN <- new_npsych_scores(
+  "DIGIBLEN",
+  label = "Digit Span Backward - Span Length",
+  range = c(0, 8),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted" = -4
   )
-
-  ts
-}
+)
 
 #' Setup DIGIBLEN method versions
 #'

@@ -1,3 +1,6 @@
+#' @include new_npsych_scores.R
+NULL
+
 #' REYDLIST Test Scores
 #'
 #' @description Create a `REYDLIST` object to hold REYDLIST scores.
@@ -8,17 +11,11 @@
 #' An object of class `REYDLIST`.
 #'
 #' @export
-REYDLIST <- function(scores = numeric()) {
-  ts <- npsych_scores(
-    scores,
-    label = "RAVLT Distractor List",
-    range = c(0, 15),
-    # codes = c("" = ),
-    subclass = "REYDLIST"
-  )
-
-  ts
-}
+REYDLIST <- new_npsych_scores(
+  "REYDLIST",
+  label = "RAVLT Distractor List",
+  range = c(0, 15)
+)
 
 #' Setup REYDLIST method versions
 #'

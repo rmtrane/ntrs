@@ -8,32 +8,36 @@ register_regression_version(
   scores,
   version,
   coefs,
-  covar_fns,
+  covar_fns = NULL,
   description = "",
   overwrite = FALSE
 )
 }
 \arguments{
-\item{scores}{A \code{npsych_scores} object, such as \code{MOCATOTS()}.}
+\item{scores}{A \code{npsych_scores} object, such as \code{MOCATOTS()}. Used to
+determine the scores class for registration.}
 
-\item{version}{Character string identifying this version.}
+\item{version}{Character string identifying this version (e.g., \code{"nacc"},
+\code{"updated"}).}
 
-\item{coefs}{A named numeric vector or data frame of regression coefficients.
-Must include \code{rmse}. Allowed names are \code{intercept}, \code{age}, \code{sex}, \code{educ},
-\code{race}, \code{delay}, and \code{rmse}. If a data frame, no column may consist
-entirely of missing values.}
+\item{coefs}{A named numeric vector or a data frame of regression coefficients.
+Must include \code{"intercept"} and \code{"rmse"} entries. Additional names are treated as
+covariate coefficients. See \link{regression_version} for validation details.}
 
-\item{covar_fns}{Optional named list of functions that prepare
-covariates. Names must be a subset of \code{names(coefs)}.}
+\item{covar_fns}{A named list of functions that transform raw covariate
+inputs. Must include entries for all coefficient names other than
+\code{"intercept"} and \code{"rmse"}.}
 
 \item{description}{Optional character string describing this version.}
 
-\item{overwrite}{Logical indicating whether to overwrite an existing version with the same name. Defaults to \code{FALSE}.}
+\item{overwrite}{Logical. If \code{TRUE}, allows overwriting an existing version
+with a warning. Defaults to \code{FALSE}.}
 }
 \value{
-Called for its side effect of registering the version in the
-internal \code{.std_versions} registry. Returns \code{invisible()}.
+Invisible \code{NULL}. Called for its side effect of registering the
+version in the internal \code{.std_versions} registry.
 }
 \description{
-Register a regression-based standardization version
+Creates a \link{regression_version} object and registers it in the
+\code{.std_versions} registry via \code{\link[=.register_std_version]{.register_std_version()}}.
 }
