@@ -24,7 +24,7 @@ jobs:
         with:
           extra-packages: |
             any::quarto
-            rmtrane/NpsychBatteryNorms
+            local::.
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
