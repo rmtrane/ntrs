@@ -1,0 +1,36 @@
+S7 based framework for working with and standardizing neuropsychological
+test results. Built in tools for working with the NACC Uniform Data Set
+(UDS) and the National Alzheimer's Coordinating Center (NACC)
+neuropsychological battery, but with extensibility at the center of the
+design.
+
+# Package index
+
+## All functions
+
+- [`MOCATOTS()`](https://rmtrane.github.io/ntrs/reference/MOCATOTS.md) :
+  MOCATOTS Test Scores
+
+- [`get_version_data()`](https://rmtrane.github.io/ntrs/reference/get_version_data.md)
+  : Get version data
+
+- [`register_norms_version()`](https://rmtrane.github.io/ntrs/reference/register_norms_version.md)
+  : Register a norms-based standardization version
+
+- [`register_regression_version()`](https://rmtrane.github.io/ntrs/reference/register_regression_version.md)
+  : Register a regression-based standardization version
+
+- [`std_using_norms()`](https://rmtrane.github.io/ntrs/reference/std_using_norms.md)
+  :
+
+  Standardize `npsych_scores` using norms
+
+- [`std_using_regression()`](https://rmtrane.github.io/ntrs/reference/std_using_regression.md)
+  : Standardize using regression
+
+# Articles
+
+### All vignettes
+
+- [Getting
+  Started](https://rmtrane.github.io/ntrs/articles/getting-started.md):
