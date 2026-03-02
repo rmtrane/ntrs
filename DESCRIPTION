@@ -1,5 +1,6 @@
 Package: ntrs
 Title: Neuropsychological Test Result Standardization
+URL: https://rmtrane.github.io/ntrs/
 Version: 0.0.0.9000
 Authors@R: 
     person(
@@ -19,6 +20,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Remotes:
+    rmtrane/NpsychBatteryNorms
 Imports: 
     cli,
     data.table,
@@ -91,4 +94,3 @@ Collate:
     'std_using_norms.R'
     'std_using_regression.R'
     'zzz.R'
-URL: https://rmtrane.github.io/ntrs/
