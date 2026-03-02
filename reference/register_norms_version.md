@@ -1,7 +1,8 @@
 # Register a norms-based standardization version
 
-Creates a norms_version object and registers it in the `.std_versions`
-registry via
+Creates a
+[norms_version](https://rmtrane.github.io/ntrs/reference/norms_version.md)
+object and registers it in the `.std_versions` registry via
 [`.register_std_version()`](https://rmtrane.github.io/ntrs/reference/dot-register_std_version.md).
 
 ## Usage
@@ -35,7 +36,9 @@ register_norms_version(
   Data frame containing norms. Must include columns `m` (mean) and `sd`
   (standard deviation), may include `n`(sample size). Additional columns
   are treated as covariate grouping variables and must have matching
-  entries in `covar_fns`. See norms_version for validation details.
+  entries in `covar_fns`. See
+  [norms_version](https://rmtrane.github.io/ntrs/reference/norms_version.md)
+  for validation details.
 
 - covar_fns:
 

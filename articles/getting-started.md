@@ -13,9 +13,11 @@ neuropsychological test scores. The typical workflow is:
 
 1.  Create score objects using factory functions (e.g.,
     [`MOCATOTS()`](https://rmtrane.github.io/ntrs/reference/MOCATOTS.md),
-    `ANIMALS()`)
-2.  Standardize scores with `std()` or batch-standardize a data frame
-    with `std_data()`
+    [`ANIMALS()`](https://rmtrane.github.io/ntrs/reference/ANIMALS.md))
+2.  Standardize scores with
+    [`std()`](https://rmtrane.github.io/ntrs/reference/std.md) or
+    batch-standardize a data frame with
+    [`std_data()`](https://rmtrane.github.io/ntrs/reference/std_data.md)
 
 ## Creating score objects
 
@@ -83,7 +85,8 @@ get_std_defaults(moca)
     $version
     [1] "updated_2025.06"
 
-These can be changed globally with `set_std_defaults()`:
+These can be changed globally with
+[`set_std_defaults()`](https://rmtrane.github.io/ntrs/reference/set_std_defaults.md):
 
 ``` r
 set_std_defaults(
@@ -117,8 +120,9 @@ them to persist.
 
 ## Standardizing a single score vector
 
-Use `std()` to convert raw scores to z-scores. Covariates (age, sex,
-education, etc.) are passed as named arguments:
+Use [`std()`](https://rmtrane.github.io/ntrs/reference/std.md) to
+convert raw scores to z-scores. Covariates (age, sex, education, etc.)
+are passed as named arguments:
 
 ``` r
 z <- std(moca, age = 72, sex = 1, educ = 16)
@@ -166,7 +170,8 @@ z_norms
 ## Batch standardization with `std_data()`
 
 When you have a data frame with multiple test score columns,
-`std_data()` standardizes all of them at once:
+[`std_data()`](https://rmtrane.github.io/ntrs/reference/std_data.md)
+standardizes all of them at once:
 
 ``` r
 df <- data.frame(
@@ -224,7 +229,7 @@ result2
 ## Changing defaults
 
 If you prefer a different default method for your session, use
-`set_std_defaults()`:
+[`set_std_defaults()`](https://rmtrane.github.io/ntrs/reference/set_std_defaults.md):
 
 ``` r
 set_std_defaults(

@@ -1,7 +1,8 @@
 # Register a regression-based standardization version
 
-Creates a regression_version object and registers it in the
-`.std_versions` registry via
+Creates a
+[regression_version](https://rmtrane.github.io/ntrs/reference/regression_version.md)
+object and registers it in the `.std_versions` registry via
 [`.register_std_version()`](https://rmtrane.github.io/ntrs/reference/dot-register_std_version.md).
 
 ## Usage
@@ -34,8 +35,9 @@ register_regression_version(
 
   A named numeric vector or a data frame of regression coefficients.
   Must include `"intercept"` and `"rmse"` entries. Additional names are
-  treated as covariate coefficients. See regression_version for
-  validation details.
+  treated as covariate coefficients. See
+  [regression_version](https://rmtrane.github.io/ntrs/reference/regression_version.md)
+  for validation details.
 
 - covar_fns:
 

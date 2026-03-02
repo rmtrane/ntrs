@@ -1,7 +1,11 @@
 # Register a standardization version
 
-Stores a std_version object (e.g., norms_version, regression_version) in
-the `.std_versions` registry, organized by method, scores class, and
+Stores a
+[std_version](https://rmtrane.github.io/ntrs/reference/std_version.md)
+object (e.g.,
+[norms_version](https://rmtrane.github.io/ntrs/reference/norms_version.md),
+[regression_version](https://rmtrane.github.io/ntrs/reference/regression_version.md))
+in the `.std_versions` registry, organized by method, scores class, and
 version ID.
 
 ## Usage
@@ -14,9 +18,11 @@ version ID.
 
 - version_obj:
 
-  An S7 object inheriting from std_version. Contains all version
-  metadata (`scores_class`, `method_name`, `version_id`) and the
-  method-specific data (e.g., `lookup_table` or `coefs`).
+  An S7 object inheriting from
+  [std_version](https://rmtrane.github.io/ntrs/reference/std_version.md).
+  Contains all version metadata (`scores_class`, `method_name`,
+  `version_id`) and the method-specific data (e.g., `lookup_table` or
+  `coefs`).
 
 - overwrite:
 

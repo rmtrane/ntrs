@@ -2,7 +2,8 @@
 
 Retrieve the standardization data for a specific method and version of a
 test score class from the `.std_versions` registry. When `method` and/or
-`version` are `NULL`, defaults are resolved via `get_std_defaults()`.
+`version` are `NULL`, defaults are resolved via
+[`get_std_defaults()`](https://rmtrane.github.io/ntrs/reference/get_std_defaults.md).
 
 ## Usage
 
