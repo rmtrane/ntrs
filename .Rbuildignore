@@ -5,6 +5,7 @@
 \~$
 ^codecov\.yml$
 ^\.github$
+^README\.qmd$
 ^doc$
 ^Meta$
 ^_pkgdown\.yml$

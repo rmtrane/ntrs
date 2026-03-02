@@ -1,5 +1,7 @@
-
-# Neuropsychological Test Result Standardization (`ntrs`)
+---
+title: Neuropsychological Test Result Standardization (`ntrs`)
+format: gfm
+---
 
 <!-- badges: start -->
 
@@ -22,8 +24,17 @@ pak::pak("rmtrane/ntrs")
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+```{r}
 library(ntrs)
-## basic example code
+
+moca_scores <- MOCATOTS(c(25, 28, 18))
+
+std(
+  moca_scores,
+  age = c(62, 59, 61),
+  educ = c(15, 12, 13),
+  sex = c(1, 2, 2),
+  race = c(1, 4, 2)
+)
 ```
 
