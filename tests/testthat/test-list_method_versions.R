@@ -1,7 +1,15 @@
 # Test file for list_method_versions() / get_versions.npsych_scores()
 
-# Test 2: Error handling for non-existent methods ----
+# Test 1: Error handling for non-npsych_scores input ----
+test_that("list_method_versions() errors when input is not npsych_scores", {
+  testthat::local_reproducible_output()
+  expect_error(
+    list_method_versions(1:10, "norms"),
+    "must be an object of class .+npsych_scores.+"
+  )
+})
 
+# Test 2: Error handling for non-existent methods ----
 test_that("list_method_versions() errors when method doesn't exist", {
   test_obj <- MOCATOTS(c(25, 28, 30))
 
@@ -36,12 +44,40 @@ test_that("list_method_versions() provides helpful error with available methods"
   )
 })
 
-test_that("list_method_versions() errors when no versions registered yet", {
+
+test_that("list_method_versions() errors when .std_versions[[method]] doesn't exist yet", {
   # Create a new test class that hasn't been set up yet
   new_test <- new_npsych_scores(
     name = "BrandNewTestClass",
     label = "Brand New Test Class",
     range = c(0, 30)
+  )
+
+  new_test_obj <- new_test(c(10, 20, 30))
+
+  # Should error because no versions have been registered
+  testthat::local_reproducible_output()
+
+  expect_error(
+    list_method_versions(new_test_obj, "norms"),
+    "No versions registered for test class"
+  )
+})
+
+test_that("list_method_versions() errors when .std_versions[[method]] exists, but is empty", {
+  # Note: this is an extreme edge case that should be rarely, if ever, happens in practice
+  # because register_*_version() always creates a version when registering, but we test it for robustness
+
+  # Create a new test class that hasn't been set up yet
+  new_test <- new_npsych_scores(
+    name = "BrandNewTestClass",
+    label = "Brand New Test Class",
+    range = c(0, 30)
+  )
+
+  # Create empty environment for the method to simulate the edge case
+  .std_versions[["norms"]][["BrandNewTestClass"]] <- new.env(
+    parent = emptyenv()
   )
 
   new_test_obj <- new_test(c(10, 20, 30))

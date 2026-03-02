@@ -14,6 +14,7 @@
 std_using_norms <- S7::new_generic("std_using_norms", "scores")
 
 #' Standardize test scores using norms
+#' @name std_using_norms-npsych_scores
 #'
 #' @description
 #' A short description...
@@ -28,7 +29,6 @@ std_using_norms <- S7::new_generic("std_using_norms", "scores")
 #' @returns
 #' A numeric vector of standardized scores. The function will error if `version` is not registered, if provided covariates are not numeric, if required covariates are missing based on the `lookup_table` for the specified `version`, or if covariate lengths are mismatched.
 #'
-#' @export
 S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
   raw_scores <- as.numeric(scores)
 

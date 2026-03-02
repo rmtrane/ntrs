@@ -8,13 +8,13 @@ vignette: >
 
 ```{r}
 suppressPackageStartupMessages(
-  library(NpsychBatteryNormsS3)
+  library(ntrs)
 )
 ```
 
 ## Overview
 
-NpsychBatteryNormsS3 provides an S3-based interface for standardizing
+`ntrs` provides an S7-based interface for standardizing
 neuropsychological test scores. The typical workflow is:
 
 1. Create score objects using factory functions (e.g., `MOCATOTS()`, `ANIMALS()`)
@@ -87,7 +87,6 @@ set_std_defaults(
 )
 
 z_reg <- std(moca, age = 72, sex = 1, educ = 16, race = 1)
-z_reg
 ```
 
 To override the default method or version, specify them explicitly:
@@ -154,7 +153,12 @@ If you prefer a different default method for your session, use
 
 ```{r}
 #| eval: false
-set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+set_std_defaults(
+  MOCATOTS(),
+  method = "norms",
+  version = "nacc",
+  overwrite = TRUE
+)
 
 # Subsequent calls use the new default
 std(MOCATOTS(c(25, 28)), age = 72, sex = 1, educ = 16)

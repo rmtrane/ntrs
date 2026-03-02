@@ -1,10 +1,20 @@
 Package: ntrs
-Title: What the Package Does (One Line, Title Case)
+Title: Neuropsychological Test Result Standardization
 Version: 0.0.0.9000
 Authors@R: 
-    person("Ralph", "Møller Trane", , "rmtrane@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-7824-1785"))
-Description: What the package does (one paragraph).
+    person(
+        given = "Ralph", 
+        family = "Møller Trane",
+        email = "rmtrane@gmail.com", 
+        role = c("aut", "cre"),
+        comment = c(
+            ORCID = "0000-0001-7824-1785"
+        )
+    )
+Description: S7 based framework for working with and standardizing neuropsychological test results. 
+    Built in tools for working with the NACC Uniform Data Set (UDS) and the National Alzheimer's 
+    Coordinating Center (NACC) neuropsychological battery, but with extensibility at the center of 
+    the design.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -18,10 +28,11 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0),
     withr
-VignetteBuilder: quarto
+VignetteBuilder: 
+    quarto
 Config/testthat/edition: 3
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1)
 LazyData: true
 Collate: 
     'get_version_data.R'
@@ -69,6 +80,7 @@ Collate:
     'npsych_scores-UDSVERTN.R'
     'npsych_scores-VEG.R'
     'npsych_scores-WAIS.R'
+    'ntrs-package.R'
     'register_norms_version.R'
     'register_regression_version.R'
     'register_std_version.R'

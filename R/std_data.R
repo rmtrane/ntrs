@@ -73,10 +73,6 @@ std_data <- function(
     )
   }
 
-  if (any(names(rlang::list2(...)) == "")) {
-    cli::cli_abort("All covariates in {.arg ...} must be named.")
-  }
-
   # ---- Convert to data.table; remember whether to revert ----
   input_is_dt <- data.table::is.data.table(data)
 

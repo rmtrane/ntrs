@@ -135,6 +135,17 @@ test_that("std_using_regression() output length equals input length", {
   )
 
   expect_length(result, length(scores))
+
+  exp_res <- c(
+    (24 - (30 + (-0.1) * 60 + 0.2 * 12)) / 2.5,
+    (25 - (30 + (-0.1) * 70 + 0.2 * 12)) / 2.5,
+    (26 - (30 + (-0.1) * 80 + 0.2 * 12)) / 2.5
+  )
+
+  expect_equal(
+    result,
+    exp_res
+  )
 })
 
 # Test 9: scalar covariate is recycled across scores ----
@@ -143,12 +154,22 @@ test_that("std_using_regression() accepts scalar covariates recycled across scor
   scores <- MOCATOTS(c(24, 26))
 
   expect_no_error(
-    std_using_regression(
+    result <- std_using_regression(
       scores,
       age = 70, # scalar — recycled
       educ = 12, # scalar — recycled
       version = "test_reg_str_001"
     )
+  )
+
+  exp_res <- c(
+    (24 - (30 + (-0.1) * 70 + 0.2 * 12)) / 2.5,
+    (26 - (30 + (-0.1) * 70 + 0.2 * 12)) / 2.5
+  )
+
+  expect_equal(
+    result,
+    exp_res
   )
 })
 

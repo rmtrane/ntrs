@@ -13,6 +13,7 @@
 std_using_regression <- S7::new_generic("std_using_regression", "scores")
 
 #' Standardize test scores using regression
+#' @name std_using_regression-npsych_scores
 #'
 #' @description
 #' A short description...
@@ -25,7 +26,6 @@ std_using_regression <- S7::new_generic("std_using_regression", "scores")
 #' @returns
 #' A numeric vector of standardized test scores. The function will error if any supplied covariates are not numeric, if required covariates for the specified `version` are missing, or if covariate lengths are mismatched.
 #'
-#' @export
 S7::method(std_using_regression, npsych_scores) <- function(
   scores,
   ...,
@@ -101,8 +101,22 @@ S7::method(std_using_regression, npsych_scores) <- function(
     data.frame(covars)
   )
 
+  if (nrow(X) != length(raw_scores)) {
+    if (nrow(X) == 1L) {
+      X <- X[rep(1L, length(raw_scores)), , drop = FALSE]
+    } else {
+      cli::cli_abort(
+        "Internal error: number of rows in covariate matrix ({nrow(X)}) does not match length of scores ({length(raw_scores)})."
+      )
+    }
+  }
+
   ## Get std scores
-  lin_reg_resids(raw_scores, X, coefs)
+  lin_reg_resids(
+    raw_scores,
+    X,
+    coefs_to_use = coefs
+  )
 }
 
 

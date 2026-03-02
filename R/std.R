@@ -36,10 +36,9 @@
 std <- S7::new_generic("std", "scores")
 
 #' @rdname std
+#' @name std-npsych_scores
 #'
 #' @importFrom data.table .SD :=
-#'
-#' @export
 S7::method(std, npsych_scores) <- function(
   scores,
   method = NULL,
