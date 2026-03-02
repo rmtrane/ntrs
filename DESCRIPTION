@@ -30,7 +30,8 @@ Imports:
     S7
 Suggests: 
     testthat (>= 3.0.0),
-    withr
+    withr,
+    quarto
 VignetteBuilder: 
     quarto
 Config/testthat/edition: 3
