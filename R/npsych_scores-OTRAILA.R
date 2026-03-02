@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `OTRAILA` object to hold OTRAILA scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `OTRAILA`.

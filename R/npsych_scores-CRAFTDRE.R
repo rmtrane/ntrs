@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `CRAFTDRE` object to hold CRAFTDRE scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `CRAFTDRE`.

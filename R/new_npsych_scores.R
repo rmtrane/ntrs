@@ -23,7 +23,7 @@ NULL
 #'   (e.g., `c("Not administered" = 88)`). Defaults to an empty numeric vector.
 #'
 #' @returns An S7 class object (subclass of [npsych_scores]) whose constructor
-#'   accepts a single `scores` argument.
+#'   accepts a single `.data` argument.
 #'
 #' @keywords internal
 new_npsych_scores <- function(name, label, range, codes = numeric()) {

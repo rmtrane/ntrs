@@ -5,7 +5,7 @@
 #' neuropsychological test scores. This is the parent class for all
 #' test-specific subclasses (e.g., `MOCATOTS`, `TRAILA`).
 #'
-#' @param scores Numeric vector of test scores. Values must fall within
+#' @param .data Numeric vector of test scores. Values must fall within
 #'   `range` or match one of the `codes`, or be `NA`.
 #' @param label A single character string identifying the test (e.g., `"MoCA"`).
 #' @param range A numeric vector of length 2 giving the minimum and maximum

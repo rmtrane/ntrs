@@ -7,7 +7,7 @@
 MOCATOTS(x = numeric())
 }
 \arguments{
-\item{scores}{Numeric scores.}
+\item{x}{Numeric scores.}
 }
 \value{
 An object of class \code{MOCATOTS}.

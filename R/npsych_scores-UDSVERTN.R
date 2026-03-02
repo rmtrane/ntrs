@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `UDSVERTN` object to hold UDSVERTN scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `UDSVERTN`.

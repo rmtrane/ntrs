@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `CRAFTDVR` object to hold CRAFTDVR scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `CRAFTDVR`.

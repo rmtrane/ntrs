@@ -6,7 +6,7 @@ NULL
 #'
 #' @description Create a `DIGIB` object to hold DIGIB scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGIB`.

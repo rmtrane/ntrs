@@ -16,6 +16,10 @@
 #' @param covar_fns A named list of functions that transform raw covariate
 #'   inputs to match the levels in `lookup_table`. Names must match the
 #'   non-statistic columns (everything but `m`, `sd`, `n`) in `lookup_table`.
+#' @param overwrite Logical. If `FALSE` (the default), an error is thrown if a
+#'   version with the same `version` and scores class already exists in the
+#'   registry. If `TRUE`, the existing version is overwritten with the new
+#'   one.
 #' @param description Optional character string describing this version.
 #'
 #' @return Invisible `NULL`. Called for its side effect of registering the

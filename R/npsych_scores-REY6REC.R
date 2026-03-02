@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `REY6REC` object to hold REY6REC scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `REY6REC`.

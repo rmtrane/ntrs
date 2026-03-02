@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `TRAILA` object to hold TRAILA scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `TRAILA`.

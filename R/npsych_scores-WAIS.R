@@ -6,7 +6,7 @@ NULL
 #'
 #' @description Create a `WAIS` object to hold WAIS scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `WAIS`.

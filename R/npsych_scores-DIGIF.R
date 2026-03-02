@@ -6,7 +6,7 @@ NULL
 #'
 #' @description Create a `DIGIF` object to hold DIGIF scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGIF`.

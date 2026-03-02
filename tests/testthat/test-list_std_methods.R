@@ -67,7 +67,7 @@ test_that("list_std_methods() finds new method", {
   withr::defer(rm("std_using_new_method", envir = .GlobalEnv))
   S7::method(std_using_new_method, MOCATOTS) <- function(scores, ...) "result"
 
-  expect_true("new_method" %in% list_std_methods(MOCATOTS(), debug = F))
+  expect_true("new_method" %in% list_std_methods(MOCATOTS()))
 })
 
 test_that("list_std_methods() dismisses method implemented via npsych_scores generic for new class", {

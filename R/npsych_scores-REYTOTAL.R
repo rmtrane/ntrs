@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `REYTOTAL` object to hold REYTOTAL scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `REYTOTAL`.

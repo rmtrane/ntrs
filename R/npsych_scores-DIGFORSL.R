@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `DIGFORSL` object to hold DIGFORSL scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGFORSL`.

@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `CRAFTVRS` object to hold CRAFTVRS scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `CRAFTVRS`.

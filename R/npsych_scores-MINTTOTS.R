@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `MINTTOTS` object to hold MINTTOTS scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `MINTTOTS`.

@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `MOCATOTS` object to hold MoCA scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `MOCATOTS`.

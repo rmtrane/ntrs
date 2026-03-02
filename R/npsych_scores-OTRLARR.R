@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `OTRLARR` object to hold OTRLARR scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `OTRLARR`.

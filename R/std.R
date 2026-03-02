@@ -6,6 +6,8 @@
 #' omitted, the registered defaults (see [set_std_defaults()]) are used.
 #'
 #' @param scores An `npsych_scores` object, such as `MOCATOTS(c(25, 28))`.
+#' @param ... Named covariates passed through to the underlying
+#'   `std_using_*()` method (e.g., `age`, `sex`, `educ`).
 #' @param method A single string naming the standardization method (e.g.,
 #'   `"norms"`, `"regression"`). When `NULL` (the default), the default
 #'   method registered via [set_std_defaults()] is used.
@@ -13,8 +15,7 @@
 #'   (e.g., `"nacc"`, `"updated_2025.06"`). When `NULL` (the default), the
 #'   default version registered via [set_std_defaults()] is used. Ignored
 #'   when the resolved method does not use versioned data.
-#' @param ... Named covariates passed through to the underlying
-#'   `std_using_*()` method (e.g., `age`, `sex`, `educ`).
+#'
 #'
 #' @returns A numeric vector of standardized scores.
 #'
@@ -32,19 +33,22 @@
 #'     age = 72, sex = "m", educ = 16)
 #' }
 #'
-#' @export
-std <- S7::new_generic("std", "scores")
-
-#' @rdname std
-#' @name std-npsych_scores
-#'
 #' @importFrom data.table .SD :=
-S7::method(std, npsych_scores) <- function(
+#'
+#' @export
+std <- function(
   scores,
+  ...,
   method = NULL,
-  version = NULL,
-  ...
+  version = NULL
 ) {
+  if (!S7::S7_inherits(scores, npsych_scores)) {
+    cli::cli_abort(c(
+      "x" = "{.arg scores} must be an {.cls npsych_scores} object.",
+      "i" = "Use a constructor like {.fun MOCATOTS()} to create one."
+    ))
+  }
+
   # Resolve defaults when method/version are NULL
   if (is.null(method)) {
     defaults <- get_std_defaults(scores)

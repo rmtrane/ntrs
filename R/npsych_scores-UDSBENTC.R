@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `UDSBENTC` object to hold UDSBENTC scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `UDSBENTC`.

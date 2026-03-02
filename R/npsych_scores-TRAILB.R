@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `TRAILB` object to hold TRAILB scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `TRAILB`.

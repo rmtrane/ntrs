@@ -6,7 +6,7 @@ NULL
 #'
 #' @description Create a `DIGBACCT` object to hold DIGBACCT scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGBACCT`.

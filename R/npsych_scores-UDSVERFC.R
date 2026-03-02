@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `UDSVERFC` object to hold UDSVERFC scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `UDSVERFC`.

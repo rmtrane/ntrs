@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `ANIMALS` object to hold ANIMALS scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `ANIMALS`.

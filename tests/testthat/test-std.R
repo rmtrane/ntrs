@@ -8,18 +8,6 @@
 # helper-restore-defaults.R.
 
 # ---------------------------------------------------------------------------
-# S3 generic structure
-# ---------------------------------------------------------------------------
-
-test_that("std() is an S7 generic", {
-  expect_no_error(S7::check_is_S7(std))
-})
-
-test_that("method(std, npsych_scores) exists", {
-  expect_no_error(S7::method(std, npsych_scores))
-})
-
-# ---------------------------------------------------------------------------
 # Default resolution — uses get_std_defaults() when method/version are NULL
 # ---------------------------------------------------------------------------
 

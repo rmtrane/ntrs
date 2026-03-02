@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `DIGIFLEN` object to hold DIGIFLEN scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGIFLEN`.

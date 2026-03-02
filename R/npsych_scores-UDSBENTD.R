@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `UDSBENTD` object to hold UDSBENTD scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `UDSBENTD`.

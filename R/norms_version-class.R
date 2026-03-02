@@ -10,8 +10,6 @@ NULL
 #'
 #' @param scores_class A single non-empty string giving the `npsych_scores`
 #'   subclass this version applies to (e.g., `"MOCATOTS"`).
-#' @param method_name A single non-empty string identifying the standardization
-#'   method (e.g., `"norms"`).
 #' @param version_id A single non-empty string uniquely identifying this
 #'   version within its method and scores class.
 #' @param description An optional single string describing the version.

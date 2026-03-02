@@ -30,6 +30,11 @@ details.}
 inputs to match the levels in \code{lookup_table}. Names must match the
 non-statistic columns (everything but \code{m}, \code{sd}, \code{n}) in \code{lookup_table}.}
 
+\item{overwrite}{Logical. If \code{FALSE} (the default), an error is thrown if a
+version with the same \code{version} and scores class already exists in the
+registry. If \code{TRUE}, the existing version is overwritten with the new
+one.}
+
 \item{description}{Optional character string describing this version.}
 }
 \value{

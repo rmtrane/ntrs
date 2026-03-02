@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `REYDLIST` object to hold REYDLIST scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `REYDLIST`.

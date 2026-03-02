@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `VEG` object to hold VEG scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `VEG`.

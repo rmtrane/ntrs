@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `CRAFTURS` object to hold CRAFTURS scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `CRAFTURS`.

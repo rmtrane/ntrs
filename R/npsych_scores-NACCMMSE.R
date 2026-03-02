@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `NACCMMSE` object to hold NACCMMSE scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `NACCMMSE`.

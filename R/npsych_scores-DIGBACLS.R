@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `DIGBACLS` object to hold DIGBACLS scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGBACLS`.

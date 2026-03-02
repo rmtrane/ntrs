@@ -11,26 +11,8 @@
 #' @returns A character vector of standardization method names.
 #'
 #' @export
-list_std_methods <- function(scores, debug = FALSE) {
+list_std_methods <- function(scores) {
   cls <- S7::S7_class(scores)@name
-
-  # Source 1: version registry (methods with registered data)
-  # from_registry <- {
-  #   with_class <- vapply(
-  #     ls(.std_versions),
-  #     \(m) exists(cls, envir = .std_versions[[m]], inherits = FALSE),
-  #     logical(1)
-  #   )
-  #   names(which(with_class))
-  # }
-
-  # Source 2: S7 method check for known std_using_* generics
-  # from_s7 <- {
-  # Scan for std_using_* generics in loaded namespaces
-
-  if (debug) {
-    browser()
-  }
 
   all_generics <- .find_std_generics()
   all_generics <- Filter(
@@ -61,12 +43,9 @@ list_std_methods <- function(scores, debug = FALSE) {
     },
     all_generics
   )
-  # }
 
   # Extract method names from generic names
   return(sub("^std_using_", "", all_generics))
-
-  # unique(c(from_registry, methods_from_s7))
 }
 
 

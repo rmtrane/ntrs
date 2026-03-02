@@ -5,7 +5,7 @@ NULL
 #'
 #' @description Create a `DIGIBLEN` object to hold DIGIBLEN scores.
 #'
-#' @param scores Numeric scores.
+#' @param x Numeric scores.
 #'
 #' @returns
 #' An object of class `DIGIBLEN`.
