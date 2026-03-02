@@ -43,6 +43,13 @@ register_norms_version(
   the levels in `lookup_table`. Names must match the non-statistic
   columns (everything but `m`, `sd`, `n`) in `lookup_table`.
 
+- overwrite:
+
+  Logical. If `FALSE` (the default), an error is thrown if a version
+  with the same `version` and scores class already exists in the
+  registry. If `TRUE`, the existing version is overwritten with the new
+  one.
+
 - description:
 
   Optional character string describing this version.

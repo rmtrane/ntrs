@@ -10,7 +10,7 @@ MOCATOTS(x = numeric())
 
 ## Arguments
 
-- scores:
+- x:
 
   Numeric scores.
 
