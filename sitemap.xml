@@ -85,13 +85,17 @@
 <url><loc>https://rmtrane.github.io/ntrs/reference/get_std_defaults.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/get_version_data.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/index.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/is_npsych_scores.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/list_method_versions.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/list_npsych_scores.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/list_std_methods.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/new_npsych_scores.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/normative_summaries.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/norms_version.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/npsych_scores.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/ntrs-package.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/rdd.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/reg_coefs.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/register_norms_version.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/register_regression_version.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/regression_version.html</loc></url>
@@ -104,5 +108,6 @@
 <url><loc>https://rmtrane.github.io/ntrs/reference/std_using_regression-npsych_scores.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/std_using_regression.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/std_version.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/tick-sub-tick.html</loc></url>
 </urlset>
 

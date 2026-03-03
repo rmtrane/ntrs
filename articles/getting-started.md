@@ -194,10 +194,10 @@ result <- std_data(
 result
 ```
 
-      age sex educ race moca animals     z_moca    z_animals
-    1  72   1   16    1   25      18  0.2659906 -0.062950951
-    2  75   2   14    2   28      20  1.0636149 -0.006775812
-    3  68   1   12    1   22      16 -0.4479148 -0.155103986
+      age sex educ race moca animals     z_moca  z_animals
+    1  72   1   16    1   25      18 -0.3628727 -0.6295726
+    2  75   2   14    2   28      20  1.6463434  0.5252069
+    3  68   1   12    1   22      16 -1.1015874 -0.7205741
 
 You can override the method/version per test class:
 
@@ -221,10 +221,10 @@ result2 <- std_data(
 result2
 ```
 
-      age sex educ race moca animals     z_moca    z_animals
-    1  72   1   16    1   25      18 -0.4166667 -0.062950951
-    2  75   2   14    2   28      20  0.8928571 -0.006775812
-    3  68   1   12    1   22      16 -1.0303030 -0.155103986
+      age sex educ race moca animals     z_moca  z_animals
+    1  72   1   16    1   25      18 -0.4166667 -0.6295726
+    2  75   2   14    2   28      20  0.8928571  0.5252069
+    3  68   1   12    1   22      16 -1.0303030 -0.7205741
 
 ## Changing defaults
 

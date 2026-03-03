@@ -195,6 +195,11 @@ std(
 - [`get_version_data()`](https://rmtrane.github.io/ntrs/reference/get_version_data.md)
   : Get version data
 
+- [`is_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/is_npsych_scores.md)
+  :
+
+  Is `x` an npsych_scores object?
+
 - [`list_method_versions()`](https://rmtrane.github.io/ntrs/reference/list_method_versions.md)
   : Get available version names for a standardization method
 
@@ -208,11 +213,20 @@ std(
 
   List available standardization methods for `npsych_scores`
 
+- [`normative_summaries`](https://rmtrane.github.io/ntrs/reference/normative_summaries.md)
+  : Means and SDs for calculating z-scores
+
 - [`norms_version()`](https://rmtrane.github.io/ntrs/reference/norms_version.md)
   : Norms-Based Standardization Version
 
 - [`npsych_scores()`](https://rmtrane.github.io/ntrs/reference/npsych_scores.md)
   : Neuropsychological Test Scores
+
+- [`rdd`](https://rmtrane.github.io/ntrs/reference/rdd.md) : Researchers
+  Data Dictionary in List Form
+
+- [`reg_coefs`](https://rmtrane.github.io/ntrs/reference/reg_coefs.md) :
+  Regression Coefficients for Regression Based Standardization
 
 - [`register_norms_version()`](https://rmtrane.github.io/ntrs/reference/register_norms_version.md)
   : Register a norms-based standardization version
