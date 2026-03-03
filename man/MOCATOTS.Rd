@@ -4,7 +4,7 @@
 \alias{MOCATOTS}
 \title{MOCATOTS Test Scores}
 \usage{
-MOCATOTS(x = numeric())
+MOCATOTS(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

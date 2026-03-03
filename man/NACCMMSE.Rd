@@ -4,7 +4,7 @@
 \alias{NACCMMSE}
 \title{NACCMMSE Test Scores}
 \usage{
-NACCMMSE(x = numeric())
+NACCMMSE(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

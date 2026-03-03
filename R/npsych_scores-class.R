@@ -54,7 +54,11 @@ npsych_scores <- S7::new_class(
     }
 
     if (
-      !all((scores >= range[1] & scores <= range[2]) | scores %in% c(codes, NA))
+      !all(
+        (scores >= range[1] & scores <= range[2]) |
+          scores %in% codes |
+          is.na(scores)
+      )
     ) {
       errs <- c(
         errs,
@@ -111,4 +115,35 @@ remove_error_codes <- function(x) {
   numeric_x[numeric_x %in% x@codes] <- NA
 
   numeric_x
+}
+
+
+#' Subset `npsych_scores` objects.
+#'
+#' @param x An S7 object of class `npsych_scores`.
+#' @param i A numeric index.
+#'
+#' @returns
+#' A new `npsych_scores` object containing the elements of `x` specified by `i`.
+#'
+#' @name `[`
+S7::method(`[`, npsych_scores) <- function(x, i) {
+  npsych_scores_constructor <- S7::S7_class(x)@name
+
+  do.call(npsych_scores_constructor, args = list(x = as.integer(x)[i]))
+}
+
+
+#' Is `x` an npsych_scores object?
+#'
+#' @description#' A short description...
+#'
+#' @param x An R object.
+#'
+#' @returns
+#' A single logical value: `TRUE` if `x` is an `npsych_scores` object, `FALSE` otherwise.
+#'
+#' @export
+is_npsych_scores <- function(x) {
+  S7::S7_inherits(x, npsych_scores)
 }

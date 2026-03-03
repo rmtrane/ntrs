@@ -4,7 +4,7 @@
 \alias{WAIS}
 \title{WAIS Test Scores}
 \usage{
-WAIS(x = numeric())
+WAIS(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

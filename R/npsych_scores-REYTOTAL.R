@@ -33,7 +33,7 @@ REYTOTAL <- new_npsych_scores(
 .setup_REYTOTAL_versions <- function() {
   var_name <- NULL
   # Register norms versions for REYDREC
-  lookup_table <- NpsychBatteryNorms::normative_summaries$ravlt_trials$REYTOTAL
+  lookup_table <- normative_summaries$ravlt_trials$REYTOTAL
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group")
   )] <- c("age")
@@ -43,20 +43,23 @@ REYTOTAL <- new_npsych_scores(
     version = "ravlt_trials",
     lookup_table = lookup_table,
     covar_fns = list(
-      age = \(x) NpsychBatteryNorms::get_age_group(x, "ravlt_trials")
+      age = \(x) {
+        out <- .bincode(x, c(0, 60, 70, 80, 90, Inf), right = FALSE)
+        attr(out, "levels") <- c("<60", "60-69", "70-79", "80-89", ">89")
+        class(out) <- "factor"
+        return(out)
+      }
     )
   )
 
   # Register regression versions for REYTOTAL
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "REYTOTAL"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = REYTOTAL(),
@@ -94,14 +97,12 @@ REYTOTAL <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "REYTOTAL"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = REYTOTAL(),

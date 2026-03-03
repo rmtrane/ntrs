@@ -4,7 +4,7 @@
 \alias{UDSVERTN}
 \title{UDSVERTN Test Scores}
 \usage{
-UDSVERTN(x = numeric())
+UDSVERTN(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

@@ -4,7 +4,7 @@
 \alias{REYDREC}
 \title{REYDREC Test Scores}
 \usage{
-REYDREC(x = numeric())
+REYDREC(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

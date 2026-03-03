@@ -4,7 +4,7 @@
 \alias{MEMUNITS}
 \title{MEMUNITS Test Scores}
 \usage{
-MEMUNITS(x = numeric())
+MEMUNITS(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

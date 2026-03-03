@@ -4,7 +4,7 @@
 \alias{CRAFTDRE}
 \title{CRAFTDRE Test Scores}
 \usage{
-CRAFTDRE(x = numeric())
+CRAFTDRE(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

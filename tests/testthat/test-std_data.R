@@ -107,7 +107,11 @@ test_that("std_data() standardized values match std() output", {
     set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
   )
 
-  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df <- data.frame(
+    age = c(72, 75),
+    sex = c(1, 2),
+    educ = c(16, 12)
+  )
   df$moca <- MOCATOTS(c(25, 28))
 
   result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)

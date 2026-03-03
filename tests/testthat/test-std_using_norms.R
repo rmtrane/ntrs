@@ -315,7 +315,7 @@ test_that("std_using_norms() passes covariates through when version has no covar
   withr::defer(
     rm(
       "test_no_covar_fns_001",
-      envir = .std_versions[["norms"]]
+      envir = .std_versions[["norms"]][["MOCATOTS"]]
     )
   )
 

@@ -4,7 +4,7 @@
 \alias{UDSVERLC}
 \title{UDSVERLC Test Scores}
 \usage{
-UDSVERLC(x = numeric())
+UDSVERLC(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

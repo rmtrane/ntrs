@@ -4,7 +4,7 @@
 \alias{UDSBENTC}
 \title{UDSBENTC Test Scores}
 \usage{
-UDSBENTC(x = numeric())
+UDSBENTC(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

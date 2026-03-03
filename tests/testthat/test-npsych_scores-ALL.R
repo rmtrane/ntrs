@@ -118,6 +118,7 @@ for (spec in npsych_scores_specs) {
 
   test_that(paste0(".setup_", nm, "_versions registers the expected methods"), {
     methods <- list_std_methods(factory())
+
     if (has_norms) {
       expect_true("norms" %in% methods)
     }

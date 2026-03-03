@@ -45,6 +45,10 @@ new_npsych_scores <- function(name, label, range, codes = numeric()) {
     name,
     parent = npsych_scores,
     constructor = function(x = numeric()) {
+      if (is.integer(x)) {
+        x <- as.double(x)
+      }
+
       obj <- S7::new_object(
         x,
         label = label,

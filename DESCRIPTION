@@ -20,12 +20,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-Remotes:
-    rmtrane/NpsychBatteryNorms
 Imports: 
     cli,
     data.table,
-    NpsychBatteryNorms,
     rlang,
     S7
 Suggests: 
@@ -45,6 +42,7 @@ Collate:
     'list_std_methods.R'
     'npsych_scores-class.R'
     'new_npsych_scores.R'
+    'normative_summaries.R'
     'std_version-class.R'
     'norms_version-class.R'
     'npsych_scores-ANIMALS.R'
@@ -85,6 +83,8 @@ Collate:
     'npsych_scores-VEG.R'
     'npsych_scores-WAIS.R'
     'ntrs-package.R'
+    'rdd.R'
+    'reg_coefs.R'
     'register_norms_version.R'
     'register_regression_version.R'
     'register_std_version.R'

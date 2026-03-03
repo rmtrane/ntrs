@@ -4,7 +4,7 @@
 \alias{DIGFORSL}
 \title{DIGFORSL Test Scores}
 \usage{
-DIGFORSL(x = numeric())
+DIGFORSL(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

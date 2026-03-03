@@ -4,7 +4,7 @@
 \alias{ANIMALS}
 \title{ANIMALS Test Scores}
 \usage{
-ANIMALS(x = numeric())
+ANIMALS(x = integer())
 }
 \arguments{
 \item{x}{Numeric scores.}

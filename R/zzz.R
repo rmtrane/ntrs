@@ -8,6 +8,9 @@
 
   invisible(lapply(
     grep(pattern = "^\\.setup_.+_versions", x = names(ns), value = T),
-    \(x) do.call(x, args = list())
+    \(x) {
+      # message(x)
+      do.call(x, args = list())
+    }
   ))
 }

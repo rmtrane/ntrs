@@ -39,14 +39,12 @@ BOSTON <- new_npsych_scores(
   var_name <- NULL
   # Register regression versions for BOSTON
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "BOSTON"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = BOSTON(),
@@ -84,14 +82,12 @@ BOSTON <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "BOSTON"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = BOSTON(),
@@ -128,10 +124,10 @@ BOSTON <- new_npsych_scores(
     )
   )
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["nacc_legacy"]],
+    reg_coefs[["nacc_legacy"]],
     var_name == "BOSTON"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["nacc_legacy"]]),
+    names(reg_coefs[["nacc_legacy"]]),
     "var_name"
   )]
 
@@ -139,8 +135,6 @@ BOSTON <- new_npsych_scores(
     as.numeric(coefs),
     names(coefs)
   )
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = BOSTON(),
