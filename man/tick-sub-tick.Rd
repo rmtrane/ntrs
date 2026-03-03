@@ -14,3 +14,4 @@ A new \code{npsych_scores} object containing the elements of \code{x} specified 
 \description{
 Subset \code{npsych_scores} objects.
 }
+\keyword{internal}

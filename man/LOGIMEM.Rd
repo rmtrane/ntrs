@@ -4,7 +4,7 @@
 \alias{LOGIMEM}
 \title{LOGIMEM Test Scores}
 \usage{
-LOGIMEM(x = integer())
+LOGIMEM(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

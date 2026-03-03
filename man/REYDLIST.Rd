@@ -4,7 +4,7 @@
 \alias{REYDLIST}
 \title{REYDLIST Test Scores}
 \usage{
-REYDLIST(x = integer())
+REYDLIST(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

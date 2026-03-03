@@ -4,7 +4,7 @@
 \alias{OTRAILA}
 \title{OTRAILA Test Scores}
 \usage{
-OTRAILA(x = integer())
+OTRAILA(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

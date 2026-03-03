@@ -4,7 +4,7 @@
 \alias{MINTTOTS}
 \title{MINTTOTS Test Scores}
 \usage{
-MINTTOTS(x = integer())
+MINTTOTS(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

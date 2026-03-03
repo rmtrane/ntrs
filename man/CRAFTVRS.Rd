@@ -4,7 +4,7 @@
 \alias{CRAFTVRS}
 \title{CRAFTVRS Test Scores}
 \usage{
-CRAFTVRS(x = integer())
+CRAFTVRS(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

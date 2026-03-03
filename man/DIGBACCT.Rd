@@ -4,7 +4,7 @@
 \alias{DIGBACCT}
 \title{DIGBACCT Test Scores}
 \usage{
-DIGBACCT(x = integer())
+DIGBACCT(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

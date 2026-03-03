@@ -4,7 +4,7 @@
 \alias{REYTOTAL}
 \title{REYTOTAL Test Scores}
 \usage{
-REYTOTAL(x = integer())
+REYTOTAL(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

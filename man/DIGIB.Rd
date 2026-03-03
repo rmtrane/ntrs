@@ -4,7 +4,7 @@
 \alias{DIGIB}
 \title{DIGIB Test Scores}
 \usage{
-DIGIB(x = integer())
+DIGIB(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

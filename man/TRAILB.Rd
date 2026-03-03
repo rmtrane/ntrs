@@ -4,7 +4,7 @@
 \alias{TRAILB}
 \title{TRAILB Test Scores}
 \usage{
-TRAILB(x = integer())
+TRAILB(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

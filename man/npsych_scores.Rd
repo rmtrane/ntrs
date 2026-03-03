@@ -5,7 +5,7 @@
 \title{Neuropsychological Test Scores}
 \usage{
 npsych_scores(
-  .data = integer(0),
+  .data = numeric(0),
   label = character(0),
   range = numeric(0),
   codes = numeric(0)

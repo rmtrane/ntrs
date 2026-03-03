@@ -4,7 +4,7 @@
 \alias{BOSTON}
 \title{BOSTON Test Scores}
 \usage{
-BOSTON(x = integer())
+BOSTON(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

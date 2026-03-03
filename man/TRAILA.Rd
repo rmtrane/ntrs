@@ -4,7 +4,7 @@
 \alias{TRAILA}
 \title{TRAILA Test Scores}
 \usage{
-TRAILA(x = integer())
+TRAILA(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

@@ -4,7 +4,7 @@
 \alias{OTRLBRR}
 \title{OTRLBRR Test Scores}
 \usage{
-OTRLBRR(x = integer())
+OTRLBRR(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

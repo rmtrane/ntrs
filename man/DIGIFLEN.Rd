@@ -4,7 +4,7 @@
 \alias{DIGIFLEN}
 \title{DIGIFLEN Test Scores}
 \usage{
-DIGIFLEN(x = integer())
+DIGIFLEN(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

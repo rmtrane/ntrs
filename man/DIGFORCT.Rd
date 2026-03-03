@@ -4,7 +4,7 @@
 \alias{DIGFORCT}
 \title{DIGFORCT Test Scores}
 \usage{
-DIGFORCT(x = integer())
+DIGFORCT(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

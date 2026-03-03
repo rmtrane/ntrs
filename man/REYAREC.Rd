@@ -4,7 +4,7 @@
 \alias{REYAREC}
 \title{REYAREC Test Scores}
 \usage{
-REYAREC(x = integer())
+REYAREC(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

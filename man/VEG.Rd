@@ -4,7 +4,7 @@
 \alias{VEG}
 \title{VEG Test Scores}
 \usage{
-VEG(x = integer())
+VEG(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

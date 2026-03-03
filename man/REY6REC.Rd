@@ -4,7 +4,7 @@
 \alias{REY6REC}
 \title{REY6REC Test Scores}
 \usage{
-REY6REC(x = integer())
+REY6REC(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}

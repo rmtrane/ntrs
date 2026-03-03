@@ -4,7 +4,7 @@
 \alias{DIGIF}
 \title{DIGIF Test Scores}
 \usage{
-DIGIF(x = integer())
+DIGIF(x = numeric())
 }
 \arguments{
 \item{x}{Numeric scores.}
