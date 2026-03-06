@@ -7,7 +7,7 @@
 #' @param ... Arguments passed to methods.
 #'
 #' @returns
-#' The standardized value of `x`, whose exact type depends on the specific S3
+#' The standardized value of `x`, whose exact type depends on the specific S7
 #' method called.
 #'
 #' @export

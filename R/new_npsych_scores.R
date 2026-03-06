@@ -25,7 +25,7 @@ NULL
 #' @returns An S7 class object (subclass of [npsych_scores]) whose constructor
 #'   accepts a single `.data` argument.
 #'
-#' @keywords internal
+#' @export
 new_npsych_scores <- function(name, label, range, codes = numeric()) {
   # Validate definition-time arguments
   if (!is.character(name) || length(name) != 1 || name == "") {

@@ -36,6 +36,7 @@ Depends:
     R (>= 4.1)
 LazyData: true
 Collate: 
+    'demo_data.R'
     'get_version_data.R'
     'list_method_versions.R'
     'list_npsych_scores.R'
