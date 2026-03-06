@@ -21,4 +21,4 @@ std_using_norms(scores, ...)
 ## Value
 
 The standardized value of `x`, whose exact type depends on the specific
-S3 method called.
+S7 method called.

@@ -113,6 +113,9 @@
 - [`WAIS()`](https://rmtrane.github.io/ntrs/reference/WAIS.md) : WAIS
   Test Scores
 
+- [`demo_data`](https://rmtrane.github.io/ntrs/reference/demo_data.md) :
+  Demo Data
+
 - [`get_std_defaults()`](https://rmtrane.github.io/ntrs/reference/get_std_defaults.md)
   :
 
@@ -138,6 +141,9 @@
   :
 
   List available standardization methods for `npsych_scores`
+
+- [`new_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/new_npsych_scores.md)
+  : Create an npsych_scores subclass
 
 - [`normative_summaries`](https://rmtrane.github.io/ntrs/reference/normative_summaries.md)
   : Means and SDs for calculating z-scores
