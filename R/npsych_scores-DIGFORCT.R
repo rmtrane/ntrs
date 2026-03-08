@@ -16,6 +16,7 @@ DIGFORCT <- new_npsych_scores(
   "DIGFORCT",
   label = "Number Span Forward - Total",
   domain = "Attention/Processing",
+  short_descriptor = "Number Span Test: Forward - Number of correct trials",
   range = c(0, 14),
   codes = c(
     "Physical problem" = 95,

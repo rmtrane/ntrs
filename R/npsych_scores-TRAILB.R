@@ -14,6 +14,8 @@ NULL
 TRAILB <- new_npsych_scores(
   "TRAILB",
   label = "Trailmaking Part B",
+  domain = "Executive Functioning",
+  short_descriptor = "Trail Making Test Part B - Total number of seconds to complete",
   range = c(0, 300),
   codes = c(
     "Physical problem" = 995,

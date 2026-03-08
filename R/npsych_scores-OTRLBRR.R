@@ -14,6 +14,8 @@ NULL
 OTRLBRR <- new_npsych_scores(
   "OTRLBRR",
   label = "Oral Trailmaking Part B - Errors",
+  domain = "Executive Functioning",
+  short_descriptor = "Oral Trail Making Test Part B - Number of commission errors",
   range = c(0, 77),
   codes = c(
     "Not assessed, optional" = 88,

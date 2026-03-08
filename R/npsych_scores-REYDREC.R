@@ -14,6 +14,8 @@ NULL
 REYDREC <- new_npsych_scores(
   "REYDREC",
   label = "RAVLT Long Delay",
+  domain = "Memory",
+  short_descriptor = "Rey Auditory Verbal Learning (Delayed)  - Total Recall",
   range = c(0, 15),
   codes = c(
     "Not assessed, optional" = 88,

@@ -11,6 +11,7 @@
 REYTCOR <- new_npsych_scores(
   "REYTCOR",
   label = "RAVLT (Delayed) Recognition: Tocal Correct",
+  short_descriptor = "Rey Auditory Verbal Learning (Delayed) Recognition - Total correct",
   range = c(0, 15),
   codes = c(
     "Not assessed, optional" = 88,

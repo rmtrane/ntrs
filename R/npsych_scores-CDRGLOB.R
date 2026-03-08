@@ -12,6 +12,7 @@ CDRGLOB <- new_npsych_scores(
   "CDRGLOB",
   label = "Global CDR",
   domain = "General Cognition",
+  short_descriptor = "Global CDR",
   range = c(0, 3),
   codes = c(
     "No impairment" = 0,

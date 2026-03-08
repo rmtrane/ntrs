@@ -15,6 +15,7 @@ LOGIMEM <- new_npsych_scores(
   "LOGIMEM",
   label = "Logical Memory, Immediate",
   domain = "Memory",
+  short_descriptor = "Total number of story units recalled from this current test administration",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,

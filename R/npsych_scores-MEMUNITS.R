@@ -15,6 +15,7 @@ MEMUNITS <- new_npsych_scores(
   "MEMUNITS",
   label = "Logical Memory, Delayed",
   domain = "Memory",
+  short_descriptor = "Logical Memory IIA - Delayed - Total number of story units recalled",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,

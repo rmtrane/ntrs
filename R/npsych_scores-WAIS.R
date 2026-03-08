@@ -15,6 +15,8 @@ NULL
 WAIS <- new_npsych_scores(
   "WAIS",
   label = "WAIS-R Digit Symbol",
+  domain = "Attention/Processing",
+  short_descriptor = "WAIS-R Digit Symbol",
   range = c(0, 93),
   codes = c(
     "Physical problem" = 95,

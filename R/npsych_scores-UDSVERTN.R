@@ -14,6 +14,8 @@ NULL
 UDSVERTN <- new_npsych_scores(
   "UDSVERTN",
   label = "F+L Words",
+  domain = "Language",
+  short_descriptor = "Total number of correct F-words and L-words",
   range = c(0, 80),
   codes = c(
     "Physical problem" = 95,

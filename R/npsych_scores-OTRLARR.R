@@ -14,6 +14,8 @@ NULL
 OTRLARR <- new_npsych_scores(
   "OTRLARR",
   label = "Oral Trailmaking Part A - Errors",
+  domain = "Attention/Processing",
+  short_descriptor = "Oral Trail Making Test Part A - Number of commission errors",
   range = c(0, 77),
   codes = c(
     "Not assessed, optional" = 88,

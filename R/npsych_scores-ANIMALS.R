@@ -15,6 +15,7 @@ ANIMALS <- new_npsych_scores(
   "ANIMALS",
   label = "Animal Fluency",
   domain = "Language",
+  short_descriptor = "Animals - Total number of animals named in 60 seconds",
   range = c(0, 77),
   codes = c(
     "Physical problem" = 95,

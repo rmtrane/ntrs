@@ -15,6 +15,7 @@ DIGFORSL <- new_npsych_scores(
   "DIGFORSL",
   label = "Number Span Forward - Span Length",
   domain = "Attention/Processing",
+  short_descriptor = "Number Span Test: Forward - Longest span forward",
   range = c(0, 9),
   codes = c(
     "Physical problem" = 95,

@@ -15,6 +15,7 @@ CRAFTDRE <- new_npsych_scores(
   "CRAFTDRE",
   label = "Craft Delay - Paraphrase",
   domain = "Memory",
+  short_descriptor = "Craft Story 21 Recall (Delayed) - Total story units recalled, paraphrase scoring",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,

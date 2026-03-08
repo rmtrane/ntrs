@@ -14,6 +14,8 @@ NULL
 TRAILA <- new_npsych_scores(
   "TRAILA",
   label = "Trailmaking Part A",
+  domain = "Attention/Processing",
+  short_descriptor = "Trail Making Test Part A - Total number of seconds to complete",
   range = c(0, 150),
   codes = c(
     "Physical problem" = 995,

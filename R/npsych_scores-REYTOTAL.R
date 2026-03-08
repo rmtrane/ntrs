@@ -14,6 +14,8 @@ NULL
 REYTOTAL <- new_npsych_scores(
   "REYTOTAL",
   label = "RAVLT Total Learning",
+  domain = "Memory",
+  short_descriptor = "Sum of REY1REC, ..., REY5REC",
   range = c(0, 75),
   codes = numeric()
 )

@@ -14,6 +14,8 @@ NULL
 VEG <- new_npsych_scores(
   "VEG",
   label = "Vegetable Fluency",
+  domain = "Language",
+  short_descriptor = "Vegetables - Total number of vegetables named in 60 seconds",
   range = c(0, 77),
   codes = c(
     "Physical problem" = 95,

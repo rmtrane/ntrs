@@ -16,6 +16,7 @@ DIGBACCT <- new_npsych_scores(
   "DIGBACCT",
   label = "Number Span Backward - Total",
   domain = "Attention/Processing",
+  short_descriptor = "Number Span Test: Backward - Number of correct trials",
   range = c(0, 14),
   codes = c(
     "Physical problem" = 95,

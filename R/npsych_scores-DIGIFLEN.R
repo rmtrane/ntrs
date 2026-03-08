@@ -15,6 +15,7 @@ DIGIFLEN <- new_npsych_scores(
   "DIGIFLEN",
   label = "Digit Span Forward - Span Length",
   domain = "Attention/Processing",
+  short_descriptor = "Digit span forward length",
   range = c(0, 8),
   codes = c(
     "Physical problem" = 95,

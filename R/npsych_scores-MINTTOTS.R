@@ -13,8 +13,9 @@ NULL
 #' @export
 MINTTOTS <- new_npsych_scores(
   "MINTTOTS",
-  label = "Multilingual Naming Test (MINT) - Total Score",
+  label = "MINT",
   domain = "Language",
+  short_descriptor = "Multilingual Naming Test (MINT) - Total score",
   range = c(0, 32),
   codes = c(
     "Physical problem" = 95,

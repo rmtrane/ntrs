@@ -16,6 +16,7 @@ DIGIF <- new_npsych_scores(
   "DIGIF",
   label = "Digit Span Forward - Total",
   domain = "Attention/Processing",
+  short_descriptor = "Digit span forward trials correct",
   range = c(0, 12),
   codes = c(
     "Physical problem" = 95,

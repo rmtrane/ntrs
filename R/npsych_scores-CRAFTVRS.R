@@ -15,6 +15,7 @@ CRAFTVRS <- new_npsych_scores(
   "CRAFTVRS",
   label = "Craft Immediate - Verbatim",
   domain = "Memory",
+  short_descriptor = "Craft Story 21 Recall (Immediate) - Total story units recalled, verbatim scoring",
   range = c(0, 44),
   codes = c(
     "Physical problem" = 95,

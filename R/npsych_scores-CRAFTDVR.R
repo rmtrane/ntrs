@@ -15,6 +15,7 @@ CRAFTDVR <- new_npsych_scores(
   "CRAFTDVR",
   label = "Craft Delay - Verbatim",
   domain = "Memory",
+  short_descriptor = "Craft Story 21 Recall (Delayed) - Total story units recalled, verbatim scoring",
   range = c(0, 44),
   codes = c(
     "Physical problem" = 95,

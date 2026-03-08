@@ -14,6 +14,8 @@ NULL
 REY6REC <- new_npsych_scores(
   "REY6REC",
   label = "RAVLT Short Delay",
+  domain = "Memory",
+  short_descriptor = "Rey Auditory Verbal Learning (Immediate) Trial 6 Total recall",
   range = c(0, 15),
   codes = c(
     "Not assessed, optional" = 88,

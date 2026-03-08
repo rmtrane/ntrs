@@ -15,6 +15,7 @@ DIGIBLEN <- new_npsych_scores(
   "DIGIBLEN",
   label = "Digit Span Backward - Span Length",
   domain = "Attention/Processing",
+  short_descriptor = "Digit span backward length",
   range = c(0, 8),
   codes = c(
     "Physical problem" = 95,

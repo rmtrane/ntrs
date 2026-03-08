@@ -14,6 +14,8 @@ NULL
 REYDLIST <- new_npsych_scores(
   "REYDLIST",
   label = "RAVLT Distractor List",
+  domain = "Memory",
+  short_descriptor = "RAVLT Distractor List (not in NACC data)",
   range = c(0, 15)
 )
 

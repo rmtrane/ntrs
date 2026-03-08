@@ -14,6 +14,8 @@ NULL
 REYAREC <- new_npsych_scores(
   "REYAREC",
   label = "RAVLT Recognition",
+  domain = "Memory",
+  short_descriptor = "RAVLT Recognition Percentage (not in NACC data)",
   range = c(0, 100)
 )
 

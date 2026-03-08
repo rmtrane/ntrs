@@ -14,6 +14,8 @@ NULL
 UDSBENTD <- new_npsych_scores(
   "UDSBENTD",
   label = "Benson Delay",
+  domain = "Memory",
+  short_descriptor = "Total score for 10- to 15-minute delayed drawing of Benson figure",
   range = c(0, 17),
   codes = c(
     "Physical problem" = 95,

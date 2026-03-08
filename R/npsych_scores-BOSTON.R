@@ -15,6 +15,7 @@ BOSTON <- new_npsych_scores(
   "BOSTON",
   label = "Boston Naming Test",
   domain = "Language",
+  short_descriptor = "Boston Naming Test (30) - Total score",
   range = c(0, 30),
   codes = c(
     "Physical problem" = 95,

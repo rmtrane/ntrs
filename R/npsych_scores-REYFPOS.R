@@ -11,6 +11,7 @@
 REYFPOS <- new_npsych_scores(
   "REYFPOS",
   label = "RAVLT (Delayed) Recognition: Tocal false positives",
+  short_descriptor = "Rey Auditory Verbal Learning (Delayed) Recognition - Total false positive",
   range = c(0, 15),
   codes = c(
     "Not assessed, optional" = 88,

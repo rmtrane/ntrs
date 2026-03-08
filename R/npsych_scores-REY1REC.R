@@ -14,6 +14,7 @@ NULL
 REY1REC <- new_npsych_scores(
   "REY1REC",
   label = "RAVLT (Immediate) Trial 1 Total recall",
+  short_descriptor = "Rey Auditory Verbal Learning (Immediate) Trial 1 Total recall",
   range = c(0, 15),
   codes = c(
     "Not assessed, optional" = 88,

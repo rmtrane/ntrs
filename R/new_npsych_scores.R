@@ -33,6 +33,7 @@ new_npsych_scores <- function(
   name,
   label,
   domain = character(),
+  short_descriptor = character(),
   range,
   codes = numeric()
 ) {
@@ -62,6 +63,7 @@ new_npsych_scores <- function(
         x,
         label = label,
         domain = domain,
+        short_descriptor = short_descriptor,
         range = range,
         codes = codes
       )

@@ -20,10 +20,11 @@
 #' @export
 npsych_scores <- S7::new_class(
   "npsych_scores",
-  parent = S7::class_numeric,
+  parent = S7::class_double,
   properties = list(
     label = S7::class_character,
     domain = S7::class_character,
+    short_descriptor = S7::class_character,
     range = S7::class_double,
     codes = S7::class_double
   ),
@@ -32,6 +33,7 @@ npsych_scores <- S7::new_class(
 
     label <- self@label
     domain <- self@domain
+    short_descriptor <- self@short_descriptor
     range <- self@range
     codes <- self@codes
 
@@ -43,6 +45,13 @@ npsych_scores <- S7::new_class(
 
     if (!is.character(domain) || length(domain) > 1) {
       errs <- c(errs, cli::format_inline("{.arg domain} must be a string."))
+    }
+
+    if (!is.character(short_descriptor) || length(short_descriptor) > 1) {
+      errs <- c(
+        errs,
+        cli::format_inline("{.arg short_descriptor} must be a string.")
+      )
     }
 
     if (!is.numeric(range) || length(range) != 2) {

@@ -14,6 +14,8 @@ NULL
 UDSVERLC <- new_npsych_scores(
   "UDSVERLC",
   label = "L Words",
+  domain = "Language",
+  short_descriptor = "Number of correct L-words generated in 1 minute",
   range = c(0, 40),
   codes = c(
     "Physical problem" = 95,

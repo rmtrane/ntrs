@@ -14,6 +14,8 @@ NULL
 UDSBENTC <- new_npsych_scores(
   "UDSBENTC",
   label = "Benson Figure Copy",
+  domain = "Visuospatial",
+  short_descriptor = "Total Score for copy of Benson figure",
   range = c(0, 17),
   codes = c(
     "Physical problem" = 95,
