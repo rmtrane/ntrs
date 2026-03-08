@@ -20,7 +20,7 @@
 #' @export
 npsych_scores <- S7::new_class(
   "npsych_scores",
-  parent = S7::class_double,
+  parent = S7::class_numeric,
   properties = list(
     label = S7::class_character,
     range = S7::class_double,
