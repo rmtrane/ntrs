@@ -13,7 +13,14 @@ not mentioned in `methods` fall back to their registered defaults (see
 ## Usage
 
 ``` r
-std_data(data, ..., methods = list(), prefix = "z_", .cols = NULL)
+std_data(
+  data,
+  ...,
+  methods = list(),
+  prefix_std = "z_",
+  prefix_raw = NULL,
+  .cols = NULL
+)
 ```
 
 ## Arguments
@@ -45,10 +52,16 @@ std_data(data, ..., methods = list(), prefix = "z_", .cols = NULL)
         ANIMALS  = c(method = "norms")
       )
 
-- prefix:
+- prefix_std:
 
   A single string prepended to each score column name to form the new
   column name. Defaults to `"z_"`.
+
+- prefix_raw:
+
+  Optional; if character string, used as prefix for scores that are
+  standardized. This enables you to obtain pairs of scores, for example
+  `raw_MOCATOTS` and `z_MOCATOTS` for bookkeeping
 
 - .cols:
 

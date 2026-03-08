@@ -8,6 +8,9 @@
 - [`BOSTON()`](https://rmtrane.github.io/ntrs/reference/BOSTON.md) :
   BOSTON Test Scores
 
+- [`CDRGLOB()`](https://rmtrane.github.io/ntrs/reference/CDRGLOB.md) :
+  CDRGLOB Test Scores
+
 - [`CRAFTDRE()`](https://rmtrane.github.io/ntrs/reference/CRAFTDRE.md) :
   CRAFTDRE Test Scores
 
@@ -53,6 +56,9 @@
 - [`MINTTOTS()`](https://rmtrane.github.io/ntrs/reference/MINTTOTS.md) :
   MINTTOTS Test Scores
 
+- [`MOCACLOCK()`](https://rmtrane.github.io/ntrs/reference/MOCACLOCK.md)
+  : MOCACLOCK Test Scores
+
 - [`MOCATOTS()`](https://rmtrane.github.io/ntrs/reference/MOCATOTS.md) :
   MOCATOTS Test Scores
 
@@ -71,6 +77,21 @@
 - [`OTRLBRR()`](https://rmtrane.github.io/ntrs/reference/OTRLBRR.md) :
   OTRLBRR Test Scores
 
+- [`REY1REC()`](https://rmtrane.github.io/ntrs/reference/REY1REC.md) :
+  REY1REC Test Scores
+
+- [`REY2REC()`](https://rmtrane.github.io/ntrs/reference/REY2REC.md) :
+  REY2REC Test Scores
+
+- [`REY3REC()`](https://rmtrane.github.io/ntrs/reference/REY3REC.md) :
+  REY3REC Test Scores
+
+- [`REY4REC()`](https://rmtrane.github.io/ntrs/reference/REY4REC.md) :
+  REY4REC Test Scores
+
+- [`REY5REC()`](https://rmtrane.github.io/ntrs/reference/REY5REC.md) :
+  REY5REC Test Scores
+
 - [`REY6REC()`](https://rmtrane.github.io/ntrs/reference/REY6REC.md) :
   REY6REC Test Scores
 
@@ -82,6 +103,12 @@
 
 - [`REYDREC()`](https://rmtrane.github.io/ntrs/reference/REYDREC.md) :
   REYDREC Test Scores
+
+- [`REYFPOS()`](https://rmtrane.github.io/ntrs/reference/REYFPOS.md) :
+  REYFPOS Test Scores
+
+- [`REYTCOR()`](https://rmtrane.github.io/ntrs/reference/REYTCOR.md) :
+  REYTCOR Test Scores
 
 - [`REYTOTAL()`](https://rmtrane.github.io/ntrs/reference/REYTOTAL.md) :
   REYTOTAL Test Scores
@@ -112,6 +139,18 @@
 
 - [`WAIS()`](https://rmtrane.github.io/ntrs/reference/WAIS.md) : WAIS
   Test Scores
+
+- [`calc_FAS()`](https://rmtrane.github.io/ntrs/reference/calc_FAS.md) :
+  Calcaulate Functional Assessment Score summary
+
+- [`calc_MOCACLOCK()`](https://rmtrane.github.io/ntrs/reference/calc_MOCACLOCK.md)
+  : Calculate MoCA clock drawing test total
+
+- [`calc_REYAREC()`](https://rmtrane.github.io/ntrs/reference/calc_REYAREC.md)
+  : Calculate the Rey AVLT Accuracy
+
+- [`calc_REYTOTAL()`](https://rmtrane.github.io/ntrs/reference/calc_REYTOTAL.md)
+  : Calculate Rey Total
 
 - [`demo_data`](https://rmtrane.github.io/ntrs/reference/demo_data.md) :
   Demo Data

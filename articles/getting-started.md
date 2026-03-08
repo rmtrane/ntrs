@@ -30,9 +30,10 @@ moca
 ```
 
     <ntrs::MOCATOTS> num [1:3] 25 28 30
-     @ label: chr "MoCA"
-     @ range: num [1:2] 0 30
-     @ codes: Named num [1:2] -4 88
+     @ label : chr "MoCA"
+     @ domain: chr "General Cognition"
+     @ range : num [1:2] 0 30
+     @ codes : Named num [1:2] -4 88
      .. - attr(*, "names")= chr [1:2] "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" "Item(s) or whole test not administered"
 
 To see all available tests:
@@ -41,13 +42,14 @@ To see all available tests:
 list_npsych_scores()
 ```
 
-     [1] "ANIMALS"  "BOSTON"   "CRAFTDRE" "CRAFTDVR" "CRAFTURS" "CRAFTVRS"
-     [7] "DIGBACCT" "DIGBACLS" "DIGFORCT" "DIGFORSL" "DIGIB"    "DIGIBLEN"
-    [13] "DIGIF"    "DIGIFLEN" "LOGIMEM"  "MEMUNITS" "MINTTOTS" "MOCATOTS"
-    [19] "NACCMMSE" "OTRAILA"  "OTRAILB"  "OTRLARR"  "OTRLBRR"  "REY6REC"
-    [25] "REYAREC"  "REYDLIST" "REYDREC"  "REYTOTAL" "TRAILA"   "TRAILB"
-    [31] "UDSBENTC" "UDSBENTD" "UDSVERFC" "UDSVERLC" "UDSVERTN" "VEG"
-    [37] "WAIS"    
+     [1] "ANIMALS"   "BOSTON"    "CDRGLOB"   "CRAFTDRE"  "CRAFTDVR"  "CRAFTURS"
+     [7] "CRAFTVRS"  "DIGBACCT"  "DIGBACLS"  "DIGFORCT"  "DIGFORSL"  "DIGIB"
+    [13] "DIGIBLEN"  "DIGIF"     "DIGIFLEN"  "LOGIMEM"   "MEMUNITS"  "MINTTOTS"
+    [19] "MOCACLOCK" "MOCATOTS"  "NACCMMSE"  "OTRAILA"   "OTRAILB"   "OTRLARR"
+    [25] "OTRLBRR"   "REY1REC"   "REY2REC"   "REY3REC"   "REY4REC"   "REY5REC"
+    [31] "REY6REC"   "REYAREC"   "REYDLIST"  "REYDREC"   "REYFPOS"   "REYTCOR"
+    [37] "REYTOTAL"  "TRAILA"    "TRAILB"    "UDSBENTC"  "UDSBENTD"  "UDSVERFC"
+    [43] "UDSVERLC"  "UDSVERTN"  "VEG"       "WAIS"     
 
 ## Discovering standardization options
 
