@@ -29,4 +29,3 @@ fixed \code{label}, \code{range}, and \code{codes} properties. The returned clas
 is also registered in the \code{.npsych_classes} environment for discovery by
 \code{\link[=list_npsych_scores]{list_npsych_scores()}}.
 }
-\keyword{internal}

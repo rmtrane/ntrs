@@ -12,3 +12,5 @@
 ^docs$
 ^pkgdown$
 ^vignettes/.quart/*
+^data-raw/*
+^scratch/*

@@ -14,6 +14,7 @@ NULL
 MOCATOTS <- new_npsych_scores(
   "MOCATOTS",
   label = "MoCA",
+  domain = "General Cognition",
   range = c(0, 30),
   codes = c(
     "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
@@ -36,11 +37,7 @@ MOCATOTS <- new_npsych_scores(
   var_name <- NULL
 
   # Register norms versions for MOCATOTS
-  lookup_table <- NpsychBatteryNorms::normative_summaries$nacc$MOCATOTS
-
-  names(lookup_table)[which(
-    names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
-  )] <- c("age", "educ")
+  lookup_table <- normative_summaries$nacc$MOCATOTS
 
   lookup_table$sex <- factor(lookup_table$sex, levels = c("m", "f"))
 
@@ -49,16 +46,23 @@ MOCATOTS <- new_npsych_scores(
     version = "nacc",
     lookup_table = lookup_table,
     covar_fns = list(
-      age = \(x) NpsychBatteryNorms::get_age_group(x, "nacc"),
-      educ = \(x) NpsychBatteryNorms::get_educ_group(x),
+      age = \(x) {
+        out <- .bincode(x, c(0, 60, 70, 80, 90, Inf), right = FALSE)
+        attr(out, "levels") <- c("<60", "60-69", "70-79", "80-89", ">89")
+        class(out) <- "factor"
+        return(out)
+      },
+      educ = \(x) {
+        edu_group <- .bincode(x, c(0, 13, 16, 17, Inf), right = FALSE)
+        attr(edu_group, "levels") <- c("<13", "13-15", "16", ">16")
+        class(edu_group) <- "factor"
+        edu_group
+      },
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
     )
   )
 
-  lookup_table <- NpsychBatteryNorms::normative_summaries$updated$MOCATOTS
-  names(lookup_table)[which(
-    names(lookup_table) %in% c("age_group", "edu_group", "educ_group")
-  )] <- c("age", "educ")
+  lookup_table <- normative_summaries$updated$MOCATOTS
 
   lookup_table$sex <- factor(lookup_table$sex, levels = c("m", "f"))
 
@@ -67,22 +71,30 @@ MOCATOTS <- new_npsych_scores(
     version = "updated",
     lookup_table = lookup_table,
     covar_fns = list(
-      age = \(x) NpsychBatteryNorms::get_age_group(x, "nacc"),
-      educ = \(x) NpsychBatteryNorms::get_educ_group(x),
+      age = \(x) {
+        out <- .bincode(x, c(0, 60, 70, 80, 90, Inf), right = FALSE)
+        attr(out, "levels") <- c("<60", "60-69", "70-79", "80-89", ">89")
+        class(out) <- "factor"
+        return(out)
+      },
+      educ = \(x) {
+        edu_group <- .bincode(x, c(0, 13, 16, 17, Inf), right = FALSE)
+        attr(edu_group, "levels") <- c("<13", "13-15", "16", ">16")
+        class(edu_group) <- "factor"
+        edu_group
+      },
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
     )
   )
 
   # Register regression versions for MOCATOTS
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "MOCATOTS"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = MOCATOTS(),
@@ -120,14 +132,12 @@ MOCATOTS <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "MOCATOTS"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = MOCATOTS(),
@@ -165,10 +175,10 @@ MOCATOTS <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["nacc"]],
+    reg_coefs[["nacc"]],
     var_name == "MOCATOTS"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["nacc"]]),
+    names(reg_coefs[["nacc"]]),
     "var_name"
   )]
 
@@ -176,8 +186,6 @@ MOCATOTS <- new_npsych_scores(
     as.numeric(coefs),
     names(coefs)
   )
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = MOCATOTS(),

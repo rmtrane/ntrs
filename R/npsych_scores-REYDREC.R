@@ -39,7 +39,7 @@ REYDREC <- new_npsych_scores(
 .setup_REYDREC_versions <- function() {
   var_name <- NULL
   # Register norms versions for REYDREC
-  lookup_table <- NpsychBatteryNorms::normative_summaries$ravlt_trials$REYDREC
+  lookup_table <- normative_summaries$ravlt_trials$REYDREC
   names(lookup_table)[which(
     names(lookup_table) %in% c("age_group")
   )] <- c("age")
@@ -49,20 +49,24 @@ REYDREC <- new_npsych_scores(
     version = "ravlt_trials",
     lookup_table = lookup_table,
     covar_fns = list(
-      age = \(x) NpsychBatteryNorms::get_age_group(x, "ravlt_trials")
+      age = \(x) {
+        out <- .bincode(x, c(0, 60, 70, 80, 90, Inf), right = FALSE)
+        attr(out, "levels") <- c("<60", "60-69", "70-79", "80-89", ">89")
+        class(out) <- "factor"
+        return(out)
+      }
     )
   )
 
   # Register regression versions for REYDREC
+
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "REYDREC"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = REYDREC(),
@@ -100,14 +104,12 @@ REYDREC <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "REYDREC"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = REYDREC(),
@@ -131,10 +133,11 @@ REYDREC <- new_npsych_scores(
       }
     )
   )
+
   ## Set the default for %s
-  # set_std_defaults(
-  #   scores = REYDREC(),
-  #   method = "T-score",
-  #   version = "NA"
-  # )
+  set_std_defaults(
+    scores = REYDREC(),
+    method = "norms",
+    version = "ravlt_trials"
+  )
 }

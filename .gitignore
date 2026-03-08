@@ -7,5 +7,6 @@
 /doc/
 /Meta/
 docs
-
+data-raw/*
+scratch/*
 /.quarto/

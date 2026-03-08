@@ -107,7 +107,11 @@ test_that("std_data() standardized values match std() output", {
     set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
   )
 
-  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df <- data.frame(
+    age = c(72, 75),
+    sex = c(1, 2),
+    educ = c(16, 12)
+  )
   df$moca <- MOCATOTS(c(25, 28))
 
   result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)
@@ -264,7 +268,7 @@ test_that("std_data() respects custom prefix", {
 
   result <- std_data(
     df,
-    prefix = "std_",
+    prefix_std = "std_",
     age = df$age,
     sex = df$sex,
     educ = df$educ

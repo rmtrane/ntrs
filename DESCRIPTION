@@ -20,12 +20,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-Remotes:
-    rmtrane/NpsychBatteryNorms
 Imports: 
     cli,
     data.table,
-    NpsychBatteryNorms,
     rlang,
     S7
 Suggests: 
@@ -39,16 +36,23 @@ Depends:
     R (>= 4.1)
 LazyData: true
 Collate: 
+    'calc_FAS.R'
+    'calc_MOCACLOCK.R'
+    'calc_REYAREC.R'
+    'calc_REYTOTAL.R'
+    'demo_data.R'
     'get_version_data.R'
     'list_method_versions.R'
     'list_npsych_scores.R'
     'list_std_methods.R'
     'npsych_scores-class.R'
     'new_npsych_scores.R'
+    'normative_summaries.R'
     'std_version-class.R'
     'norms_version-class.R'
     'npsych_scores-ANIMALS.R'
     'npsych_scores-BOSTON.R'
+    'npsych_scores-CDRGLOB.R'
     'npsych_scores-CRAFTDRE.R'
     'npsych_scores-CRAFTDVR.R'
     'npsych_scores-CRAFTURS.R'
@@ -64,16 +68,24 @@ Collate:
     'npsych_scores-LOGIMEM.R'
     'npsych_scores-MEMUNITS.R'
     'npsych_scores-MINTTOTS.R'
+    'npsych_scores-MOCACLOCK.R'
     'npsych_scores-MOCATOTS.R'
     'npsych_scores-NACCMMSE.R'
     'npsych_scores-OTRAILA.R'
     'npsych_scores-OTRAILB.R'
     'npsych_scores-OTRLARR.R'
     'npsych_scores-OTRLBRR.R'
+    'npsych_scores-REY1REC.R'
+    'npsych_scores-REY2REC.R'
+    'npsych_scores-REY3REC.R'
+    'npsych_scores-REY4REC.R'
+    'npsych_scores-REY5REC.R'
     'npsych_scores-REY6REC.R'
     'npsych_scores-REYAREC.R'
     'npsych_scores-REYDLIST.R'
     'npsych_scores-REYDREC.R'
+    'npsych_scores-REYFPOS.R'
+    'npsych_scores-REYTCOR.R'
     'npsych_scores-REYTOTAL.R'
     'npsych_scores-TRAILA.R'
     'npsych_scores-TRAILB.R'
@@ -85,6 +97,8 @@ Collate:
     'npsych_scores-VEG.R'
     'npsych_scores-WAIS.R'
     'ntrs-package.R'
+    'rdd.R'
+    'reg_coefs.R'
     'register_norms_version.R'
     'register_regression_version.R'
     'register_std_version.R'

@@ -14,6 +14,8 @@ NULL
 NACCMMSE <- new_npsych_scores(
   "NACCMMSE",
   label = "MMSE",
+  # short_descriptor = "Total MMSE score (using D-L-R-O-W)",
+  domain = "General Cognition",
   range = c(0, 30),
   codes = c(
     "Score not calculated; missing at least" = 88,
@@ -40,14 +42,12 @@ NACCMMSE <- new_npsych_scores(
   var_name <- NULL
   # Register regression versions for NACCMMSE
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "NACCMMSE"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = NACCMMSE(),
@@ -85,14 +85,12 @@ NACCMMSE <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "NACCMMSE"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = NACCMMSE(),
@@ -129,10 +127,10 @@ NACCMMSE <- new_npsych_scores(
     )
   )
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["nacc_legacy"]],
+    reg_coefs[["nacc_legacy"]],
     var_name == "NACCMMSE"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["nacc_legacy"]]),
+    names(reg_coefs[["nacc_legacy"]]),
     "var_name"
   )]
 
@@ -140,8 +138,6 @@ NACCMMSE <- new_npsych_scores(
     as.numeric(coefs),
     names(coefs)
   )
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = NACCMMSE(),

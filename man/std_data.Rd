@@ -4,7 +4,14 @@
 \alias{std_data}
 \title{Standardize all \code{npsych_scores} columns in a data frame}
 \usage{
-std_data(data, ..., methods = list(), prefix = "z_", .cols = NULL)
+std_data(
+  data,
+  ...,
+  methods = list(),
+  prefix_std = "z_",
+  prefix_raw = NULL,
+  .cols = NULL
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} or \code{data.table} containing one or more
@@ -28,8 +35,12 @@ default. Classes not listed use their defaults.
 )
 }\if{html}{\out{</div>}}}
 
-\item{prefix}{A single string prepended to each score column name to
+\item{prefix_std}{A single string prepended to each score column name to
 form the new column name. Defaults to \code{"z_"}.}
+
+\item{prefix_raw}{Optional; if character string, used as prefix for scores that
+are standardized. This enables you to obtain pairs of scores, for example
+\code{raw_MOCATOTS} and \code{z_MOCATOTS} for bookkeeping}
 
 \item{.cols}{An optional character vector of \code{npsych_scores} \strong{column
 names} to standardize. When \code{NULL} (the default), all \code{npsych_scores}

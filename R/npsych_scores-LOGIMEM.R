@@ -14,6 +14,7 @@ NULL
 LOGIMEM <- new_npsych_scores(
   "LOGIMEM",
   label = "Logical Memory, Immediate",
+  domain = "Memory",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,
@@ -39,14 +40,12 @@ LOGIMEM <- new_npsych_scores(
   var_name <- NULL
   # Register regression versions for LOGIMEM
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "LOGIMEM"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = LOGIMEM(),
@@ -84,14 +83,12 @@ LOGIMEM <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "LOGIMEM"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = LOGIMEM(),
@@ -128,10 +125,10 @@ LOGIMEM <- new_npsych_scores(
     )
   )
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["nacc_legacy"]],
+    reg_coefs[["nacc_legacy"]],
     var_name == "LOGIMEM"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["nacc_legacy"]]),
+    names(reg_coefs[["nacc_legacy"]]),
     "var_name"
   )]
 
@@ -139,8 +136,6 @@ LOGIMEM <- new_npsych_scores(
     as.numeric(coefs),
     names(coefs)
   )
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = LOGIMEM(),

@@ -12,7 +12,7 @@ std_using_norms(scores, ...)
 \item{...}{Arguments passed to methods.}
 }
 \value{
-The standardized value of \code{x}, whose exact type depends on the specific S3
+The standardized value of \code{x}, whose exact type depends on the specific S7
 method called.
 }
 \description{

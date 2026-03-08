@@ -14,6 +14,7 @@ NULL
 DIGIFLEN <- new_npsych_scores(
   "DIGIFLEN",
   label = "Digit Span Forward - Span Length",
+  domain = "Attention/Processing",
   range = c(0, 8),
   codes = c(
     "Physical problem" = 95,
@@ -39,14 +40,12 @@ DIGIFLEN <- new_npsych_scores(
   var_name <- NULL
   # Register regression versions for DIGIFLEN
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2024.06"]],
+    reg_coefs[["updated_2024.06"]],
     var_name == "DIGIFLEN"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2024.06"]]),
+    names(reg_coefs[["updated_2024.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = DIGIFLEN(),
@@ -84,14 +83,12 @@ DIGIFLEN <- new_npsych_scores(
   )
 
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["updated_2025.06"]],
+    reg_coefs[["updated_2025.06"]],
     var_name == "DIGIFLEN"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["updated_2025.06"]]),
+    names(reg_coefs[["updated_2025.06"]]),
     "var_name"
   )]
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = DIGIFLEN(),
@@ -128,10 +125,10 @@ DIGIFLEN <- new_npsych_scores(
     )
   )
   coefs <- subset(
-    NpsychBatteryNorms::reg_coefs[["nacc_legacy"]],
+    reg_coefs[["nacc_legacy"]],
     var_name == "DIGIFLEN"
   )[, setdiff(
-    names(NpsychBatteryNorms::reg_coefs[["nacc_legacy"]]),
+    names(reg_coefs[["nacc_legacy"]]),
     "var_name"
   )]
 
@@ -139,8 +136,6 @@ DIGIFLEN <- new_npsych_scores(
     as.numeric(coefs),
     names(coefs)
   )
-
-  names(coefs)[names(coefs) == "education"] <- "educ"
 
   register_regression_version(
     scores = DIGIFLEN(),
