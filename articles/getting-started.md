@@ -30,10 +30,11 @@ moca
 ```
 
     <ntrs::MOCATOTS> num [1:3] 25 28 30
-     @ label : chr "MoCA"
-     @ domain: chr "General Cognition"
-     @ range : num [1:2] 0 30
-     @ codes : Named num [1:2] -4 88
+     @ label           : chr "MoCA"
+     @ domain          : chr "General Cognition"
+     @ short_descriptor: chr "MoCA Total Raw Score - uncorrected"
+     @ range           : num [1:2] 0 30
+     @ codes           : Named num [1:2] -4 88
      .. - attr(*, "names")= chr [1:2] "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" "Item(s) or whole test not administered"
 
 To see all available tests:
