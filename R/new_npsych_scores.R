@@ -15,15 +15,7 @@ NULL
 #'
 #' @param name A non-empty single string giving the subclass name
 #'   (e.g., `"MOCATOTS"`). Used as both the S7 class name and registry key.
-#' @param label A single string identifying the test
-#'   (e.g., `"MoCA"`, `"Trail Making Test Part A"`).
-#' @param domain A single string identifying the domain the test belongs to
-#'   (e.g., `"General Cognition"`, `"Language"`). Defaults to an empty
-#'   character vector.
-#' @param range A numeric vector of length 2 giving the minimum and maximum
-#'   valid scores.
-#' @param codes A named numeric vector of error/special codes
-#'   (e.g., `c("Not administered" = 88)`). Defaults to an empty numeric vector.
+#' @inheritParams npsych_scores
 #'
 #' @returns An S7 class object (subclass of [npsych_scores]) whose constructor
 #'   accepts a single `.data` argument.

@@ -4,7 +4,14 @@
 \alias{new_npsych_scores}
 \title{Create an npsych_scores subclass}
 \usage{
-new_npsych_scores(name, label, range, codes = numeric())
+new_npsych_scores(
+  name,
+  label,
+  domain = character(),
+  short_descriptor = character(),
+  range,
+  codes = numeric()
+)
 }
 \arguments{
 \item{name}{A non-empty single string giving the subclass name
@@ -12,6 +19,14 @@ new_npsych_scores(name, label, range, codes = numeric())
 
 \item{label}{A single string identifying the test
 (e.g., \code{"MoCA"}, \code{"Trail Making Test Part A"}).}
+
+\item{domain}{A single string identifying the domain the test belongs to
+(e.g., \code{"General Cognition"}, \code{"Language"}). Defaults to an empty
+character vector.}
+
+\item{short_descriptor}{A short descriptor giving a little bit more
+information than the label. When available, the entry from the Researchers
+Data Dictionary; see \link{rdd} for more.}
 
 \item{range}{A numeric vector of length 2 giving the minimum and maximum
 valid scores.}

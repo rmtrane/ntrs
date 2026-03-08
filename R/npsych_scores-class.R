@@ -7,7 +7,14 @@
 #'
 #' @param .data Numeric vector of test scores. Values must fall within
 #'   `range` or match one of the `codes`, or be `NA`.
-#' @param label A single character string identifying the test (e.g., `"MoCA"`).
+#' @param label A single string identifying the test
+#'   (e.g., `"MoCA"`, `"Trail Making Test Part A"`).
+#' @param domain A single string identifying the domain the test belongs to
+#'   (e.g., `"General Cognition"`, `"Language"`). Defaults to an empty
+#'   character vector.
+#' @param short_descriptor A short descriptor giving a little bit more
+#'   information than the label. When available, the entry from the Researchers
+#'   Data Dictionary; see [rdd] for more.
 #' @param range A numeric vector of length 2 giving the minimum and maximum
 #'   valid scores.
 #' @param codes A named numeric vector of error/special codes

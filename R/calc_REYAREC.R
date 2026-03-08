@@ -3,8 +3,8 @@
 #' Calculates accuracy from true positives and false positives, but applies `valid_values_only()`
 #' first. As percentage, i.e. a value of 55 means 55%.
 #'
-#' @param REYTCOR true positives
-#' @param REYFPOS false positives
+#' @param reytcor true positives
+#' @param reyfpos false positives
 #'
 #' @export
 calc_REYAREC <- function(

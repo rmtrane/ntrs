@@ -7,9 +7,9 @@
 calc_REYAREC(reytcor, reyfpos)
 }
 \arguments{
-\item{REYTCOR}{true positives}
+\item{reytcor}{true positives}
 
-\item{REYFPOS}{false positives}
+\item{reyfpos}{false positives}
 }
 \description{
 Calculates accuracy from true positives and false positives, but applies \code{valid_values_only()}

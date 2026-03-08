@@ -7,6 +7,8 @@
 npsych_scores(
   .data = numeric(0),
   label = character(0),
+  domain = character(0),
+  short_descriptor = character(0),
   range = numeric(0),
   codes = numeric(0)
 )
@@ -15,7 +17,16 @@ npsych_scores(
 \item{.data}{Numeric vector of test scores. Values must fall within
 \code{range} or match one of the \code{codes}, or be \code{NA}.}
 
-\item{label}{A single character string identifying the test (e.g., \code{"MoCA"}).}
+\item{label}{A single string identifying the test
+(e.g., \code{"MoCA"}, \code{"Trail Making Test Part A"}).}
+
+\item{domain}{A single string identifying the domain the test belongs to
+(e.g., \code{"General Cognition"}, \code{"Language"}). Defaults to an empty
+character vector.}
+
+\item{short_descriptor}{A short descriptor giving a little bit more
+information than the label. When available, the entry from the Researchers
+Data Dictionary; see \link{rdd} for more.}
 
 \item{range}{A numeric vector of length 2 giving the minimum and maximum
 valid scores.}
