@@ -50,7 +50,14 @@ is also registered in the <code>.npsych_classes</code> environment for discovery
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">new_npsych_scores</span><span class="op">(</span><span class="va">name</span>, <span class="va">label</span>, <span class="va">range</span>, codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">new_npsych_scores</span><span class="op">(</span></span>
+<span>  <span class="va">name</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  short_descriptor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">range</span>,</span>
+<span>  codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -65,6 +72,18 @@ is also registered in the <code>.npsych_classes</code> environment for discovery
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
 <dd><p>A single string identifying the test
 (e.g., <code>"MoCA"</code>, <code>"Trail Making Test Part A"</code>).</p></dd>
+
+
+<dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>
+<dd><p>A single string identifying the domain the test belongs to
+(e.g., <code>"General Cognition"</code>, <code>"Language"</code>). Defaults to an empty
+character vector.</p></dd>
+
+
+<dt id="arg-short-descriptor">short_descriptor<a class="anchor" aria-label="anchor" href="#arg-short-descriptor"></a></dt>
+<dd><p>A short descriptor giving a little bit more
+information than the label. When available, the entry from the Researchers
+Data Dictionary; see <a href="rdd.html">rdd</a> for more.</p></dd>
 
 
 <dt id="arg-range">range<a class="anchor" aria-label="anchor" href="#arg-range"></a></dt>

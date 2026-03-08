@@ -10,6 +10,8 @@ for all test-specific subclasses (e.g., `MOCATOTS`, `TRAILA`).
 npsych_scores(
   .data = numeric(0),
   label = character(0),
+  domain = character(0),
+  short_descriptor = character(0),
   range = numeric(0),
   codes = numeric(0)
 )
@@ -24,7 +26,20 @@ npsych_scores(
 
 - label:
 
-  A single character string identifying the test (e.g., `"MoCA"`).
+  A single string identifying the test (e.g., `"MoCA"`,
+  `"Trail Making Test Part A"`).
+
+- domain:
+
+  A single string identifying the domain the test belongs to (e.g.,
+  `"General Cognition"`, `"Language"`). Defaults to an empty character
+  vector.
+
+- short_descriptor:
+
+  A short descriptor giving a little bit more information than the
+  label. When available, the entry from the Researchers Data Dictionary;
+  see [rdd](https://rmtrane.github.io/ntrs/reference/rdd.md) for more.
 
 - range:
 

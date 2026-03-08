@@ -12,10 +12,10 @@ calc_REYAREC(reytcor, reyfpos)
 
 ## Arguments
 
-- REYTCOR:
+- reytcor:
 
   true positives
 
-- REYFPOS:
+- reyfpos:
 
   false positives
