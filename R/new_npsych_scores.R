@@ -17,6 +17,9 @@ NULL
 #'   (e.g., `"MOCATOTS"`). Used as both the S7 class name and registry key.
 #' @param label A single string identifying the test
 #'   (e.g., `"MoCA"`, `"Trail Making Test Part A"`).
+#' @param domain A single string identifying the domain the test belongs to
+#'   (e.g., `"General Cognition"`, `"Language"`). Defaults to an empty
+#'   character vector.
 #' @param range A numeric vector of length 2 giving the minimum and maximum
 #'   valid scores.
 #' @param codes A named numeric vector of error/special codes
@@ -26,7 +29,13 @@ NULL
 #'   accepts a single `.data` argument.
 #'
 #' @export
-new_npsych_scores <- function(name, label, range, codes = numeric()) {
+new_npsych_scores <- function(
+  name,
+  label,
+  domain = character(),
+  range,
+  codes = numeric()
+) {
   # Validate definition-time arguments
   if (!is.character(name) || length(name) != 1 || name == "") {
     cli::cli_abort("{.arg name} must be a non-empty single string.")
@@ -52,6 +61,7 @@ new_npsych_scores <- function(name, label, range, codes = numeric()) {
       obj <- S7::new_object(
         x,
         label = label,
+        domain = domain,
         range = range,
         codes = codes
       )

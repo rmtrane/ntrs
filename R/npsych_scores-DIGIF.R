@@ -15,6 +15,7 @@ NULL
 DIGIF <- new_npsych_scores(
   "DIGIF",
   label = "Digit Span Forward - Total",
+  domain = "Attention/Processing",
   range = c(0, 12),
   codes = c(
     "Physical problem" = 95,

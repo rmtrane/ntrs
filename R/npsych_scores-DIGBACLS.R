@@ -14,6 +14,7 @@ NULL
 DIGBACLS <- new_npsych_scores(
   "DIGBACLS",
   label = "Number Span Backward - Span Length",
+  domain = "Attention/Processing",
   range = c(0, 8),
   codes = c(
     "Physical problem" = 95,

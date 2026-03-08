@@ -14,6 +14,7 @@ NULL
 CRAFTURS <- new_npsych_scores(
   "CRAFTURS",
   label = "Craft Immediate - Paraphrase",
+  domain = "Memory",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,

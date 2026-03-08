@@ -14,6 +14,7 @@ NULL
 CRAFTDVR <- new_npsych_scores(
   "CRAFTDVR",
   label = "Craft Delay - Verbatim",
+  domain = "Memory",
   range = c(0, 44),
   codes = c(
     "Physical problem" = 95,

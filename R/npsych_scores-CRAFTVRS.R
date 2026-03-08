@@ -14,6 +14,7 @@ NULL
 CRAFTVRS <- new_npsych_scores(
   "CRAFTVRS",
   label = "Craft Immediate - Verbatim",
+  domain = "Memory",
   range = c(0, 44),
   codes = c(
     "Physical problem" = 95,

@@ -14,6 +14,7 @@ NULL
 DIGIFLEN <- new_npsych_scores(
   "DIGIFLEN",
   label = "Digit Span Forward - Span Length",
+  domain = "Attention/Processing",
   range = c(0, 8),
   codes = c(
     "Physical problem" = 95,

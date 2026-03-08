@@ -23,6 +23,7 @@ npsych_scores <- S7::new_class(
   parent = S7::class_double,
   properties = list(
     label = S7::class_character,
+    domain = S7::class_character,
     range = S7::class_double,
     codes = S7::class_double
   ),
@@ -30,6 +31,7 @@ npsych_scores <- S7::new_class(
     scores <- S7::S7_data(self)
 
     label <- self@label
+    domain <- self@domain
     range <- self@range
     codes <- self@codes
 
@@ -37,6 +39,10 @@ npsych_scores <- S7::new_class(
 
     if (!is.character(label) || length(label) != 1) {
       errs <- c(errs, cli::format_inline("{.arg label} must be a string."))
+    }
+
+    if (!is.character(domain) || length(domain) > 1) {
+      errs <- c(errs, cli::format_inline("{.arg domain} must be a string."))
     }
 
     if (!is.numeric(range) || length(range) != 2) {
@@ -112,7 +118,12 @@ remove_error_codes <- function(x) {
 
   numeric_x <- as.numeric(x)
 
-  numeric_x[numeric_x %in% x@codes] <- NA
+  # codes might not be error codes. We find error codes by checking if codes are inside range
+  all_codes <- x@codes
+  error_codes <- all_codes[all_codes < x@range[1] | all_codes > x@range[2]]
+
+  # replace error codes by NA
+  numeric_x[numeric_x %in% error_codes] <- NA
 
   numeric_x
 }

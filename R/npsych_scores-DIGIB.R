@@ -15,6 +15,7 @@ NULL
 DIGIB <- new_npsych_scores(
   "DIGIB",
   label = "Digit Span Backward - Total",
+  domain = "Attention/Processing",
   range = c(0, 12),
   codes = c(
     "Physical problem" = 95,

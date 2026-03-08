@@ -14,6 +14,7 @@ NULL
 BOSTON <- new_npsych_scores(
   "BOSTON",
   label = "Boston Naming Test",
+  domain = "Language",
   range = c(0, 30),
   codes = c(
     "Physical problem" = 95,

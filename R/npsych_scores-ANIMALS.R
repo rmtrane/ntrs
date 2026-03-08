@@ -14,6 +14,7 @@ NULL
 ANIMALS <- new_npsych_scores(
   "ANIMALS",
   label = "Animal Fluency",
+  domain = "Language",
   range = c(0, 77),
   codes = c(
     "Physical problem" = 95,

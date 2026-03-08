@@ -14,6 +14,7 @@ NULL
 OTRAILA <- new_npsych_scores(
   "OTRAILA",
   label = "Oral Trailmaking Part A - Completion Time",
+  domain = "Attention/Processing",
   range = c(0, 100),
   codes = c(
     "Not assessed, optional" = 888,

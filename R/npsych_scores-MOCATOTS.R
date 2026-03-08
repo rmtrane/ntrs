@@ -14,6 +14,7 @@ NULL
 MOCATOTS <- new_npsych_scores(
   "MOCATOTS",
   label = "MoCA",
+  domain = "General Cognition",
   range = c(0, 30),
   codes = c(
     "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,

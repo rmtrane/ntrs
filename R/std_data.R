@@ -28,8 +28,11 @@
 #'   must be supplied explicitly. Values can be bare column names
 #'   referencing columns in `data` (e.g., `age = age`) or explicit
 #'   vectors (e.g., `age = c(72, 65, 80)`).
-#' @param prefix A single string prepended to each score column name to
+#' @param prefix_std A single string prepended to each score column name to
 #'   form the new column name. Defaults to `"z_"`.
+#' @param prefix_raw Optional; if character string, used as prefix for scores that
+#'   are standardized. This enables you to obtain pairs of scores, for example
+#'   `raw_MOCATOTS` and `z_MOCATOTS` for bookkeeping
 #' @param .cols An optional character vector of `npsych_scores` **column
 #'   names** to standardize. When `NULL` (the default), all `npsych_scores`
 #'   columns are processed.
@@ -64,7 +67,8 @@ std_data <- function(
   data,
   ...,
   methods = list(),
-  prefix = "z_",
+  prefix_std = "z_",
+  prefix_raw = NULL,
   .cols = NULL
 ) {
   if (!is.data.frame(data)) {
@@ -150,8 +154,8 @@ std_data <- function(
     rlang::eval_tidy(quo, data = data_mask, env = caller_env)
   })
 
-  # ---- New column names ----
-  new_nms <- paste0(prefix, npsych_cols)
+  # ---- New column names for std columns ----
+  new_nms <- paste0(prefix_std, npsych_cols)
 
   # ---- Standardize using .SD / .SDcols ----
   data[,
@@ -187,6 +191,15 @@ std_data <- function(
     }),
     .SDcols = npsych_cols
   ]
+
+  # --- New column names for raw columns, if prefix_raw specified ---
+  if (!is.null(prefix_raw)) {
+    data.table::setnames(
+      data,
+      old = npsych_cols,
+      new = paste0(prefix_raw, npsych_cols)
+    )
+  }
 
   # ---- Revert to data.frame if input was not data.table ----
   if (!input_is_dt) {

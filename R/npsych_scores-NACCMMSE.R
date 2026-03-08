@@ -14,6 +14,8 @@ NULL
 NACCMMSE <- new_npsych_scores(
   "NACCMMSE",
   label = "MMSE",
+  # short_descriptor = "Total MMSE score (using D-L-R-O-W)",
+  domain = "General Cognition",
   range = c(0, 30),
   codes = c(
     "Score not calculated; missing at least" = 88,

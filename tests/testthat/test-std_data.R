@@ -268,7 +268,7 @@ test_that("std_data() respects custom prefix", {
 
   result <- std_data(
     df,
-    prefix = "std_",
+    prefix_std = "std_",
     age = df$age,
     sex = df$sex,
     educ = df$educ

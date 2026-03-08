@@ -14,6 +14,7 @@ NULL
 LOGIMEM <- new_npsych_scores(
   "LOGIMEM",
   label = "Logical Memory, Immediate",
+  domain = "Memory",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,

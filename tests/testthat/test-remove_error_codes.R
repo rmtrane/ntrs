@@ -107,3 +107,13 @@ test_that("remove_error_codes errors when x is NULL", {
     regexp = "npsych_scores"
   )
 })
+
+
+test_that("remove_error_codes works when codes are NOT error codes", {
+  for_test <- CDRGLOB(c(1, 2))
+
+  expect_equal(
+    remove_error_codes(for_test),
+    as.numeric(for_test)
+  )
+})

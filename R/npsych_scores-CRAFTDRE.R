@@ -14,6 +14,7 @@ NULL
 CRAFTDRE <- new_npsych_scores(
   "CRAFTDRE",
   label = "Craft Delay - Paraphrase",
+  domain = "Memory",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,

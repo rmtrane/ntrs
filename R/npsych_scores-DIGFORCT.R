@@ -15,6 +15,7 @@ NULL
 DIGFORCT <- new_npsych_scores(
   "DIGFORCT",
   label = "Number Span Forward - Total",
+  domain = "Attention/Processing",
   range = c(0, 14),
   codes = c(
     "Physical problem" = 95,

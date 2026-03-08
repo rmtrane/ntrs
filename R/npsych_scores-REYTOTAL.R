@@ -18,7 +18,6 @@ REYTOTAL <- new_npsych_scores(
   codes = numeric()
 )
 
-
 #' Setup REYTOTAL method versions
 #'
 #' @description

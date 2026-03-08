@@ -14,6 +14,7 @@ NULL
 MEMUNITS <- new_npsych_scores(
   "MEMUNITS",
   label = "Logical Memory, Delayed",
+  domain = "Memory",
   range = c(0, 25),
   codes = c(
     "Physical problem" = 95,
