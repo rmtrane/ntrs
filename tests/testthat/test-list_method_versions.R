@@ -34,18 +34,6 @@ test_that("list_method_versions() returns empty vector when method doesn't exist
   )
 })
 
-# test_that("list_method_versions() provides helpful error with available methods", {
-#   test_obj <- MOCATOTS(c(25, 28, 30))
-
-#   # Error should mention available methods when some exist
-#   testthat::local_reproducible_output()
-
-#   expect_error(
-#     list_method_versions(test_obj, "nonexistent_method"),
-#     "Available methods:"
-#   )
-# })
-
 test_that("list_method_versions() errors when .std_versions[[method]] doesn't exist yet", {
   # Create a new test class that hasn't been set up yet
   new_test <- new_npsych_scores(
