@@ -59,6 +59,10 @@ test_that(".register_std_version() creates scores class environment when needed"
     range = c(0, 100)
   )
 
+  ## Assign to global environment so test works
+  assign("RegTestClass1", test_cls, envir = .GlobalEnv)
+  withr::defer(rm("RegTestClass1", envir = .GlobalEnv))
+
   v <- regression_version(
     scores_class = "RegTestClass1",
     version_id = "env_test_v1",
@@ -69,7 +73,11 @@ test_that(".register_std_version() creates scores class environment when needed"
   .register_std_version(v)
 
   expect_true(
-    exists("RegTestClass1", envir = .std_versions[["regression"]], inherits = FALSE)
+    exists(
+      "RegTestClass1",
+      envir = .std_versions[["regression"]],
+      inherits = FALSE
+    )
   )
 })
 

@@ -76,6 +76,15 @@ test_that("remove_error_codes strips npsych_scores properties from the result", 
   expect_null(attr(result, "codes"))
 })
 
+test_that("remove_error_codes passes NA through", {
+  x <- make_scores(c(1, NA, 5, -99))
+  result <- remove_error_codes(x)
+
+  expect_equal(
+    result,
+    c(1, NA, 5, NA)
+  )
+})
 
 # ---------------------------------------------------------------------------
 # Input validation

@@ -53,11 +53,14 @@ test_that("list_npsych_scores() returns all known internal subclasses", {
 })
 
 test_that("list_npsych_scores() picks up dynamically registered classes", {
-  new_npsych_scores(
+  new_scores <- new_npsych_scores(
     "DynamicListTest1",
     label = "Dynamic Test",
     range = c(0, 100)
   )
+
+  assign("new_scores", new_scores, envir = .GlobalEnv)
+  withr::defer(rm("new_scores", envir = .GlobalEnv))
 
   expect_true("DynamicListTest1" %in% list_npsych_scores())
 })

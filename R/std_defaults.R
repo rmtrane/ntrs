@@ -8,22 +8,36 @@
 #' @param overwrite Logical (default: `FALSE`); should existing default, if it exists, be overwritten?
 #'
 #' @export
-set_std_defaults <- function(scores, method, version, overwrite = FALSE) {
+set_std_defaults <- function(
+  scores,
+  method,
+  version = NULL,
+  overwrite = FALSE
+) {
   if (!S7::S7_inherits(scores, npsych_scores)) {
     cli::cli_abort(
       "{.arg scores} must be an object of class {.cls npsych_scores}, but is {.cls {class(scores)}}."
     )
   }
 
-  # Verify method + version combo exists (will error if not)
-  invisible(get_version_data(scores, method, version))
+  # Verify method + version combo exists if version is not NULL (will error if not)
+
+  if (!is.null(version)) {
+    invisible(get_version_data(scores, method, version))
+  }
 
   scores_class <- S7::S7_class(scores)@name
 
   # Check if scores_class already has a default method
   if (exists(scores_class, envir = .std_defaults, inherits = FALSE)) {
     cur_default <- .std_defaults[[scores_class]]
-    if (cur_default$method == method && cur_default$version == version) {
+    new_default <- c(
+      list(method = method),
+      if (!is.null(version)) list(version = version)
+    )
+
+    # if (cur_default$method == method && identical(cur_default$version)) {
+    if (identical(cur_default, new_default)) {
       cli::cli_inform(
         c(
           "i" = "Default method and version for {.val {scores_class}} already set to {.val {method}} and {.val {version}}."
@@ -35,21 +49,21 @@ set_std_defaults <- function(scores, method, version, overwrite = FALSE) {
 
     if (overwrite) {
       cli::cli_bullets(c(
-        "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {method}} and {.val {version}}.",
+        "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {cur_default$method}} and {.val {cur_default$version}}.",
         "i" = "Will be overwritten."
       ))
     } else {
       cli::cli_abort(c(
-        "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {method}} and {.val {version}}.",
+        "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {cur_default$method}} and {.val {cur_default$version}}.",
         "x" = "To overwrite, use {.arg overwrite = TRUE}."
       ))
     }
   }
 
   # Set default method, version
-  .std_defaults[[scores_class]] <- list(
-    "method" = method,
-    "version" = version
+  .std_defaults[[scores_class]] <- c(
+    list("method" = method),
+    if (!is.null(version)) list("version" = version)
   )
 
   cli::cli_inform(

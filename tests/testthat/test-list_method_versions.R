@@ -275,6 +275,8 @@ test_that("list_method_versions() correctly distinguishes between test classes",
     label = "New Scores",
     range = c(0, 30)
   )
+  assign("new_scores", new_scores, envir = .GlobalEnv)
+  withr::defer(rm("new_scores", envir = .GlobalEnv))
 
   new_scores_obj <- new_scores(c(10, 20, 30))
 

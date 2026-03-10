@@ -30,7 +30,7 @@ std_using_norms <- S7::new_generic("std_using_norms", "scores")
 #' A numeric vector of standardized scores. The function will error if `version` is not registered, if provided covariates are not numeric, if required covariates are missing based on the `lookup_table` for the specified `version`, or if covariate lengths are mismatched.
 #'
 S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
-  raw_scores <- as.numeric(scores)
+  raw_scores <- remove_error_codes(scores) # as.numeric(scores)
 
   ## Get version data (will fail if version not registered).
   version_obj <- get_version_data(scores, "norms", version)
@@ -98,7 +98,7 @@ S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
 
   ## Create data.frame that we will match means and sd to
   match_to <- cbind(
-    raw_scores = as.numeric(scores),
+    raw_scores = raw_scores,
     data.frame(covars)
   )
 

@@ -4,7 +4,7 @@
 \alias{set_std_defaults}
 \title{Set the default standardization method (and version) an \code{npsych_scores} subclass}
 \usage{
-set_std_defaults(scores, method, version, overwrite = FALSE)
+set_std_defaults(scores, method, version = NULL, overwrite = FALSE)
 }
 \arguments{
 \item{scores}{S7 object of class \code{npsych_scores} with subclass.}

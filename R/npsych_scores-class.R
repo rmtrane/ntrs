@@ -1,3 +1,6 @@
+#' @include npsych_subclass_helpers.R
+NULL
+
 #' Neuropsychological Test Scores
 #'
 #' @description

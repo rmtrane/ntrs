@@ -46,11 +46,20 @@
   }
 
   # Check that the generic has a method for this specific class
-  class_obj <- .npsych_classes[[scores_class]]
+  # class_obj <- .npsych_classes[[scores_class]]
+
+  # if (is.null(class_obj)) {
+  #   cli::cli_abort(
+  #     "No registered npsych_scores subclass {.val {scores_class}}. Create it with {.fn new_npsych_test} first."
+  #   )
+  # }
+
+  all_classes <- .find_npsych_classes()
+  class_obj <- all_classes[[scores_class]]
 
   if (is.null(class_obj)) {
     cli::cli_abort(
-      "No registered npsych_scores subclass {.val {scores_class}}. Create it with {.fn new_npsych_test} first."
+      "No npsych_scores subclass {.val {scores_class}} found in any loaded namespace. Create it with {.fn new_npsych_scores} first."
     )
   }
 

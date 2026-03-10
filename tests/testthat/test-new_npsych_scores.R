@@ -80,18 +80,6 @@ test_that("new_npsych_scores creates empty instance by default", {
   expect_true(S7::S7_inherits(result, npsych_scores))
 })
 
-test_that("new_npsych_scores registers class in .npsych_classes", {
-  new_npsych_scores(
-    "my_test_factory7",
-    label = "My Test",
-    range = c(0, 100)
-  )
-
-  expect_true(
-    exists("my_test_factory7", envir = .npsych_classes, inherits = FALSE)
-  )
-})
-
 test_that("new_npsych_scores instances validate scores against range", {
   my_test <- new_npsych_scores(
     "my_test_factory8",

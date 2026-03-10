@@ -65,7 +65,8 @@ new_npsych_scores <- function(
   )
 
   # Register in the class registry
-  .npsych_classes[[name]] <- cls
+  # .npsych_classes[[name]] <- cls
+  .npsych_cache$ns_snapshot <- NULL
 
   cls
 }
