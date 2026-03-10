@@ -10,7 +10,7 @@ test_that("list_method_versions() errors when input is not npsych_scores", {
 })
 
 # Test 2: Error handling for non-existent methods ----
-test_that("list_method_versions() errors when method doesn't exist", {
+test_that("list_method_versions() returns empty vector when method doesn't exist", {
   test_obj <- MOCATOTS(c(25, 28, 30))
 
   # When NO versions exist at all
@@ -19,31 +19,32 @@ test_that("list_method_versions() errors when method doesn't exist", {
 
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(test_obj, "nonexistent_method"),
-    "No versions registered for method"
+    # "No versions registered for method"
+    character()
   )
 
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(test_obj, "fake_standardization"),
-    "No versions registered for method"
+    # "No versions registered for method"
+    character()
   )
 })
 
-test_that("list_method_versions() provides helpful error with available methods", {
-  test_obj <- MOCATOTS(c(25, 28, 30))
+# test_that("list_method_versions() provides helpful error with available methods", {
+#   test_obj <- MOCATOTS(c(25, 28, 30))
 
-  # Error should mention available methods when some exist
-  testthat::local_reproducible_output()
+#   # Error should mention available methods when some exist
+#   testthat::local_reproducible_output()
 
-  expect_error(
-    list_method_versions(test_obj, "nonexistent_method"),
-    "Available methods:"
-  )
-})
-
+#   expect_error(
+#     list_method_versions(test_obj, "nonexistent_method"),
+#     "Available methods:"
+#   )
+# })
 
 test_that("list_method_versions() errors when .std_versions[[method]] doesn't exist yet", {
   # Create a new test class that hasn't been set up yet
@@ -58,9 +59,9 @@ test_that("list_method_versions() errors when .std_versions[[method]] doesn't ex
   # Should error because no versions have been registered
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(new_test_obj, "norms"),
-    "No versions registered for test class"
+    character()
   )
 })
 
@@ -85,9 +86,9 @@ test_that("list_method_versions() errors when .std_versions[[method]] exists, bu
   # Should error because no versions have been registered
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(new_test_obj, "norms"),
-    "No versions registered for test class"
+    character()
   )
 })
 
@@ -104,14 +105,15 @@ test_that("list_method_versions() errors when scores doesn't exist for method wi
   # Method 'norms' exists in .std_versions but not for this test class
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(new_scores, "norms"),
-    "No versions registered for test class"
+    character()
   )
 
-  expect_error(
+  expect_equal(
     list_method_versions(new_scores, "norms"),
-    "Available test classes:"
+    # "Available test classes:"
+    character()
   )
 })
 
@@ -251,16 +253,18 @@ test_that("list_method_versions() is case-sensitive for method names", {
   # Should error with wrong case
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(test_obj, "Norms"),
-    "No versions registered for method"
+    # "No versions registered for method"
+    character()
   )
 
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(test_obj, "REGRESSION"),
-    "No versions registered for method"
+    # "No versions registered for method"
+    character()
   )
 })
 
@@ -334,9 +338,10 @@ test_that("list_method_versions() handles test class with no versions gracefully
 
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(new_scores_obj, "norms"),
-    "No versions registered for test class"
+    # "No versions registered for test class"
+    character()
   )
 })
 
@@ -359,8 +364,9 @@ test_that("list_method_versions() handles method without versions gracefully", {
 
   testthat::local_reproducible_output()
 
-  expect_error(
+  expect_equal(
     list_method_versions(MOCATOTS(), "norms"),
-    "No versions have been registered for any methods yet"
+    # "No versions have been registered for any methods yet"
+    character()
   )
 })

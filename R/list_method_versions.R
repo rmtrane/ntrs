@@ -17,8 +17,8 @@ list_method_versions <- function(scores, method) {
   # Check if method exists
   if (!exists(method, envir = .std_versions, inherits = FALSE)) {
     # available_methods <- ls(envir = .std_versions)
-
-    return(ls(envir = .std_versions))
+    return(character())
+    # return(ls(envir = .std_versions))
 
     # if (length(available_methods) == 0) {
     #   cli::cli_abort(c(
@@ -35,11 +35,13 @@ list_method_versions <- function(scores, method) {
 
   scores_class <- S7::S7_class(scores)@name
 
-  # # Check if scores_class exists
-  # if (
-  #   !exists(scores_class, envir = .std_versions[[method]], inherits = FALSE)
-  # ) {
-  #   available_classes <- ls(.std_versions[[method]])
+  # Check if scores_class exists
+  if (
+    !exists(scores_class, envir = .std_versions[[method]], inherits = FALSE)
+  ) {
+    # ls(.std_versions[[method]])
+    return(character())
+  }
 
   #   cli::cli_abort(c(
   #     "No versions registered for test class {.val {scores_class}}",
