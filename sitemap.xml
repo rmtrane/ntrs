@@ -9,6 +9,7 @@
 <url><loc>https://rmtrane.github.io/ntrs/reference/ANIMALS.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/BOSTON.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/CDRGLOB.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/CDRSUM.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/CRAFTDRE.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/CRAFTDVR.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/CRAFTURS.html</loc></url>
@@ -26,6 +27,8 @@
 <url><loc>https://rmtrane.github.io/ntrs/reference/MINTTOTS.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/MOCACLOCK.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/MOCATOTS.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/MOCBTOTS.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/NACCGDS.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/NACCMMSE.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/OTRAILA.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/OTRAILB.html</loc></url>
@@ -44,7 +47,12 @@
 <url><loc>https://rmtrane.github.io/ntrs/reference/REYTCOR.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/REYTOTAL.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/TRAILA.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/TRAILALI.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/TRAILARR.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/TRAILB.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/TRAILBLI.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/TRAILBRR.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/UDSBENRS.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/UDSBENTC.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/UDSBENTD.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/UDSVERFC.html</loc></url>
@@ -57,7 +65,9 @@
 <url><loc>https://rmtrane.github.io/ntrs/reference/calc_REYAREC.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/calc_REYTOTAL.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/demo_data.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/dot-find_npsych_classes.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/dot-find_std_generics.html</loc></url>
+<url><loc>https://rmtrane.github.io/ntrs/reference/dot-is_npsych_subclass.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/dot-register_std_version.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/dot-setup_ANIMALS_versions.html</loc></url>
 <url><loc>https://rmtrane.github.io/ntrs/reference/dot-setup_BOSTON_versions.html</loc></url>

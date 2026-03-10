@@ -6,7 +6,7 @@ subclass
 ## Usage
 
 ``` r
-set_std_defaults(scores, method, version, overwrite = FALSE)
+set_std_defaults(scores, method, version = NULL, overwrite = FALSE)
 ```
 
 ## Arguments

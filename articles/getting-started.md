@@ -43,14 +43,15 @@ To see all available tests:
 list_npsych_scores()
 ```
 
-     [1] "ANIMALS"   "BOSTON"    "CDRGLOB"   "CRAFTDRE"  "CRAFTDVR"  "CRAFTURS"
-     [7] "CRAFTVRS"  "DIGBACCT"  "DIGBACLS"  "DIGFORCT"  "DIGFORSL"  "DIGIB"
-    [13] "DIGIBLEN"  "DIGIF"     "DIGIFLEN"  "LOGIMEM"   "MEMUNITS"  "MINTTOTS"
-    [19] "MOCACLOCK" "MOCATOTS"  "NACCMMSE"  "OTRAILA"   "OTRAILB"   "OTRLARR"
-    [25] "OTRLBRR"   "REY1REC"   "REY2REC"   "REY3REC"   "REY4REC"   "REY5REC"
-    [31] "REY6REC"   "REYAREC"   "REYDLIST"  "REYDREC"   "REYFPOS"   "REYTCOR"
-    [37] "REYTOTAL"  "TRAILA"    "TRAILB"    "UDSBENTC"  "UDSBENTD"  "UDSVERFC"
-    [43] "UDSVERLC"  "UDSVERTN"  "VEG"       "WAIS"     
+     [1] "ANIMALS"   "BOSTON"    "CDRGLOB"   "CDRSUM"    "CRAFTDRE"  "CRAFTDVR"
+     [7] "CRAFTURS"  "CRAFTVRS"  "DIGBACCT"  "DIGBACLS"  "DIGFORCT"  "DIGFORSL"
+    [13] "DIGIB"     "DIGIBLEN"  "DIGIF"     "DIGIFLEN"  "LOGIMEM"   "MEMUNITS"
+    [19] "MINTTOTS"  "MOCACLOCK" "MOCATOTS"  "MOCBTOTS"  "NACCGDS"   "NACCMMSE"
+    [25] "OTRAILA"   "OTRAILB"   "OTRLARR"   "OTRLBRR"   "REY1REC"   "REY2REC"
+    [31] "REY3REC"   "REY4REC"   "REY5REC"   "REY6REC"   "REYAREC"   "REYDLIST"
+    [37] "REYDREC"   "REYFPOS"   "REYTCOR"   "REYTOTAL"  "TRAILA"    "TRAILALI"
+    [43] "TRAILARR"  "TRAILB"    "TRAILBLI"  "TRAILBRR"  "UDSBENRS"  "UDSBENTC"
+    [49] "UDSBENTD"  "UDSVERFC"  "UDSVERLC"  "UDSVERTN"  "VEG"       "WAIS"     
 
 ## Discovering standardization options
 
@@ -100,8 +101,8 @@ set_std_defaults(
 )
 ```
 
-    ℹ Default method and version for "MOCATOTS" was previously set to "norms" and
-      "nacc".
+    ℹ Default method and version for "MOCATOTS" was previously set to "regression"
+      and "updated_2025.06".
 
     ℹ Will be overwritten.
 
@@ -143,8 +144,8 @@ set_std_defaults(
 )
 ```
 
-    ℹ Default method and version for "MOCATOTS" was previously set to "regression"
-      and "updated_2025.06".
+    ℹ Default method and version for "MOCATOTS" was previously set to "norms" and
+      "nacc".
 
     ℹ Will be overwritten.
 

@@ -11,6 +11,9 @@
 - [`CDRGLOB()`](https://rmtrane.github.io/ntrs/reference/CDRGLOB.md) :
   CDRGLOB Test Scores
 
+- [`CDRSUM()`](https://rmtrane.github.io/ntrs/reference/CDRSUM.md) :
+  CDRSUM Test Scores
+
 - [`CRAFTDRE()`](https://rmtrane.github.io/ntrs/reference/CRAFTDRE.md) :
   CRAFTDRE Test Scores
 
@@ -61,6 +64,12 @@
 
 - [`MOCATOTS()`](https://rmtrane.github.io/ntrs/reference/MOCATOTS.md) :
   MOCATOTS Test Scores
+
+- [`MOCBTOTS()`](https://rmtrane.github.io/ntrs/reference/MOCBTOTS.md) :
+  MOCBTOTS Test Scores
+
+- [`NACCGDS()`](https://rmtrane.github.io/ntrs/reference/NACCGDS.md) :
+  NACCGDS Test Scores
 
 - [`NACCMMSE()`](https://rmtrane.github.io/ntrs/reference/NACCMMSE.md) :
   NACCMMSE Test Scores
@@ -116,8 +125,23 @@
 - [`TRAILA()`](https://rmtrane.github.io/ntrs/reference/TRAILA.md) :
   TRAILA Test Scores
 
+- [`TRAILALI()`](https://rmtrane.github.io/ntrs/reference/TRAILALI.md) :
+  TRAILALI Test Scores
+
+- [`TRAILARR()`](https://rmtrane.github.io/ntrs/reference/TRAILARR.md) :
+  TRAILARR Test Scores
+
 - [`TRAILB()`](https://rmtrane.github.io/ntrs/reference/TRAILB.md) :
   TRAILB Test Scores
+
+- [`TRAILBLI()`](https://rmtrane.github.io/ntrs/reference/TRAILBLI.md) :
+  TRAILBLI Test Scores
+
+- [`TRAILBRR()`](https://rmtrane.github.io/ntrs/reference/TRAILBRR.md) :
+  TRAILBRR Test Scores
+
+- [`UDSBENRS()`](https://rmtrane.github.io/ntrs/reference/UDSBENRS.md) :
+  UDSBENRS Test Scores
 
 - [`UDSBENTC()`](https://rmtrane.github.io/ntrs/reference/UDSBENTC.md) :
   UDSBENTC Test Scores
