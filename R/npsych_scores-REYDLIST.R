@@ -16,7 +16,14 @@ REYDLIST <- new_npsych_scores(
   label = "RAVLT Distractor List",
   domain = "Memory",
   short_descriptor = "RAVLT Distractor List (not in NACC data)",
-  range = c(0, 15)
+  range = c(0, 15),
+  codes = c(
+    "Physical problem" = 95,
+    "Cognitive/behavior problem" = 96,
+    "Other problem" = 97,
+    "Verbal refusal" = 98,
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
+  )
 )
 
 #' Setup REYDLIST method versions

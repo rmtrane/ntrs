@@ -34,7 +34,7 @@ test_that("list_method_versions() returns empty vector when method doesn't exist
   )
 })
 
-test_that("list_method_versions() errors when .std_versions[[method]] doesn't exist yet", {
+test_that("list_method_versions() returns empty vector when .std_versions[[method]] doesn't exist yet", {
   # Create a new test class that hasn't been set up yet
   new_test <- new_npsych_scores(
     name = "BrandNewTestClass",
@@ -53,7 +53,7 @@ test_that("list_method_versions() errors when .std_versions[[method]] doesn't ex
   )
 })
 
-test_that("list_method_versions() errors when .std_versions[[method]] exists, but is empty", {
+test_that("list_method_versions() returns empty vector when .std_versions[[method]] exists, but is empty", {
   # Note: this is an extreme edge case that should be rarely, if ever, happens in practice
   # because register_*_version() always creates a version when registering, but we test it for robustness
 
