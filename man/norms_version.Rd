@@ -9,6 +9,8 @@ norms_version(
   version_id,
   lookup_table,
   covar_fns,
+  raw_scores_fn = function(x) x,
+  post_proc_fn = function(x) x,
   description = ""
 )
 }

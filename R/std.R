@@ -72,7 +72,8 @@ std <- function(
   # Build the generic name
   generic_name <- paste0("std_using_", method)
 
-  fn <- tryCatch(match.fun(generic_name), error = function(e) NULL)
+  # fn <- tryCatch(match.fun(generic_name), error = function(e) NULL)
+  fn <- .find_std_generics()[[generic_name]]
 
   if (is.null(fn)) {
     scores_class <- setdiff(class(scores), "npsych_scores")

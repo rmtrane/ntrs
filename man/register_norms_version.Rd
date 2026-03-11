@@ -8,7 +8,9 @@ register_norms_version(
   scores,
   version,
   lookup_table,
+  raw_scores_fn = function(x) x,
   covar_fns,
+  post_proc_fn = function(x) x,
   overwrite = FALSE,
   description = ""
 )

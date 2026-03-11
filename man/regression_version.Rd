@@ -9,6 +9,8 @@ regression_version(
   version_id,
   coefs,
   covar_fns,
+  raw_scores_fn = function(x) x,
+  post_proc_fn = function(x) x,
   description = ""
 )
 }

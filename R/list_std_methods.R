@@ -15,15 +15,16 @@ list_std_methods <- function(scores) {
   cls <- S7::S7_class(scores)@name
 
   all_generics <- .find_std_generics()
+
   all_generics <- Filter(
     \(g) {
       tryCatch(
         {
-          gg <- S7::method(get(g), S7::S7_class(scores))
+          gg <- S7::method(g, S7::S7_class(scores))
 
           if ("version" %in% names(formals(gg))) {
             # Remove prefix
-            g <- sub("^std_using_", "", g)
+            g <- sub("^std_using_", "", attr(g, "name") %||% "")
 
             # If method has version argument, check if any version is registered for class
             vers_exists <- exists(g, .std_versions, inherits = FALSE) &&
@@ -45,7 +46,7 @@ list_std_methods <- function(scores) {
   )
 
   # Extract method names from generic names
-  return(sub("^std_using_", "", all_generics))
+  sub("^std_using_", "", names(all_generics))
 }
 
 
@@ -55,15 +56,22 @@ list_std_methods <- function(scores) {
 .find_std_generics <- function() {
   all_ns <- c(loadedNamespaces(), ".GlobalEnv")
 
-  fns <- unlist(lapply(all_ns, function(ns) {
-    env <- if (ns == ".GlobalEnv") {
-      .GlobalEnv
-    } else {
-      asNamespace(ns)
-    }
-    nms <- grep("^std_using_", ls(env), value = TRUE)
-    Filter(\(nm) inherits(get(nm, envir = env), "S7_generic"), nms)
-  }))
+  result <- list()
 
-  unique(fns)
+  #fns <- unlist(lapply(all_ns, function(ns) {
+  for (ns in all_ns) {
+    env <- if (ns == ".GlobalEnv") .GlobalEnv else asNamespace(ns)
+    nms <- grep("^std_using_", ls(env), value = TRUE)
+
+    # Filter(\(nm) inherits(get(nm, envir = env), "S7_generic"), nms)
+    for (nm in nms) {
+      obj <- get(nm, envir = env)
+      if (inherits(obj, "S7_generic") && !nm %in% names(result)) {
+        result[[nm]] <- obj
+      }
+    }
+  }
+
+  # unique(fns)
+  result
 }
