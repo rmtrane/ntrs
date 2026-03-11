@@ -1,4 +1,4 @@
-#' @include new_npsych_scores.R
+#' @include new_npsych_scores.R std_using_norms.R std_using_regression.R
 NULL
 
 #' TRAILB Test Scores
@@ -25,7 +25,6 @@ TRAILB <- new_npsych_scores(
     "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
   )
 )
-
 
 #' Setup TRAILB method versions
 #'
@@ -103,6 +102,7 @@ TRAILB <- new_npsych_scores(
     scores = TRAILB(),
     version = "updated_2024.06",
     coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
+    raw_scores_fn = \(x) -x,
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -146,6 +146,7 @@ TRAILB <- new_npsych_scores(
     scores = TRAILB(),
     version = "updated_2025.06",
     coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
+    raw_scores_fn = \(x) -x,
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -193,6 +194,7 @@ TRAILB <- new_npsych_scores(
     scores = TRAILB(),
     version = "nacc",
     coefs = c(stats::na.omit(coefs)),
+    # raw_scores_fn = \(x) -x,
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0

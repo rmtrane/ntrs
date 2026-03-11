@@ -58,7 +58,11 @@ calc_FAS <- function(
 
   ## Check inputs
   for (vals in colnames(all_vals)) {
-    if (!all(all_vals[, vals] %in% ntrs::rdd[[vals]]$codes)) {
+    if (
+      !all(
+        is.na(all_vals[, vals]) | all_vals[, vals] %in% ntrs::rdd[[vals]]$codes
+      )
+    ) {
       cli::cli_abort(
         "{.arg {vals}} must be a numeric vector with entries in {.val {ntrs::rdd[[vals]]$codes}} (see {.val ntrs::rdd${vals}$codes} for details)"
       )

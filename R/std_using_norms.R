@@ -35,6 +35,9 @@ S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
   ## Get version data (will fail if version not registered).
   version_obj <- get_version_data(scores, "norms", version)
 
+  ## Apply raw_scores_fn
+  raw_scores <- version_obj@raw_scores_fn(raw_scores)
+
   ## Pull out lookup table
   lookup_table <- version_obj@lookup_table
 
@@ -130,8 +133,10 @@ S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
 
   for_standardizing <- match_to[order(match_to$id), c("raw_scores", "m", "sd")]
 
-  with(
+  std_scrs <- with(
     for_standardizing,
     (raw_scores - m) / sd
   )
+
+  version_obj@post_proc_fn(std_scrs)
 }

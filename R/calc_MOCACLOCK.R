@@ -13,7 +13,7 @@ calc_MOCACLOCK <- function(
   MOCACLON,
   MOCACLOH
 ) {
-  if (!all(MOCACLOC %in% c(0, 1, ntrs::rdd$MOCACLOC$codes))) {
+  if (!all(MOCACLOC %in% c(0, 1, ntrs::rdd$MOCACLOC$codes, NA))) {
     cli::cli_abort(
       "{.arg MOCACLOC} must be one of {.val {c(0,1, ntrs::rdd$MOCACLOC$codes)}}"
     )
@@ -21,7 +21,7 @@ calc_MOCACLOCK <- function(
 
   MOCACLOC[!MOCACLOC %in% c(0, 1)] <- NA
 
-  if (!all(MOCACLON %in% c(0, 1, ntrs::rdd$MOCACLON$codes))) {
+  if (!all(MOCACLON %in% c(0, 1, ntrs::rdd$MOCACLON$codes, NA))) {
     cli::cli_abort(
       "{.arg MOCACLON} must be one of {.val {c(0,1, ntrs::rdd$MOCACLON$codes)}}"
     )
@@ -29,7 +29,7 @@ calc_MOCACLOCK <- function(
 
   MOCACLON[!MOCACLON %in% c(0, 1)] <- NA
 
-  if (!all(MOCACLOH %in% c(0, 1, ntrs::rdd$MOCACLOH$codes))) {
+  if (!all(MOCACLOH %in% c(0, 1, ntrs::rdd$MOCACLOH$codes, NA))) {
     cli::cli_abort(
       "{.arg MOCACLOH} must be one of {.val {c(0,1, ntrs::rdd$MOCACLOH$codes)}}"
     )

@@ -39,6 +39,9 @@ S7::method(std_using_regression, npsych_scores) <- function(
     version = version
   )
 
+  ## Apply raw_scores_fn
+  raw_scores <- version_obj@raw_scores_fn(raw_scores)
+
   covars <- rlang::list2(...)
 
   # Check that all dots are named
@@ -112,11 +115,13 @@ S7::method(std_using_regression, npsych_scores) <- function(
   }
 
   ## Get std scores
-  lin_reg_resids(
+  std_scrs <- lin_reg_resids(
     raw_scores,
     X,
     coefs_to_use = coefs
   )
+
+  version_obj@post_proc_fn(std_scrs)
 }
 
 

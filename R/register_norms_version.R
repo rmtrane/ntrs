@@ -30,7 +30,9 @@ register_norms_version <- function(
   scores,
   version,
   lookup_table,
+  raw_scores_fn = \(x) x,
   covar_fns,
+  post_proc_fn = \(x) x,
   overwrite = FALSE,
   description = ""
 ) {
@@ -46,7 +48,9 @@ register_norms_version <- function(
     version_id = version,
     description = description,
     lookup_table = lookup_table,
-    covar_fns = covar_fns
+    raw_scores_fn = raw_scores_fn,
+    covar_fns = covar_fns,
+    post_proc_fn = post_proc_fn
   )
 
   .register_std_version(v, overwrite = overwrite)

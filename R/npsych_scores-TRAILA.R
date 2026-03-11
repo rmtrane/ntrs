@@ -1,4 +1,4 @@
-#' @include new_npsych_scores.R
+#' @include new_npsych_scores.R std_using_norms.R std_using_regression.R
 NULL
 
 #' TRAILA Test Scores
@@ -62,7 +62,8 @@ TRAILA <- new_npsych_scores(
         edu_group
       },
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
-    )
+    ),
+    post_proc_fn = \(x) -x
   )
 
   lookup_table <- normative_summaries$updated$TRAILA
@@ -87,7 +88,8 @@ TRAILA <- new_npsych_scores(
         edu_group
       },
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
-    )
+    ),
+    post_proc_fn = \(x) -x
   )
   # Register regression versions for TRAILA
   coefs <- subset(
@@ -102,6 +104,7 @@ TRAILA <- new_npsych_scores(
     scores = TRAILA(),
     version = "updated_2024.06",
     coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
+    raw_scores_fn = \(x) -x,
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -145,6 +148,7 @@ TRAILA <- new_npsych_scores(
     scores = TRAILA(),
     version = "updated_2025.06",
     coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
+    raw_scores_fn = \(x) -x,
     covar_fns = list(
       age = \(x) {
         x[x < 0] <- 0
@@ -208,7 +212,8 @@ TRAILA <- new_npsych_scores(
 
         x
       }
-    )
+    ),
+    post_proc_fn = \(x) -x
   )
 
   ## Set the default for %s

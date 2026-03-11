@@ -26,7 +26,9 @@ register_regression_version <- function(
   scores,
   version,
   coefs,
+  raw_scores_fn = \(x) x,
   covar_fns = NULL,
+  post_proc_fn = \(x) x,
   description = "",
   overwrite = FALSE
 ) {
@@ -48,7 +50,9 @@ register_regression_version <- function(
     version_id = version,
     description = description,
     coefs = coefs,
-    covar_fns = covar_fns
+    raw_scores_fn = raw_scores_fn,
+    covar_fns = covar_fns,
+    post_proc_fn = post_proc_fn
   )
 
   .register_std_version(v, overwrite = overwrite)

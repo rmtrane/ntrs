@@ -28,7 +28,9 @@ regression_version <- S7::new_class(
   parent = std_version,
   properties = list(
     coefs = S7::class_numeric | S7::class_data.frame,
-    covar_fns = S7::class_list
+    raw_scores_fn = S7::class_function | NULL,
+    covar_fns = S7::class_list,
+    post_proc_fn = S7::class_function | NULL
   ),
   # Special constructor to enforce method_name = "regression"
   constructor = function(
@@ -36,6 +38,8 @@ regression_version <- S7::new_class(
     version_id,
     coefs,
     covar_fns,
+    raw_scores_fn = \(x) x,
+    post_proc_fn = \(x) x,
     description = ""
   ) {
     S7::new_object(
@@ -45,7 +49,9 @@ regression_version <- S7::new_class(
       version_id = version_id,
       description = description,
       coefs = coefs,
-      covar_fns = covar_fns
+      raw_scores_fn = raw_scores_fn,
+      covar_fns = covar_fns,
+      post_proc_fn = post_proc_fn
     )
   },
   validator = function(self) {
@@ -70,7 +76,7 @@ regression_version <- S7::new_class(
         errs,
         cli::format_inline(
           c(
-            "x" = "{.arg covar_fns} may only include entries for non-intercept, non-rmse coefs. Extras: {.val {extras_covar_fns}}."
+            "x" = "{.arg covar_fns} may only include entries for non-intercept, non-rmse coefs. Extras: {.val {extra_covar_fns}}."
             # "i" = "If no transformation needed, provide the identity function, e.g., {.val covar_fns = list({missing_covar_fns[1]} = identity)}. (equivalent to {.val covar_fns = list({missing_covar_fns[1]} = function(x) x))})"
           )
         )
