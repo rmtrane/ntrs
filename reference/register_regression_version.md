@@ -12,7 +12,9 @@ register_regression_version(
   scores,
   version,
   coefs,
+  raw_scores_fn = function(x) x,
   covar_fns = NULL,
+  post_proc_fn = function(x) x,
   description = "",
   overwrite = FALSE
 )
