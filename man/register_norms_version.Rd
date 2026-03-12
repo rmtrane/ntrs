@@ -22,22 +22,29 @@ determine the scores class for registration.}
 \item{version}{Character string identifying this version (e.g., \code{"nacc"},
 \code{"updated"}).}
 
-\item{lookup_table}{Data frame containing norms. Must include columns \code{m}
-(mean) and \code{sd} (standard deviation), may include \code{n}(sample size).
-Additional columns are treated as covariate grouping variables and must
-have matching entries in \code{covar_fns}. See \link{norms_version} for validation
-details.}
+\item{lookup_table}{A data frame containing columns \code{m} (mean) and \code{sd}
+(standard deviation), plus covariate columns.}
 
-\item{covar_fns}{A named list of functions that transform raw covariate
-inputs to match the levels in \code{lookup_table}. Names must match the
-non-statistic columns (everything but \code{m}, \code{sd}, \code{n}) in \code{lookup_table}.}
+\item{raw_scores_fn}{An optional function that is applied to the raw scores
+before standardization. Example: the model fitted to get the
+\code{updated_2025.06} regression coefficients for \code{TRAILA} was fitted to
+the negative \code{TRAILA} values to ensure higher values are better. Therefore
+\verb{raw_scores_fn = \\(x) -x} for this version.}
+
+\item{covar_fns}{A named list of functions. Names must match the
+non-statistic columns in \code{lookup_table}.}
+
+\item{post_proc_fn}{An option post processing function that is applied to
+standardized scores after the fact. For example, for norms based standardization
+of \code{TRAILA}, the sign of the z-scores are flipped to that larger z-scores are
+correlated with better performance. Hence, \verb{post_proc_fn = \\(x) -x}.}
 
 \item{overwrite}{Logical. If \code{FALSE} (the default), an error is thrown if a
 version with the same \code{version} and scores class already exists in the
 registry. If \code{TRUE}, the existing version is overwritten with the new
 one.}
 
-\item{description}{Optional character string describing this version.}
+\item{description}{An optional single string describing the version.}
 }
 \value{
 Invisible \code{NULL}. Called for its side effect of registering the

@@ -22,18 +22,29 @@ determine the scores class for registration.}
 \item{version}{Character string identifying this version (e.g., \code{"nacc"},
 \code{"updated"}).}
 
-\item{coefs}{A named numeric vector or a data frame of regression coefficients.
-Must include \code{"intercept"} and \code{"rmse"} entries. Additional names are treated as
-covariate coefficients. See \link{regression_version} for validation details.}
+\item{coefs}{A named numeric vector of regression coefficients. Must include
+\code{"intercept"} and \code{"rmse"} entries.}
 
-\item{covar_fns}{A named list of functions that transform raw covariate
-inputs. Must include entries for all coefficient names other than
-\code{"intercept"} and \code{"rmse"}.}
+\item{raw_scores_fn}{An optional function that is applied to the raw scores
+before standardization. Example: the model fitted to get the
+\code{updated_2025.06} regression coefficients for \code{TRAILA} was fitted to
+the negative \code{TRAILA} values to ensure higher values are better. Therefore
+\verb{raw_scores_fn = \\(x) -x} for this version.}
 
-\item{description}{Optional character string describing this version.}
+\item{covar_fns}{A named list of functions. Names must match the
+non-statistic columns in \code{lookup_table}.}
 
-\item{overwrite}{Logical. If \code{TRUE}, allows overwriting an existing version
-with a warning. Defaults to \code{FALSE}.}
+\item{post_proc_fn}{An option post processing function that is applied to
+standardized scores after the fact. For example, for norms based standardization
+of \code{TRAILA}, the sign of the z-scores are flipped to that larger z-scores are
+correlated with better performance. Hence, \verb{post_proc_fn = \\(x) -x}.}
+
+\item{description}{An optional single string describing the version.}
+
+\item{overwrite}{Logical. If \code{FALSE} (the default), an error is thrown if a
+version with the same \code{version} and scores class already exists in the
+registry. If \code{TRUE}, the existing version is overwritten with the new
+one.}
 }
 \value{
 Invisible \code{NULL}. Called for its side effect of registering the

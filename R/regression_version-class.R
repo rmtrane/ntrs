@@ -8,15 +8,9 @@ NULL
 #' covariate functions for regression-based standardization. Inherits from
 #' [std_version].
 #'
-#' @param scores_class A single non-empty string giving the `npsych_scores`
-#'   subclass this version applies to (e.g., `"MOCATOTS"`).
-#' @param version_id A single non-empty string uniquely identifying this
-#'   version within its method and scores class.
-#' @param description An optional single string describing the version.
+#' @inheritParams norms_version
 #' @param coefs A named numeric vector of regression coefficients. Must include
 #'   `"intercept"` and `"rmse"` entries.
-#' @param covar_fns A named list of functions. May include entries for all
-#'   coefficient names other than `"intercept"` and `"rmse"`.
 #'
 #' @returns
 #' An S7 object of class `regression_version` with properties inherited from

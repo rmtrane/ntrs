@@ -8,15 +8,20 @@ NULL
 #' Create a `norms_version` object that stores a lookup table and covariate
 #' functions for norms-based standardization. Inherits from [std_version].
 #'
-#' @param scores_class A single non-empty string giving the `npsych_scores`
-#'   subclass this version applies to (e.g., `"MOCATOTS"`).
-#' @param version_id A single non-empty string uniquely identifying this
-#'   version within its method and scores class.
-#' @param description An optional single string describing the version.
+#' @inheritParams std_version
 #' @param lookup_table A data frame containing columns `m` (mean) and `sd`
 #'   (standard deviation), plus covariate columns.
 #' @param covar_fns A named list of functions. Names must match the
 #'   non-statistic columns in `lookup_table`.
+#' @param raw_scores_fn An optional function that is applied to the raw scores
+#'   before standardization. Example: the model fitted to get the
+#'   `updated_2025.06` regression coefficients for `TRAILA` was fitted to
+#'   the negative `TRAILA` values to ensure higher values are better. Therefore
+#'   `raw_scores_fn = \(x) -x` for this version.
+#' @param post_proc_fn An option post processing function that is applied to
+#'   standardized scores after the fact. For example, for norms based standardization
+#'   of `TRAILA`, the sign of the z-scores are flipped to that larger z-scores are
+#'   correlated with better performance. Hence, `post_proc_fn = \(x) -x`.
 #'
 #' @returns
 #' An S7 object of class `norms_version` with properties inherited from

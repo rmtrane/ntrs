@@ -24,8 +24,19 @@ version within its method and scores class.}
 \item{coefs}{A named numeric vector of regression coefficients. Must include
 \code{"intercept"} and \code{"rmse"} entries.}
 
-\item{covar_fns}{A named list of functions. May include entries for all
-coefficient names other than \code{"intercept"} and \code{"rmse"}.}
+\item{covar_fns}{A named list of functions. Names must match the
+non-statistic columns in \code{lookup_table}.}
+
+\item{raw_scores_fn}{An optional function that is applied to the raw scores
+before standardization. Example: the model fitted to get the
+\code{updated_2025.06} regression coefficients for \code{TRAILA} was fitted to
+the negative \code{TRAILA} values to ensure higher values are better. Therefore
+\verb{raw_scores_fn = \\(x) -x} for this version.}
+
+\item{post_proc_fn}{An option post processing function that is applied to
+standardized scores after the fact. For example, for norms based standardization
+of \code{TRAILA}, the sign of the z-scores are flipped to that larger z-scores are
+correlated with better performance. Hence, \verb{post_proc_fn = \\(x) -x}.}
 
 \item{description}{An optional single string describing the version.}
 }

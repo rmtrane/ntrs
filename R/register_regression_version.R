@@ -4,19 +4,8 @@
 #' Creates a [regression_version] object and registers it in the
 #' `.std_versions` registry via [.register_std_version()].
 #'
-#' @param scores A `npsych_scores` object, such as `MOCATOTS()`. Used to
-#'   determine the scores class for registration.
-#' @param version Character string identifying this version (e.g., `"nacc"`,
-#'   `"updated"`).
-#' @param coefs A named numeric vector or a data frame of regression coefficients.
-#'   Must include `"intercept"` and `"rmse"` entries. Additional names are treated as
-#'   covariate coefficients. See [regression_version] for validation details.
-#' @param covar_fns A named list of functions that transform raw covariate
-#'   inputs. Must include entries for all coefficient names other than
-#'   `"intercept"` and `"rmse"`.
-#' @param description Optional character string describing this version.
-#' @param overwrite Logical. If `TRUE`, allows overwriting an existing version
-#'   with a warning. Defaults to `FALSE`.
+#' @inheritParams register_norms_version
+#' @inheritParams regression_version
 #'
 #' @return Invisible `NULL`. Called for its side effect of registering the
 #'   version in the internal `.std_versions` registry.

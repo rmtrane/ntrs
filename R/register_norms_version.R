@@ -8,19 +8,11 @@
 #'   determine the scores class for registration.
 #' @param version Character string identifying this version (e.g., `"nacc"`,
 #'   `"updated"`).
-#' @param lookup_table Data frame containing norms. Must include columns `m`
-#'   (mean) and `sd` (standard deviation), may include `n`(sample size).
-#'   Additional columns are treated as covariate grouping variables and must
-#'   have matching entries in `covar_fns`. See [norms_version] for validation
-#'   details.
-#' @param covar_fns A named list of functions that transform raw covariate
-#'   inputs to match the levels in `lookup_table`. Names must match the
-#'   non-statistic columns (everything but `m`, `sd`, `n`) in `lookup_table`.
+#' @inheritParams norms_version
 #' @param overwrite Logical. If `FALSE` (the default), an error is thrown if a
 #'   version with the same `version` and scores class already exists in the
 #'   registry. If `TRUE`, the existing version is overwritten with the new
 #'   one.
-#' @param description Optional character string describing this version.
 #'
 #' @return Invisible `NULL`. Called for its side effect of registering the
 #'   version in the internal `.std_versions` registry.
