@@ -53,7 +53,7 @@ npsych_scores <- S7::new_class(
       errs <- c(errs, cli::format_inline("{.arg label} must be a string."))
     }
 
-    if (!is.character(domain) || length(domain) > 1) {
+    if (!is.null(domain) && (!is.character(domain) || length(domain) > 1)) {
       errs <- c(errs, cli::format_inline("{.arg domain} must be a string."))
     }
 

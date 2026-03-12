@@ -328,3 +328,6 @@ test_that("std_using_norms() passes covariates through when version has no covar
     c(0, 1)
   )
 })
+
+
+test_that

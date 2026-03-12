@@ -52,8 +52,17 @@ REYDREC <- new_npsych_scores(
     lookup_table = lookup_table,
     covar_fns = list(
       age = \(x) {
-        out <- .bincode(x, c(0, 60, 70, 80, 90, Inf), right = FALSE)
-        attr(out, "levels") <- c("<60", "60-69", "70-79", "80-89", ">89")
+        out <- .bincode(x, c(0, 20, 30, 40, 50, 60, 70, 80, Inf), right = FALSE)
+        attr(out, "levels") <- c(
+          "<20",
+          "20-29",
+          "30-39",
+          "40-49",
+          "50-59",
+          "60-69",
+          "70-79",
+          ">79"
+        )
         class(out) <- "factor"
         return(out)
       }
