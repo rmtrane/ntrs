@@ -8,6 +8,5 @@
 #'
 #' @export
 list_npsych_scores <- function() {
-  # ls(envir = .npsych_classes)
   names(.find_npsych_classes())
 }

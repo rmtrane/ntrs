@@ -41,6 +41,7 @@ Collate:
     'calc_REYAREC.R'
     'calc_REYTOTAL.R'
     'demo_data.R'
+    'get_npsych_scores.R'
     'get_version_data.R'
     'list_method_versions.R'
     'list_npsych_scores.R'
