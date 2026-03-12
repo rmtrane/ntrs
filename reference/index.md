@@ -179,6 +179,9 @@
 - [`demo_data`](https://rmtrane.github.io/ntrs/reference/demo_data.md) :
   Demo Data
 
+- [`get_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/get_npsych_scores.md)
+  : Get an npsych_scores constructor by name
+
 - [`get_std_defaults()`](https://rmtrane.github.io/ntrs/reference/get_std_defaults.md)
   :
 
