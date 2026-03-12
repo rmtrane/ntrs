@@ -79,6 +79,21 @@ version within its method and scores class.</p></dd>
 non-statistic columns in <code>lookup_table</code>.</p></dd>
 
 
+<dt id="arg-raw-scores-fn">raw_scores_fn<a class="anchor" aria-label="anchor" href="#arg-raw-scores-fn"></a></dt>
+<dd><p>An optional function that is applied to the raw scores
+before standardization. Example: the model fitted to get the
+<code>updated_2025.06</code> regression coefficients for <code>TRAILA</code> was fitted to
+the negative <code>TRAILA</code> values to ensure higher values are better. Therefore
+<code>raw_scores_fn = \(x) -x</code> for this version.</p></dd>
+
+
+<dt id="arg-post-proc-fn">post_proc_fn<a class="anchor" aria-label="anchor" href="#arg-post-proc-fn"></a></dt>
+<dd><p>An option post processing function that is applied to
+standardized scores after the fact. For example, for norms based standardization
+of <code>TRAILA</code>, the sign of the z-scores are flipped to that larger z-scores are
+correlated with better performance. Hence, <code>post_proc_fn = \(x) -x</code>.</p></dd>
+
+
 <dt id="arg-description">description<a class="anchor" aria-label="anchor" href="#arg-description"></a></dt>
 <dd><p>An optional single string describing the version.</p></dd>
 

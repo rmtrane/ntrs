@@ -71,17 +71,28 @@ determine the scores class for registration.</p></dd>
 
 
 <dt id="arg-lookup-table">lookup_table<a class="anchor" aria-label="anchor" href="#arg-lookup-table"></a></dt>
-<dd><p>Data frame containing norms. Must include columns <code>m</code>
-(mean) and <code>sd</code> (standard deviation), may include <code>n</code>(sample size).
-Additional columns are treated as covariate grouping variables and must
-have matching entries in <code>covar_fns</code>. See <a href="norms_version.html">norms_version</a> for validation
-details.</p></dd>
+<dd><p>A data frame containing columns <code>m</code> (mean) and <code>sd</code>
+(standard deviation), plus covariate columns.</p></dd>
+
+
+<dt id="arg-raw-scores-fn">raw_scores_fn<a class="anchor" aria-label="anchor" href="#arg-raw-scores-fn"></a></dt>
+<dd><p>An optional function that is applied to the raw scores
+before standardization. Example: the model fitted to get the
+<code>updated_2025.06</code> regression coefficients for <code>TRAILA</code> was fitted to
+the negative <code>TRAILA</code> values to ensure higher values are better. Therefore
+<code>raw_scores_fn = \(x) -x</code> for this version.</p></dd>
 
 
 <dt id="arg-covar-fns">covar_fns<a class="anchor" aria-label="anchor" href="#arg-covar-fns"></a></dt>
-<dd><p>A named list of functions that transform raw covariate
-inputs to match the levels in <code>lookup_table</code>. Names must match the
-non-statistic columns (everything but <code>m</code>, <code>sd</code>, <code>n</code>) in <code>lookup_table</code>.</p></dd>
+<dd><p>A named list of functions. Names must match the
+non-statistic columns in <code>lookup_table</code>.</p></dd>
+
+
+<dt id="arg-post-proc-fn">post_proc_fn<a class="anchor" aria-label="anchor" href="#arg-post-proc-fn"></a></dt>
+<dd><p>An option post processing function that is applied to
+standardized scores after the fact. For example, for norms based standardization
+of <code>TRAILA</code>, the sign of the z-scores are flipped to that larger z-scores are
+correlated with better performance. Hence, <code>post_proc_fn = \(x) -x</code>.</p></dd>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
@@ -92,7 +103,7 @@ one.</p></dd>
 
 
 <dt id="arg-description">description<a class="anchor" aria-label="anchor" href="#arg-description"></a></dt>
-<dd><p>Optional character string describing this version.</p></dd>
+<dd><p>An optional single string describing the version.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -35,26 +35,40 @@ register_regression_version(
 
 - coefs:
 
-  A named numeric vector or a data frame of regression coefficients.
-  Must include `"intercept"` and `"rmse"` entries. Additional names are
-  treated as covariate coefficients. See
-  [regression_version](https://rmtrane.github.io/ntrs/reference/regression_version.md)
-  for validation details.
+  A named numeric vector of regression coefficients. Must include
+  `"intercept"` and `"rmse"` entries.
+
+- raw_scores_fn:
+
+  An optional function that is applied to the raw scores before
+  standardization. Example: the model fitted to get the
+  `updated_2025.06` regression coefficients for `TRAILA` was fitted to
+  the negative `TRAILA` values to ensure higher values are better.
+  Therefore `raw_scores_fn = \(x) -x` for this version.
 
 - covar_fns:
 
-  A named list of functions that transform raw covariate inputs. Must
-  include entries for all coefficient names other than `"intercept"` and
-  `"rmse"`.
+  A named list of functions. Names must match the non-statistic columns
+  in `lookup_table`.
+
+- post_proc_fn:
+
+  An option post processing function that is applied to standardized
+  scores after the fact. For example, for norms based standardization of
+  `TRAILA`, the sign of the z-scores are flipped to that larger z-scores
+  are correlated with better performance. Hence,
+  `post_proc_fn = \(x) -x`.
 
 - description:
 
-  Optional character string describing this version.
+  An optional single string describing the version.
 
 - overwrite:
 
-  Logical. If `TRUE`, allows overwriting an existing version with a
-  warning. Defaults to `FALSE`.
+  Logical. If `FALSE` (the default), an error is thrown if a version
+  with the same `version` and scores class already exists in the
+  registry. If `TRUE`, the existing version is overwritten with the new
+  one.
 
 ## Value
 

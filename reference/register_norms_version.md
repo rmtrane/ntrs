@@ -35,18 +35,29 @@ register_norms_version(
 
 - lookup_table:
 
-  Data frame containing norms. Must include columns `m` (mean) and `sd`
-  (standard deviation), may include `n`(sample size). Additional columns
-  are treated as covariate grouping variables and must have matching
-  entries in `covar_fns`. See
-  [norms_version](https://rmtrane.github.io/ntrs/reference/norms_version.md)
-  for validation details.
+  A data frame containing columns `m` (mean) and `sd` (standard
+  deviation), plus covariate columns.
+
+- raw_scores_fn:
+
+  An optional function that is applied to the raw scores before
+  standardization. Example: the model fitted to get the
+  `updated_2025.06` regression coefficients for `TRAILA` was fitted to
+  the negative `TRAILA` values to ensure higher values are better.
+  Therefore `raw_scores_fn = \(x) -x` for this version.
 
 - covar_fns:
 
-  A named list of functions that transform raw covariate inputs to match
-  the levels in `lookup_table`. Names must match the non-statistic
-  columns (everything but `m`, `sd`, `n`) in `lookup_table`.
+  A named list of functions. Names must match the non-statistic columns
+  in `lookup_table`.
+
+- post_proc_fn:
+
+  An option post processing function that is applied to standardized
+  scores after the fact. For example, for norms based standardization of
+  `TRAILA`, the sign of the z-scores are flipped to that larger z-scores
+  are correlated with better performance. Hence,
+  `post_proc_fn = \(x) -x`.
 
 - overwrite:
 
@@ -57,7 +68,7 @@ register_norms_version(
 
 - description:
 
-  Optional character string describing this version.
+  An optional single string describing the version.
 
 ## Value
 

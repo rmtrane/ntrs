@@ -38,8 +38,24 @@ regression_version(
 
 - covar_fns:
 
-  A named list of functions. May include entries for all coefficient
-  names other than `"intercept"` and `"rmse"`.
+  A named list of functions. Names must match the non-statistic columns
+  in `lookup_table`.
+
+- raw_scores_fn:
+
+  An optional function that is applied to the raw scores before
+  standardization. Example: the model fitted to get the
+  `updated_2025.06` regression coefficients for `TRAILA` was fitted to
+  the negative `TRAILA` values to ensure higher values are better.
+  Therefore `raw_scores_fn = \(x) -x` for this version.
+
+- post_proc_fn:
+
+  An option post processing function that is applied to standardized
+  scores after the fact. For example, for norms based standardization of
+  `TRAILA`, the sign of the z-scores are flipped to that larger z-scores
+  are correlated with better performance. Hence,
+  `post_proc_fn = \(x) -x`.
 
 - description:
 
