@@ -209,7 +209,7 @@ test_that("std_data() uses methods argument to override defaults", {
 
   result <- std_data(
     df,
-    methods = list(MOCATOTS = c(method = "norms", version = "nacc")),
+    methods = list(MOCATOTS = list(method = "norms", version = "nacc")),
     age = df$age,
     sex = df$sex,
     educ = df$educ
@@ -222,6 +222,9 @@ test_that("std_data() uses methods argument to override defaults", {
     educ = df$educ,
     version = "nacc"
   )
+
+  attr(expected, "method") <- "norms"
+  attr(expected, "version") <- "nacc"
 
   expect_equal(result$z_moca, expected)
 })
@@ -243,7 +246,7 @@ test_that("std_data() warns when methods contains unknown class names", {
   expect_warning(
     std_data(
       df,
-      methods = list(NONEXISTENT = c(method = "norms", version = "nacc")),
+      methods = list(NONEXISTENT = list(method = "norms", version = "nacc")),
       age = df$age,
       sex = df$sex,
       educ = df$educ

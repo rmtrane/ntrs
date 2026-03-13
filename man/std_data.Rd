@@ -30,8 +30,8 @@ optional within each entry; omitted elements resolve to the registered
 default. Classes not listed use their defaults.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{methods = list(
-  MOCATOTS = c(method = "regression", version = "nacc"),
-  ANIMALS  = c(method = "norms")
+  MOCATOTS = list(method = "regression", version = "nacc"),
+  ANIMALS  = list(method = "norms")
 )
 }\if{html}{\out{</div>}}}
 
@@ -72,8 +72,8 @@ std_data(my_data, age = my_data$age, sex = my_data$sex, educ = my_data$educ)
 std_data(
   my_data,
   methods = list(
-    MOCATOTS = c(method = "norms", version = "nacc"),
-    ANIMALS  = c(method = "regression", version = "updated_2025.06")
+    MOCATOTS = list(method = "norms", version = "nacc"),
+    ANIMALS  = list(method = "regression", version = "updated_2025.06")
   ),
   age = age, sex = sex, educ = educ
 )

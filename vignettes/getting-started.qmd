@@ -135,7 +135,7 @@ You can override the method/version per test class:
 result2 <- std_data(
   df,
   methods = list(
-    MOCATOTS = c(method = "norms", version = "nacc")
+    MOCATOTS = list(method = "norms", version = "nacc")
   ),
   age = age,
   sex = sex,

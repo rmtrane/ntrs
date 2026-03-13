@@ -7,8 +7,8 @@
 new_npsych_scores(
   name,
   label,
-  domain = character(),
-  short_descriptor = character(),
+  domain = NA_character_,
+  short_descriptor = NA_character_,
   range,
   codes = numeric()
 )
