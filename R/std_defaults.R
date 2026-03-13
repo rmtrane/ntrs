@@ -48,15 +48,20 @@ set_std_defaults <- function(
     }
 
     if (overwrite) {
-      cli::cli_bullets(c(
-        "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {cur_default$method}} and {.val {cur_default$version}}.",
-        "i" = "Will be overwritten."
-      ))
+      cli::cli_inform(
+        c(
+          "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {cur_default$method}} and {.val {cur_default$version}}.",
+          "i" = "Will be overwritten."
+        ),
+        class = "packageStartupMessage"
+      )
     } else {
-      cli::cli_abort(c(
-        "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {cur_default$method}} and {.val {cur_default$version}}.",
-        "x" = "To overwrite, use {.arg overwrite = TRUE}."
-      ))
+      cli::cli_abort(
+        c(
+          "i" = "Default method and version for {.val {scores_class}} was previously set to {.val {cur_default$method}} and {.val {cur_default$version}}.",
+          "x" = "To overwrite, use {.arg overwrite = TRUE}."
+        )
+      )
     }
   }
 
