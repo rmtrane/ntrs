@@ -19,8 +19,8 @@
 #'
 #'   ```
 #'   methods = list(
-#'     MOCATOTS = c(method = "regression", version = "nacc"),
-#'     ANIMALS  = c(method = "norms")
+#'     MOCATOTS = list(method = "regression", version = "nacc"),
+#'     ANIMALS  = list(method = "norms")
 #'   )
 #'   ```
 #' @param ... Named covariates shared across all score columns (e.g.,
@@ -55,8 +55,8 @@
 #' std_data(
 #'   my_data,
 #'   methods = list(
-#'     MOCATOTS = c(method = "norms", version = "nacc"),
-#'     ANIMALS  = c(method = "regression", version = "updated_2025.06")
+#'     MOCATOTS = list(method = "norms", version = "nacc"),
+#'     ANIMALS  = list(method = "regression", version = "updated_2025.06")
 #'   ),
 #'   age = age, sex = sex, educ = educ
 #' )
@@ -162,21 +162,28 @@ std_data <- function(
     (new_nms) := lapply(.SD, function(scores_col) {
       scores_class <- S7::S7_class(scores_col)@name
       col_spec <- methods[[scores_class]]
-      col_method <- col_spec[["method"]]
-      col_version <- col_spec[["version"]]
+      col_method <- col_spec$method
+      col_version <- col_spec$version
 
       tryCatch(
-        do.call(
-          std,
-          c(
-            list(
-              scores = scores_col,
-              method = col_method,
-              version = col_version
-            ),
-            covars
+        {
+          tmp <- do.call(
+            std,
+            c(
+              list(
+                scores = scores_col,
+                method = col_method,
+                version = col_version
+              ),
+              covars
+            )
           )
-        ),
+
+          attr(tmp, "method") <- col_method
+          attr(tmp, "version") <- col_version
+
+          tmp
+        },
         error = function(e) {
           col_nm <- npsych_cols[
             match(scores_class, col_classes)
