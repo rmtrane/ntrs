@@ -155,15 +155,11 @@ $version
 <span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Default method and version for "MOCATOTS" was previously set to "regression"
-  and "updated_2025.06".</code></pre>
+  and "updated_2025.06".
+ℹ Will be overwritten.
+✔ Set "nacc" as default for norms method on &lt;MOCATOTS&gt;</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Will be overwritten.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Set "nacc" as default for norms method on &lt;MOCATOTS&gt;</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_std_defaults.html">get_std_defaults</a></span><span class="op">(</span><span class="va">moca</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$method
@@ -178,13 +174,13 @@ $version
 </h2>
 <p>Use <code><a href="../reference/std.html">std()</a></code> to convert raw scores to z-scores. Covariates (age, sex, education, etc.) are passed as named arguments:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span><span class="va">moca</span>, age <span class="op">=</span> <span class="fl">72</span>, sex <span class="op">=</span> <span class="fl">1</span>, educ <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
 <span><span class="va">z</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.4166667  0.8333333  1.6666667</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/set_std_defaults.html">set_std_defaults</a></span><span class="op">(</span></span>
 <span>  <span class="va">moca</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"regression"</span>,</span>
@@ -193,20 +189,16 @@ $version
 <span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Default method and version for "MOCATOTS" was previously set to "norms" and
-  "nacc".</code></pre>
+  "nacc".
+ℹ Will be overwritten.
+✔ Set "updated_2025.06" as default for regression method on &lt;MOCATOTS&gt;</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Will be overwritten.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Set "updated_2025.06" as default for regression method on &lt;MOCATOTS&gt;</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">z_reg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span><span class="va">moca</span>, age <span class="op">=</span> <span class="fl">72</span>, sex <span class="op">=</span> <span class="fl">1</span>, educ <span class="op">=</span> <span class="fl">16</span>, race <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>To override the default method or version, specify them explicitly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">z_norms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span></span>
 <span>  <span class="va">moca</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"norms"</span>,</span>
@@ -225,7 +217,7 @@ $version
 </h2>
 <p>When you have a data frame with multiple test score columns, <code><a href="../reference/std_data.html">std_data()</a></code> standardizes all of them at once:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">72</span>, <span class="fl">75</span>, <span class="fl">68</span><span class="op">)</span>,</span>
 <span>  sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -253,7 +245,7 @@ $version
 </div>
 <p>You can override the method/version per test class:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_data.html">std_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -268,7 +260,7 @@ $version
 <pre><code>Warning: `race` is not needed to standardize using "norms" when version is "nacc" and
 will be ignored.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result2</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  age sex educ race moca animals     z_moca  z_animals
@@ -281,7 +273,7 @@ will be ignored.</code></pre>
 </h2>
 <p>If you prefer a different default method for your session, use <code><a href="../reference/set_std_defaults.html">set_std_defaults()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/set_std_defaults.html">set_std_defaults</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/MOCATOTS.html">MOCATOTS</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"norms"</span>,</span>

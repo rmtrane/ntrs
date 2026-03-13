@@ -103,9 +103,7 @@ set_std_defaults(
 
     ℹ Default method and version for "MOCATOTS" was previously set to "regression"
       and "updated_2025.06".
-
     ℹ Will be overwritten.
-
     ✔ Set "nacc" as default for norms method on <MOCATOTS>
 
 ``` r
@@ -146,9 +144,7 @@ set_std_defaults(
 
     ℹ Default method and version for "MOCATOTS" was previously set to "norms" and
       "nacc".
-
     ℹ Will be overwritten.
-
     ✔ Set "updated_2025.06" as default for regression method on <MOCATOTS>
 
 ``` r
