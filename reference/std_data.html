@@ -90,8 +90,8 @@ the form <code>c(method = "...", version = "...")</code>. Both elements are
 optional within each entry; omitted elements resolve to the registered
 default. Classes not listed use their defaults.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>methods <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="at">MOCATOTS =</span> <span class="fu">c</span>(<span class="at">method =</span> <span class="st">"regression"</span>, <span class="at">version =</span> <span class="st">"nacc"</span>),</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">ANIMALS  =</span> <span class="fu">c</span>(<span class="at">method =</span> <span class="st">"norms"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="at">MOCATOTS =</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="st">"regression"</span>, <span class="at">version =</span> <span class="st">"nacc"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">ANIMALS  =</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="st">"norms"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>)</span></code></pre><p></p></div></dd>
 
 
@@ -136,8 +136,8 @@ matches the input type (<code>data.frame</code> or <code>data.table</code>).</p>
 <span class="r-in"><span><span class="fu">std_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">my_data</span>,</span></span>
 <span class="r-in"><span>  methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    MOCATOTS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"norms"</span>, version <span class="op">=</span> <span class="st">"nacc"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    ANIMALS  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"regression"</span>, version <span class="op">=</span> <span class="st">"updated_2025.06"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    MOCATOTS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"norms"</span>, version <span class="op">=</span> <span class="st">"nacc"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    ANIMALS  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"regression"</span>, version <span class="op">=</span> <span class="st">"updated_2025.06"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  age <span class="op">=</span> <span class="va">age</span>, sex <span class="op">=</span> <span class="va">sex</span>, educ <span class="op">=</span> <span class="va">educ</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
