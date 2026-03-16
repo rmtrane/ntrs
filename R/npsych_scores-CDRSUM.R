@@ -13,5 +13,8 @@ CDRSUM <- new_npsych_scores(
   label = "CDR sum of boxes",
   domain = "General Cognition",
   short_descriptor = "Standard CDR sum of boxes",
-  range = c(0, 18)
+  range = c(0, 18),
+  codes = c(
+    "N/A (not official error code, but shows up in full NACC data)" = 99
+  )
 )
