@@ -6,6 +6,7 @@
 [![Codecov test
 coverage](https://codecov.io/gh/rmtrane/ntrs/graph/badge.svg)](https://app.codecov.io/gh/rmtrane/ntrs)
 [![R-CMD-check](https://github.com/rmtrane/ntrs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rmtrane/ntrs/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/rmtrane/ntrs/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/rmtrane/ntrs/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
 The goal of `ntrs` is to provide a streamlined framework for working
