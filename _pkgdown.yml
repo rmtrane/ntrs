@@ -10,6 +10,7 @@ reference:
       - new_npsych_scores
       - is_npsych_scores
       - remove_error_codes
+      - replace_codes
 
   - title: "Standardization"
     desc: "Standardize scores."
