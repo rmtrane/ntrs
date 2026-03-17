@@ -1,0 +1,588 @@
+# Working with NACC Data
+
+`ntrs` is designed around the [National Alzheimer’s Coordinating Center
+(NACC)](https://naccdata.org/) Uniform Data Set (UDS). This vignette
+walks through a realistic workflow: starting from raw NACC-style data,
+computing derived scores, and batch-standardizing everything.
+
+## The demo data
+
+`ntrs` ships with a synthetic dataset, `demo_data`, that mimics the
+structure of a NACC data extract. It contains demographic variables,
+cognitive test scores, and functional assessment items — all with
+realistic error codes.
+
+``` r
+dim(demo_data)
+```
+
+    [1] 344 159
+
+``` r
+names(demo_data)[1:20]
+```
+
+     [1] "NACCID"   "NACCAGE"  "SEX"      "EDUC"     "BIRTHYR"  "BIRTHMO"
+     [7] "VISITYR"  "VISITMO"  "VISITDAY" "RACE"     "HANDED"   "CDRGLOB"
+    [13] "MOCATOTS" "MOCBTOTS" "TRAILA"   "TRAILARR" "TRAILALI" "OTRAILA"
+    [19] "OTRLARR"  "DIGFORCT"
+
+The column names match NACC variable names (e.g., `MOCATOTS`, `TRAILA`,
+`ANIMALS`). You can look up any variable in the Researcher’s Data
+Dictionary via the `rdd` object:
+
+``` r
+rdd$MOCATOTS$short_descriptor
+```
+
+    [1] "MoCA Total Raw Score - uncorrected"
+
+``` r
+rdd$MOCATOTS$range
+```
+
+    [1]  0 30
+
+``` r
+rdd$MOCATOTS$codes
+```
+
+                                                                                       Item(s) or whole test not administered
+                                                                                                                           88
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4 
+
+## Step 1: Convert columns to `npsych_scores`
+
+Raw NACC data arrives as plain numeric columns. The first step is to
+wrap the columns you want to standardize as `npsych_scores` objects.
+This adds validation, range checking, and error-code awareness.
+
+``` r
+df <- demo_data
+
+df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
+df$ANIMALS <- ANIMALS(df$ANIMALS)
+df$TRAILA <- TRAILA(df$TRAILA)
+df$CRAFTVRS <- CRAFTVRS(df$CRAFTVRS)
+df$UDSBENTD <- UDSBENTD(df$UDSBENTD)
+```
+
+Once converted, the columns carry metadata:
+
+``` r
+df$MOCATOTS[1:10]
+```
+
+    <ntrs::MOCATOTS> num [1:10] -4 -4 -4 -4 -4 -4 -4 -4 -4 -4
+     @ label           : chr "MoCA"
+     @ domain          : chr "General Cognition"
+     @ short_descriptor: chr "MoCA Total Raw Score - uncorrected"
+     @ range           : num [1:2] 0 30
+     @ codes           : Named num [1:2] -4 88
+     .. - attr(*, "names")= chr [1:2] "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" "Item(s) or whole test not administered"
+
+## Step 2: Compute derived scores
+
+Some tests in the NACC battery don’t appear directly in the data — they
+must be calculated from component variables. `ntrs` provides `calc_*`
+helper functions for these.
+
+### MoCA Clock Drawing total
+
+The MoCA clock drawing score is the sum of three sub-items (contour,
+numbers, hands), each scored 0 or 1:
+
+``` r
+df$MOCACLOCK <- calc_MOCACLOCK(
+  MOCACLOC = demo_data$MOCACLOC,
+  MOCACLON = demo_data$MOCACLON,
+  MOCACLOH = demo_data$MOCACLOH
+)
+
+df$MOCACLOCK[1:10]
+```
+
+    <ntrs::MOCACLOCK> num [1:10] NA NA NA NA NA NA NA NA NA NA
+     @ label           : chr "Clock Drawing Test"
+     @ domain          : chr "Executive Functioning"
+     @ short_descriptor: chr "Sum of MOCACLOC, MOCACLON, and MOCACLOH (not in NACC data)"
+     @ range           : num [1:2] 0 3
+     @ codes           : num(0) 
+
+### RAVLT Total Learning
+
+The Rey Auditory Verbal Learning Test (RAVLT) total learning score is
+the sum of trials 1 through 5:
+
+``` r
+df$REYTOTAL <- calc_REYTOTAL(
+  rey1rec = REY1REC(demo_data$REY1REC),
+  rey2rec = REY2REC(demo_data$REY2REC),
+  rey3rec = REY3REC(demo_data$REY3REC),
+  rey4rec = REY4REC(demo_data$REY4REC),
+  rey5rec = REY5REC(demo_data$REY5REC)
+)
+
+df$REYTOTAL[1:10]
+```
+
+    <ntrs::REYTOTAL> num [1:10] NA NA NA NA NA NA NA NA NA NA
+     @ label           : chr "RAVLT Total Learning"
+     @ domain          : chr "Memory"
+     @ short_descriptor: chr "Sum of REY1REC, ..., REY5REC"
+     @ range           : num [1:2] 0 75
+     @ codes           : num(0) 
+
+### RAVLT Recognition Accuracy
+
+Recognition accuracy combines true positives (`REYTCOR`) and false
+positives (`REYFPOS`):
+
+``` r
+df$REYAREC <- calc_REYAREC(
+  reytcor = REYTCOR(demo_data$REYTCOR),
+  reyfpos = REYFPOS(demo_data$REYFPOS)
+)
+
+df$REYAREC[1:10]
+```
+
+    <ntrs::REYAREC> num [1:10] NA NA NA NA NA NA NA NA NA NA
+     @ label           : chr "RAVLT Recognition"
+     @ domain          : chr "Memory"
+     @ short_descriptor: chr "RAVLT Recognition Percentage (not in NACC data)"
+     @ range           : num [1:2] 0 100
+     @ codes           : num(0) 
+
+### Functional Activities Score
+
+The Functional Activities Score (FAS) summarizes ten
+everyday-functioning items. Error codes like 8 (“Not applicable”) are
+treated as 0:
+
+``` r
+df$FAS <- calc_FAS(
+  BILLS = demo_data$BILLS,
+  TAXES = demo_data$TAXES,
+  SHOPPING = demo_data$SHOPPING,
+  GAMES = demo_data$GAMES,
+  STOVE = demo_data$STOVE,
+  MEALPREP = demo_data$MEALPREP,
+  EVENTS = demo_data$EVENTS,
+  PAYATTN = demo_data$PAYATTN,
+  REMDATES = demo_data$REMDATES,
+  TRAVEL = demo_data$TRAVEL
+)
+
+head(df$FAS)
+```
+
+    [1] 2 1 0 2 2 3
+
+## Step 3: Batch standardization with `std_data()`
+
+Now that our data frame contains `npsych_scores` columns, we can
+standardize them all at once. Covariates are passed as bare column names
+referencing columns in the data frame:
+
+``` r
+result <- std_data(
+  df,
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+```
+
+    ℹ No default method set for <MOCACLOCK>.
+
+    Warning: ! Failed to standardize column MOCACLOCK (<MOCACLOCK>).
+    ✖ ✖ No default method registered for <MOCACLOCK>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <REYTOTAL>.
+
+    Warning: ! Failed to standardize column REYTOTAL (<REYTOTAL>).
+    ✖ ✖ No default method registered for <REYTOTAL>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <REYAREC>.
+
+    Warning: ! Failed to standardize column REYAREC (<REYAREC>).
+    ✖ ✖ No default method registered for <REYAREC>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+[`std_data()`](https://rmtrane.github.io/ntrs/reference/std_data.md)
+finds every `npsych_scores` column, standardizes it using the registered
+default method and version, and adds a new column with a `z_` prefix:
+
+``` r
+# Show the z-score columns
+z_cols <- grep("^z_", names(result), value = TRUE)
+z_cols
+```
+
+    [1] "z_MOCATOTS"  "z_TRAILA"    "z_ANIMALS"   "z_UDSBENTD"  "z_CRAFTVRS"
+    [6] "z_MOCACLOCK" "z_REYTOTAL"  "z_REYAREC"  
+
+``` r
+head(result[, c("MOCATOTS", "z_MOCATOTS", "ANIMALS", "z_ANIMALS")])
+```
+
+               MOCATOTS z_MOCATOTS         ANIMALS  z_ANIMALS
+       <ntrs::MOCATOTS>      <num> <ntrs::ANIMALS>      <num>
+    1:               -4         NA              26  0.9749259
+    2:               -4         NA              27  0.9119765
+    3:               -4         NA              23 -0.2150435
+    4:               -4         NA              12 -2.2613609
+    5:               -4         NA              22 -0.2426291
+    6:               -4         NA              18 -0.9339301
+
+### Keeping raw scores alongside z-scores
+
+By default, the original `npsych_scores` columns are left in place. If
+you prefer to rename them with a prefix (e.g., `raw_`) for clearer
+bookkeeping, use the `prefix_raw` argument:
+
+``` r
+result2 <- std_data(
+  df,
+  prefix_raw = "raw_",
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+```
+
+    ℹ No default method set for <MOCACLOCK>.
+
+    Warning: ! Failed to standardize column MOCACLOCK (<MOCACLOCK>).
+    ✖ ✖ No default method registered for <MOCACLOCK>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <REYTOTAL>.
+
+    Warning: ! Failed to standardize column REYTOTAL (<REYTOTAL>).
+    ✖ ✖ No default method registered for <REYTOTAL>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <REYAREC>.
+
+    Warning: ! Failed to standardize column REYAREC (<REYAREC>).
+    ✖ ✖ No default method registered for <REYAREC>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+``` r
+# Now we have raw_MOCATOTS and z_MOCATOTS
+names(result2)[grep("MOCATOTS", names(result2))]
+```
+
+    [1] "raw_MOCATOTS" "z_MOCATOTS"  
+
+### Overriding defaults per test
+
+You can specify different methods or versions for specific tests via the
+`methods` argument, keyed by class name:
+
+``` r
+result3 <- std_data(
+  df,
+  methods = list(
+    MOCATOTS = list(method = "norms", version = "nacc"),
+    ANIMALS = list(method = "norms", version = "updated")
+  ),
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+```
+
+    Warning: `race` is not needed to standardize using "norms" when version is "nacc" and
+    will be ignored.
+
+    Warning: `race` is not needed to standardize using "norms" when version is "updated" and
+    will be ignored.
+
+    ℹ No default method set for <MOCACLOCK>.
+
+    Warning: ! Failed to standardize column MOCACLOCK (<MOCACLOCK>).
+    ✖ ✖ No default method registered for <MOCACLOCK>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <REYTOTAL>.
+
+    Warning: ! Failed to standardize column REYTOTAL (<REYTOTAL>).
+    ✖ ✖ No default method registered for <REYTOTAL>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <REYAREC>.
+
+    Warning: ! Failed to standardize column REYAREC (<REYAREC>).
+    ✖ ✖ No default method registered for <REYAREC>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+### Standardizing a subset of columns
+
+If you only want to standardize specific columns, use `.cols`:
+
+``` r
+result4 <- std_data(
+  df,
+  .cols = c("MOCATOTS", "ANIMALS", "TRAILA"),
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+
+grep("^z_", names(result4), value = TRUE)
+```
+
+    [1] "z_MOCATOTS" "z_TRAILA"   "z_ANIMALS" 
+
+## Putting it all together
+
+For simplicity, consider just a subset of the `demo_data`.
+
+``` r
+demo_subset <- demo_data[, c(
+  "NACCID",
+  "NACCAGE",
+  "SEX",
+  "EDUC",
+  "RACE",
+  "MOCATOTS",
+  "ANIMALS",
+  "TRAILA",
+  "REY1REC",
+  "REY2REC",
+  "REY3REC",
+  "REY4REC",
+  "REY5REC",
+  "MOCACLOC",
+  "MOCACLON",
+  "MOCACLOH",
+  "REYTCOR",
+  "REYFPOS",
+  "BILLS",
+  "TAXES",
+  "SHOPPING",
+  "GAMES",
+  "STOVE",
+  "MEALPREP",
+  "EVENTS",
+  "PAYATTN",
+  "REMDATES",
+  "TRAVEL"
+)]
+```
+
+Here is the full workflow, from raw data to standardized scores:
+
+``` r
+# 1. Start with raw NACC data
+df <- demo_subset
+# 2. Convert test columns to npsych_scores
+df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
+df$ANIMALS <- ANIMALS(df$ANIMALS)
+df$TRAILA <- TRAILA(df$TRAILA)
+# ... repeat for each test of interest
+
+# 3. Compute derived scores
+df$REYTOTAL <- calc_REYTOTAL(
+  REY1REC(df$REY1REC),
+  REY2REC(df$REY2REC),
+  REY3REC(df$REY3REC),
+  REY4REC(df$REY4REC),
+  REY5REC(df$REY5REC)
+)
+df$MOCACLOCK <- calc_MOCACLOCK(df$MOCACLOC, df$MOCACLON, df$MOCACLOH)
+df$FAS <- calc_FAS(
+  BILLS = df$BILLS,
+  TAXES = df$TAXES,
+  SHOPPING = df$SHOPPING,
+  GAMES = df$GAMES,
+  STOVE = df$STOVE,
+  MEALPREP = df$MEALPREP,
+  EVENTS = df$EVENTS,
+  PAYATTN = df$PAYATTN,
+  REMDATES = df$REMDATES,
+  TRAVEL = df$TRAVEL
+)
+
+# 4. Standardize
+result <- std_data(
+  df,
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+```
+
+    ℹ No default method set for <REYTOTAL>.
+
+    Warning: ! Failed to standardize column REYTOTAL (<REYTOTAL>).
+    ✖ ✖ No default method registered for <REYTOTAL>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <MOCACLOCK>.
+
+    Warning: ! Failed to standardize column MOCACLOCK (<MOCACLOCK>).
+    ✖ ✖ No default method registered for <MOCACLOCK>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+We can similarly work within the `tidyverse` if that’s your preference:
+
+``` r
+library(dplyr)
+```
+
+    Attaching package: 'dplyr'
+
+    The following objects are masked from 'package:stats':
+
+        filter, lag
+
+    The following objects are masked from 'package:base':
+
+        intersect, setdiff, setequal, union
+
+``` r
+df_tidy <- demo_subset |>
+  mutate(
+    MOCATOTS = MOCATOTS(MOCATOTS),
+    ANIMALS = ANIMALS(ANIMALS),
+    TRAILA = TRAILA(TRAILA),
+    REYTOTAL = calc_REYTOTAL(
+      REY1REC(REY1REC),
+      REY2REC(REY2REC),
+      REY3REC(REY3REC),
+      REY4REC(REY4REC),
+      REY5REC(REY5REC)
+    ),
+    MOCACLOCK = calc_MOCACLOCK(MOCACLOC, MOCACLON, MOCACLOH),
+    FAS = calc_FAS(
+      BILLS,
+      TAXES,
+      SHOPPING,
+      GAMES,
+      STOVE,
+      MEALPREP,
+      EVENTS,
+      PAYATTN,
+      REMDATES,
+      TRAVEL
+    )
+  )
+
+df_tidy_result <- std_data(
+  df_tidy,
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+```
+
+    ℹ No default method set for <REYTOTAL>.
+
+    Warning: ! Failed to standardize column REYTOTAL (<REYTOTAL>).
+    ✖ ✖ No default method registered for <REYTOTAL>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <MOCACLOCK>.
+
+    Warning: ! Failed to standardize column MOCACLOCK (<MOCACLOCK>).
+    ✖ ✖ No default method registered for <MOCACLOCK>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+Or `data.table`:
+
+``` r
+library(data.table)
+```
+
+    Attaching package: 'data.table'
+
+    The following objects are masked from 'package:dplyr':
+
+        between, first, last
+
+``` r
+df_dt <- as.data.table(demo_subset)
+
+df_dt[,
+  c(
+    "MOCATOTS",
+    "ANIMALS",
+    "TRAILA",
+    "REYTOTAL",
+    "MOCACLOCK",
+    "FAS"
+  ) := list(
+    MOCATOTS(MOCATOTS),
+    ANIMALS(ANIMALS),
+    TRAILA(TRAILA),
+    calc_REYTOTAL(
+      REY1REC(REY1REC),
+      REY2REC(REY2REC),
+      REY3REC(REY3REC),
+      REY4REC(REY4REC),
+      REY5REC(REY5REC)
+    ),
+    calc_MOCACLOCK(MOCACLOC, MOCACLON, MOCACLOH),
+    calc_FAS(
+      BILLS,
+      TAXES,
+      SHOPPING,
+      GAMES,
+      STOVE,
+      MEALPREP,
+      EVENTS,
+      PAYATTN,
+      REMDATES,
+      TRAVEL
+    )
+  )
+]
+
+df_dt_result <- std_data(
+  df_dt,
+  age = NACCAGE,
+  sex = SEX,
+  educ = EDUC,
+  race = RACE
+)
+```
+
+    ℹ No default method set for <REYTOTAL>.
+
+    Warning: ! Failed to standardize column REYTOTAL (<REYTOTAL>).
+    ✖ ✖ No default method registered for <REYTOTAL>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+    ℹ No default method set for <MOCACLOCK>.
+
+    Warning: ! Failed to standardize column MOCACLOCK (<MOCACLOCK>).
+    ✖ ✖ No default method registered for <MOCACLOCK>. ℹ Register a default via
+      `set_std_defaults()()`.
+
+We can verify that all three approaches yield the same result (par
+differences in classes):
+
+``` r
+waldo::compare(as.data.frame(result), as.data.frame(df_tidy_result))
+```
+
+    ✔ No differences
+
+``` r
+waldo::compare(as.data.frame(df_tidy_result), as.data.frame(df_dt_result))
+```
+
+    ✔ No differences

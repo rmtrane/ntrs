@@ -7,6 +7,9 @@
 
 ## Citation
 
+Source:
+[`DESCRIPTION`](https://github.com/rmtrane/ntrs/blob/master/DESCRIPTION)
+
 Møller Trane R (2026). *ntrs: Neuropsychological Test Result
 Standardization*. R package version 0.0.0.9000,
 <https://rmtrane.github.io/ntrs/>.

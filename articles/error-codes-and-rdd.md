@@ -1,0 +1,390 @@
+# Error Codes and the Researcher’s Data Dictionary
+
+Neuropsychological data from NACC often contains special numeric codes
+that don’t represent actual test performance — a value of `88` for
+MOCATOTS doesn’t mean a score of 88, it means the test was not
+administered. Handling these codes correctly is critical to avoid
+nonsensical results.
+
+`ntrs` builds error-code awareness directly into its `npsych_scores`
+class so that codes are validated on input, tracked through operations,
+and automatically handled during standardization.
+
+## The `rdd` object
+
+`ntrs` ships with `rdd`, a list-based version of the NACC Researcher’s
+Data Dictionary. Each entry contains the valid range, special codes, and
+a short description for a NACC variable:
+
+``` r
+names(rdd$MOCATOTS)
+```
+
+    [1] "range"            "codes"            "short_descriptor"
+
+``` r
+rdd$MOCATOTS$short_descriptor
+```
+
+    [1] "MoCA Total Raw Score - uncorrected"
+
+``` r
+rdd$MOCATOTS$range
+```
+
+    [1]  0 30
+
+``` r
+rdd$MOCATOTS$codes
+```
+
+                                                                                       Item(s) or whole test not administered
+                                                                                                                           88
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4 
+
+This is useful for quick lookups without needing to consult the PDF:
+
+``` r
+# What codes does TRAILA have?
+rdd$TRAILA$codes
+```
+
+                                                                                                             Physical problem
+                                                                                                                          995
+                                                                                                   Cognitive/behavior problem
+                                                                                                                          996
+                                                                                                                Other problem
+                                                                                                                          997
+                                                                                                               Verbal refusal
+                                                                                                                          998
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4 
+
+``` r
+# What is the valid range for ANIMALS?
+rdd$ANIMALS$range
+```
+
+    [1]  0 77
+
+The `rdd` object covers all variables in the demo dataset, not just
+those with `npsych_scores` constructors:
+
+``` r
+rdd$SEX$codes
+```
+
+      Male Female
+         1      2 
+
+``` r
+rdd$RACE$codes
+```
+
+                                        White
+                                            1
+                    Black or African American
+                                            2
+             American Indian or Alaska Native
+                                            3
+    Native Hawaiian or Other Pacific Islander
+                                            4
+                                        Asian
+                                            5
+                              Other (specify)
+                                           50
+                                      Unknown
+                                           99 
+
+## Error codes vs. in-range codes
+
+`npsych_scores` objects distinguish between two kinds of special codes:
+
+- **Error codes** fall *outside* the valid score range. These represent
+  situations where no valid score was obtained (e.g., test not
+  administered, physical problem). They are replaced with `NA` by
+  [`remove_error_codes()`](https://rmtrane.github.io/ntrs/reference/remove_error_codes.md).
+
+- **In-range codes** fall *within* the valid score range. These are
+  unusual but can occur when a code value happens to be a plausible
+  score.
+
+For most tests, all codes are error codes (outside range):
+
+``` r
+moca <- MOCATOTS(c(25, 88, -4, 28))
+moca
+```
+
+    <ntrs::MOCATOTS> num [1:4] 25 88 -4 28
+     @ label           : chr "MoCA"
+     @ domain          : chr "General Cognition"
+     @ short_descriptor: chr "MoCA Total Raw Score - uncorrected"
+     @ range           : num [1:2] 0 30
+     @ codes           : Named num [1:2] -4 88
+     .. - attr(*, "names")= chr [1:2] "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" "Item(s) or whole test not administered"
+
+``` r
+# 88 and -4 are both outside 0-30, so both are error codes
+moca@codes
+```
+
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4
+                                                                                       Item(s) or whole test not administered
+                                                                                                                           88 
+
+``` r
+moca@range
+```
+
+    [1]  0 30
+
+[`remove_error_codes()`](https://rmtrane.github.io/ntrs/reference/remove_error_codes.md)
+identifies codes outside the range and replaces them with `NA`:
+
+``` r
+remove_error_codes(moca)
+```
+
+    [1] 25 NA NA 28
+
+An exampel of a test with an in-range code is the Global CDR
+Score.[¹](#fn1)
+
+``` r
+cdr <- CDRGLOB(c(0, 0.5, 1, 2, 3, 99))
+cdr
+```
+
+    <ntrs::CDRGLOB> num [1:6] 0 0.5 1 2 3 99
+     @ label           : chr "Global CDR"
+     @ domain          : chr "General Cognition"
+     @ short_descriptor: chr "Global CDR"
+     @ range           : num [1:2] 0 3
+     @ codes           : Named num [1:6] 0 0.5 1 2 3 99
+     .. - attr(*, "names")= chr [1:6] "No impairment" "Questionable impairment" "Mild impairment" "Moderate impairment" ...
+
+``` r
+# all values are within the valid range, and all are codes
+cdr@range
+```
+
+    [1] 0 3
+
+``` r
+cdr@codes
+```
+
+                                                    No impairment
+                                                              0.0
+                                          Questionable impairment
+                                                              0.5
+                                                  Mild impairment
+                                                              1.0
+                                              Moderate impairment
+                                                              2.0
+                                                Severe impairment
+                                                              3.0
+    N/A (not official error code, but shows up in full NACC data)
+                                                             99.0 
+
+``` r
+# only 99 is removed
+remove_error_codes(cdr)
+```
+
+    [1] 0.0 0.5 1.0 2.0 3.0  NA
+
+Only codes that fall outside the range are removed — if a test happened
+to have a code whose numeric value falls within the valid range, it
+would be preserved by
+[`remove_error_codes()`](https://rmtrane.github.io/ntrs/reference/remove_error_codes.md).
+
+## Viewing code labels with `replace_codes()`
+
+While
+[`remove_error_codes()`](https://rmtrane.github.io/ntrs/reference/remove_error_codes.md)
+is designed for analysis (replacing codes with `NA`),
+[`replace_codes()`](https://rmtrane.github.io/ntrs/reference/replace_codes.md)
+is useful for inspection — it substitutes each code value with its
+human-readable label:
+
+``` r
+replace_codes(moca)
+```
+
+    [1] "25"
+    [2] "Item(s) or whole test not administered"
+    [3] "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question"
+    [4] "28"                                                                                                                       
+
+This is handy when exploring data to understand *why* values are
+missing.
+
+## Validation on construction
+
+When you create an `npsych_scores` object, the constructor validates
+that every value is either within the declared range, matches a
+registered code, or is `NA`. Values that don’t fit any category are
+rejected:
+
+``` r
+# 50 is outside MOCATOTS range (0-30) and is not a registered code
+MOCATOTS(c(25, 50))
+```
+
+    Error:
+    ! <ntrs::MOCATOTS> object is invalid:
+    - `scores` must all be in the range 0 and 30 or one of the `codes` -4 (Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question) or 88 (Item(s) or whole test not administered).
+
+This catches data-entry errors and miscoded values early, before they
+can silently corrupt downstream analyses.
+
+## Error codes during standardization
+
+Both
+[`std_using_norms()`](https://rmtrane.github.io/ntrs/reference/std_using_norms.md)
+and
+[`std_using_regression()`](https://rmtrane.github.io/ntrs/reference/std_using_regression.md)
+call
+[`remove_error_codes()`](https://rmtrane.github.io/ntrs/reference/remove_error_codes.md)
+internally before computing z-scores. This means error codes
+automatically become `NA` in the standardized output — you don’t need to
+clean them manually:
+
+``` r
+scores <- MOCATOTS(c(25, 88, -4, 28, 30))
+
+z <- std(scores, age = 72, sex = 1, educ = 16, race = 1)
+z
+```
+
+    [1] -0.3628727         NA         NA  0.8910142  1.7269388
+
+The positions corresponding to error codes (`88` and `-4`) are `NA` in
+the result, while valid scores are standardized normally.
+
+## Inspecting codes for any test
+
+You can check which codes a score type recognizes by examining the
+`codes` property:
+
+``` r
+TRAILA()@codes
+```
+
+                                                                                                             Physical problem
+                                                                                                                          995
+                                                                                                   Cognitive/behavior problem
+                                                                                                                          996
+                                                                                                                Other problem
+                                                                                                                          997
+                                                                                                               Verbal refusal
+                                                                                                                          998
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4 
+
+``` r
+ANIMALS()@codes
+```
+
+                                                                                                             Physical problem
+                                                                                                                           95
+                                                                                                   Cognitive/behavior problem
+                                                                                                                           96
+                                                                                                                Other problem
+                                                                                                                           97
+                                                                                                               Verbal refusal
+                                                                                                                           98
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4 
+
+``` r
+REYTCOR()@codes
+```
+
+                                                                                                       Not assessed, optional
+                                                                                                                           88
+                                                                                                             Physical problem
+                                                                                                                           95
+                                                                                                   Cognitive/behavior problem
+                                                                                                                           96
+                                                                                                                Other problem
+                                                                                                                           97
+                                                                                                               Verbal refusal
+                                                                                                                           98
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                           -4 
+
+Many tests share a common set of codes (`-4` for “data not collected”,
+`95` through `98` for various problems). The NACC battery also uses `88`
+in some tests for “not administered” or “not assessed, optional”.
+
+## Practical patterns
+
+### Counting missing data by reason
+
+Since
+[`replace_codes()`](https://rmtrane.github.io/ntrs/reference/replace_codes.md)
+turns numeric codes into descriptive labels, you can use it to tabulate
+*why* data is missing:
+
+``` r
+scores <- MOCATOTS(demo_data$MOCATOTS)
+labeled <- replace_codes(scores)
+
+# Count occurrences of each code label
+table(labeled[!labeled %in% as.character(0:30)])
+```
+
+                                                                                       Item(s) or whole test not administered
+                                                                                                                            5
+    Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question
+                                                                                                                          244 
+
+### Filtering to valid observations
+
+A common pattern is to filter a dataset to rows where a particular test
+was actually administered:
+
+``` r
+df <- demo_data
+df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
+
+# Keep only rows with valid (non-error-code, non-NA) MOCATOTS
+valid_scores <- remove_error_codes(df$MOCATOTS)
+df_valid <- df[!is.na(valid_scores), ]
+nrow(df_valid)
+```
+
+    [1] 95
+
+### Checking multiple tests at once
+
+When working with several tests, you might want to identify rows where
+*all* tests of interest have valid data:
+
+``` r
+df <- demo_data
+df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
+df$ANIMALS <- ANIMALS(df$ANIMALS)
+df$TRAILA <- TRAILA(df$TRAILA)
+
+valid_moca <- !is.na(remove_error_codes(df$MOCATOTS))
+valid_animals <- !is.na(remove_error_codes(df$ANIMALS))
+valid_traila <- !is.na(remove_error_codes(df$TRAILA))
+
+all_valid <- valid_moca & valid_animals & valid_traila
+sum(all_valid)
+```
+
+    [1] 79
+
+------------------------------------------------------------------------
+
+1.  In the official documentation for CDRGLOB, `99` is not listed, but
+    this value shows up in the NACC data. It is therefore included as an
+    error code in
+    [`CDRGLOB()`](https://rmtrane.github.io/ntrs/reference/CDRGLOB.md).
