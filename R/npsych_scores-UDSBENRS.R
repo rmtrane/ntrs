@@ -20,6 +20,7 @@ UDSBENRS <- new_npsych_scores(
   codes = c(
     "No" = 0,
     "Yes" = 1,
-    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4
+    "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" = -4,
+    "N/A (not official error code, but shows up in full NACC data)" = 9
   )
 )

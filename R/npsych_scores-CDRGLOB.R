@@ -19,6 +19,7 @@ CDRGLOB <- new_npsych_scores(
     "Questionable impairment" = 0.5,
     "Mild impairment" = 1,
     "Moderate impairment" = 2,
-    "Severe impairment" = 3
+    "Severe impairment" = 3,
+    "N/A (not official error code, but shows up in full NACC data)" = 99
   )
 )
