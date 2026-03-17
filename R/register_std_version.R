@@ -74,7 +74,7 @@
   if (!has_method) {
     cli::cli_abort(c(
       "x" = "Method {.fn {generic_name}} not implemented for {.val {scores_class}}.",
-      "i" = "Register a method with {.code S7::method({generic_name}, {scores_class}) <- function(scores, ...) \\{...\\}}"
+      "i" = "Register a method with {.code S7::method({generic_name}, {scores_class}) <- function(scores, ...) {{...}}}"
     ))
   }
 

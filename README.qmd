@@ -13,7 +13,7 @@ The goal of `ntrs` is to provide a streamlined framework for working with neurop
 
 ## Installation
 
-You can install the development version of ntrs from [GitHub](https://github.com/rmtrane/ntrs) with:
+You can install the development version of `ntrs` from [GitHub](https://github.com/rmtrane/ntrs) with:
 
 ``` r
 # install.packages("pak")

@@ -10,6 +10,8 @@
 #' The standardized value of `x`, whose exact type depends on the specific S7
 #' method called.
 #'
+#' @rdname std_using_norms
+#'
 #' @export
 std_using_norms <- S7::new_generic("std_using_norms", "scores")
 
@@ -88,12 +90,7 @@ S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
     names(covars),
     \(covar_nm) {
       covar <- covars[[covar_nm]]
-
-      if (covar_nm %in% names(covar_fns)) {
-        return(covar_fns[[covar_nm]](covar))
-      }
-
-      covar
+      covar_fns[[covar_nm]](covar)
     },
     simplify = FALSE,
     USE.NAMES = TRUE

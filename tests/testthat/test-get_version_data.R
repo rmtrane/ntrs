@@ -4,6 +4,15 @@
 # Function exists
 # ---------------------------------------------------------------------------
 
+test_that("get_version_data() errors when scores is not an npsych_scores object", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    get_version_data(42),
+    regexp = "npsych_scores"
+  )
+})
+
 test_that("get_version_data() is a function", {
   expect_true(is.function(get_version_data))
 })

@@ -324,6 +324,33 @@ test_that("std_data() returns NA for columns that fail standardization", {
 })
 
 # ---------------------------------------------------------------------------
+# prefix_raw — rename raw score columns
+# ---------------------------------------------------------------------------
+
+test_that("std_data() renames raw npsych_scores columns when prefix_raw is set", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(
+    df,
+    prefix_raw = "raw_",
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
+  )
+
+  expect_true("raw_moca" %in% names(result))
+  expect_false("moca" %in% names(result))
+  expect_true("z_moca" %in% names(result))
+})
+
+# ---------------------------------------------------------------------------
 # Original columns are preserved
 # ---------------------------------------------------------------------------
 

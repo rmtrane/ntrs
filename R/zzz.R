@@ -1,6 +1,7 @@
 .datatable.aware <- TRUE
 
 .onLoad <- function(libname, pkgname) {
+  # nocov start
   S7::methods_register()
 
   ## Run all .setup_CLASS_versions()
@@ -13,4 +14,4 @@
       do.call(x, args = list())
     }
   ))
-}
+} # nocov end

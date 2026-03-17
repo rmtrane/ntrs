@@ -14,3 +14,4 @@
 ^vignettes/.quart/*
 ^data-raw/*
 ^scratch/*
+^R/archived/*

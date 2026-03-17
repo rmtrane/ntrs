@@ -176,6 +176,15 @@ test_that("std() returns a numeric vector", {
   expect_type(result, "double")
 })
 
+test_that("std() errors when scores is not an npsych_scores object", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    std(42),
+    regexp = "npsych_scores"
+  )
+})
+
 test_that("std() output length matches input length", {
   local_restore_default("MOCATOTS")
 

@@ -108,6 +108,7 @@ Collate:
     'npsych_scores-UDSVERTN.R'
     'npsych_scores-VEG.R'
     'npsych_scores-WAIS.R'
+    'npsych_scores_helpers.R'
     'ntrs-package.R'
     'rdd.R'
     'reg_coefs.R'

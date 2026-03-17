@@ -2,3 +2,121 @@ url: https://rmtrane.github.io/ntrs/
 template:
   bootstrap: 5
 
+reference:
+  - title: "Core Class"
+    desc: "Create and inspect `npsych_scores` objects."
+    contents:
+      - npsych_scores
+      - new_npsych_scores
+      - is_npsych_scores
+      - remove_error_codes
+
+  - title: "Standardization"
+    desc: "Standardize scores."
+    contents:
+      - std
+      - std_data
+      - std_using_norms
+      - std_using_regression
+      - "`std_using_norms-npsych_scores`"
+      - "`std_using_regression-npsych_scores`"
+
+  - title: "Version Management"
+    desc: "Register versions and manage defaults."
+    contents:
+      - std_version
+      - get_std_defaults
+      - set_std_defaults
+
+  - title: "Norms Versions"
+    desc: "Create and register norms-based standardization versions."
+    contents:
+      - norms_version
+      - register_norms_version
+      - normative_summaries
+
+  - title: "Regression Versions"
+    desc: "Create and register regression-based standardization versions."
+    contents:
+      - regression_version
+      - register_regression_version
+      - reg_coefs
+
+  - title: "Discovery"
+    desc: "List available scores, methods, and versions."
+    contents:
+      - list_npsych_scores
+      - list_std_methods
+      - list_method_versions
+      - get_version_data
+      - get_npsych_scores
+
+  - title: "Score Calculators"
+    desc: "Compute derived scores from raw inputs."
+    contents:
+      - starts_with("calc_")
+
+  - title: "Data & Reference"
+    desc: "Demo data and reference resources."
+    contents:
+      - demo_data
+      - rdd
+
+  - title: "Test Score Constructors"
+    desc: "Factory functions for individual neuropsychological test scores."
+    contents:
+      - ANIMALS
+      - BOSTON
+      - CDRGLOB
+      - CDRSUM
+      - CRAFTDRE
+      - CRAFTDVR
+      - CRAFTURS
+      - CRAFTVRS
+      - DIGBACCT
+      - DIGBACLS
+      - DIGFORCT
+      - DIGFORSL
+      - DIGIB
+      - DIGIBLEN
+      - DIGIF
+      - DIGIFLEN
+      - LOGIMEM
+      - MEMUNITS
+      - MINTTOTS
+      - MOCACLOCK
+      - MOCATOTS
+      - MOCBTOTS
+      - NACCGDS
+      - NACCMMSE
+      - OTRAILA
+      - OTRAILB
+      - OTRLARR
+      - OTRLBRR
+      - REY1REC
+      - REY2REC
+      - REY3REC
+      - REY4REC
+      - REY5REC
+      - REY6REC
+      - REYAREC
+      - REYDLIST
+      - REYDREC
+      - REYFPOS
+      - REYTCOR
+      - REYTOTAL
+      - TRAILA
+      - TRAILALI
+      - TRAILARR
+      - TRAILB
+      - TRAILBLI
+      - TRAILBRR
+      - UDSBENRS
+      - UDSBENTC
+      - UDSBENTD
+      - UDSVERFC
+      - UDSVERLC
+      - UDSVERTN
+      - VEG
+      - WAIS
+
