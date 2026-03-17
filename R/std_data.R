@@ -81,18 +81,20 @@ std_data <- function(
   input_is_dt <- data.table::is.data.table(data)
 
   if (!input_is_dt) {
-    data <- data.table::as.data.table(data)
+    dat <- data.table::as.data.table(data)
+  } else {
+    dat <- data.table::copy(data)
   }
 
   # ---- Identify npsych_scores columns ----
-  npsych_cols <- names(data)[
-    vapply(data, S7::S7_inherits, logical(1), class = npsych_scores)
+  npsych_cols <- names(dat)[
+    vapply(dat, S7::S7_inherits, logical(1), class = npsych_scores)
   ]
 
   if (length(npsych_cols) == 0L) {
     cli::cli_warn("No {.cls npsych_scores} columns found in {.arg data}.")
     if (!input_is_dt) {
-      data <- as.data.frame(data)
+      dat <- as.data.frame(dat)
     }
     return(data)
   }
@@ -110,7 +112,7 @@ std_data <- function(
 
   # ---- Build class → column map ----
   col_classes <- vapply(
-    data[, npsych_cols, with = FALSE],
+    dat[, npsych_cols, with = FALSE],
     function(x) S7::S7_class(x)@name,
     character(1)
   )
@@ -147,7 +149,7 @@ std_data <- function(
     cli::cli_abort("All covariates in {.arg ...} must be named.")
   }
 
-  data_mask <- rlang::as_data_mask(data)
+  data_mask <- rlang::as_data_mask(dat)
   caller_env <- rlang::caller_env()
 
   covars <- lapply(dots, function(quo) {
@@ -158,7 +160,7 @@ std_data <- function(
   new_nms <- paste0(prefix_std, npsych_cols)
 
   # ---- Standardize using .SD / .SDcols ----
-  data[,
+  dat[,
     (new_nms) := lapply(.SD, function(scores_col) {
       scores_class <- S7::S7_class(scores_col)@name
       col_spec <- methods[[scores_class]]
@@ -202,7 +204,7 @@ std_data <- function(
   # --- New column names for raw columns, if prefix_raw specified ---
   if (!is.null(prefix_raw)) {
     data.table::setnames(
-      data,
+      dat,
       old = npsych_cols,
       new = paste0(prefix_raw, npsych_cols)
     )
@@ -210,8 +212,8 @@ std_data <- function(
 
   # ---- Revert to data.frame if input was not data.table ----
   if (!input_is_dt) {
-    data <- as.data.frame(data)
+    dat <- as.data.frame(dat)
   }
 
-  data
+  dat
 }

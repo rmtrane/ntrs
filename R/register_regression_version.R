@@ -31,7 +31,7 @@ register_regression_version <- function(
   if (is.null(covar_fns)) {
     required_covars <- setdiff(names(coefs), c("intercept", "rmse"))
     covar_fns <- lapply(
-      setNames(required_covars, required_covars),
+      stats::setNames(required_covars, required_covars),
       \(x) {
         identity
       }

@@ -1,9 +1,34 @@
 url: https://rmtrane.github.io/ntrs/
+
+home: 
+navbar:
+  structure:
+    left: [home, intro, articles, reference]
+    right: [github, search]
 template:
   bootstrap: 5
 
+articles:
+  - title: "Get Started"
+    desc: "Create score objects and standardize them with ntrs."
+    contents:
+      - ntrs
+  - title: "Working with Data"
+    navbar: Working with Data
+    desc: "Practical workflows for NACC data and data quality."
+    contents:
+      - working-with-nacc-data
+      - error-codes-and-rdd
+  - title: "Extending ntrs"
+    navbar: Extending ntrs
+    desc: "How to add new scores, versions, and methods."
+    contents:
+      - extending-scores-and-versions
+      - extending-methods
+
 reference:
   - title: "Core Class"
+    navbar: Core Class
     desc: "Create and inspect `npsych_scores` objects."
     contents:
       - npsych_scores

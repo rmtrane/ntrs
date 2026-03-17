@@ -1,6 +1,6 @@
 #' CDRGLOB Test Scores
 #'
-#' @description Create a `CDRGLOB` object to hold CDRGLOB scores.
+#' @description Create a `CDRGLOB` object to hold CDRGLOB scores. 
 #'
 #' @param x Numeric scores.
 #'

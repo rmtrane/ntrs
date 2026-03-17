@@ -1,6 +1,7 @@
 Package: ntrs
 Title: Neuropsychological Test Result Standardization
-URL: https://rmtrane.github.io/ntrs/
+URL: https://rmtrane.github.io/ntrs/, https://github.com/rmtrane/ntrs
+BugReports: https://github.com/rmtrane/ntrs/issues
 Version: 0.0.0.9000
 Authors@R: 
     person(
@@ -25,8 +26,10 @@ Imports:
     data.table,
     rlang,
     S7
-Suggests: 
+Suggests:
+    dplyr,
     testthat (>= 3.0.0),
+    waldo,
     withr,
     quarto
 VignetteBuilder: 

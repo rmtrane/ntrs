@@ -1,16 +1,11 @@
 ---
-title: "Getting Started"
+title: "Get Started"
 vignette: >
-  %\VignetteIndexEntry{Getting Started}
+  %\VignetteIndexEntry{Get Started}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r}
-suppressPackageStartupMessages(
-  library(ntrs)
-)
-```
 
 ## Overview
 
@@ -19,6 +14,12 @@ neuropsychological test scores. The typical workflow is:
 
 1. Create score objects using factory functions (e.g., `MOCATOTS()`, `ANIMALS()`)
 2. Standardize scores with `std()` or batch-standardize a data frame with `std_data()`
+
+When loading the package, messages are printed for all the defaults being set. These can be suppressed with `suppressPackageStartupMessages()`.
+
+```{r}
+library(ntrs)
+```
 
 ## Creating score objects
 
