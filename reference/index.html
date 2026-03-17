@@ -34,9 +34,298 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="core-class">Core Class<a class="anchor" aria-label="anchor" href="#core-class"></a></h2>
+
+      <div class="section-desc"><p>Create and inspect <code>npsych_scores</code> objects.</p></div>
+
+      <dl></dl></div><div class="section level2">
 
 
+
+
+      <dl><dt>
+
+          <code><a href="npsych_scores.html">npsych_scores()</a></code>
+
+        </dt>
+        <dd>Neuropsychological Test Scores</dd>
+
+        <dt>
+
+          <code><a href="new_npsych_scores.html">new_npsych_scores()</a></code>
+
+        </dt>
+        <dd>Create an npsych_scores subclass</dd>
+
+        <dt>
+
+          <code><a href="is_npsych_scores.html">is_npsych_scores()</a></code>
+
+        </dt>
+        <dd>Is <code>x</code> an npsych_scores object?</dd>
+
+        <dt>
+
+          <code><a href="remove_error_codes.html">remove_error_codes()</a></code>
+
+        </dt>
+        <dd>Remove error codes</dd>
+
+        <dt>
+
+          <code><a href="replace_codes.html">replace_codes()</a></code>
+
+        </dt>
+        <dd>Replace codes with their labels</dd>
+      </dl></div><div class="section level2">
+      <h2 id="standardization">Standardization<a class="anchor" aria-label="anchor" href="#standardization"></a></h2>
+
+      <div class="section-desc"><p>Standardize scores.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="std.html">std()</a></code>
+
+        </dt>
+        <dd>Standardize neuropsychological test scores</dd>
+
+        <dt>
+
+          <code><a href="std_data.html">std_data()</a></code>
+
+        </dt>
+        <dd>Standardize all <code>npsych_scores</code> columns in a data frame</dd>
+
+        <dt>
+
+          <code><a href="std_using_norms.html">std_using_norms()</a></code>
+
+        </dt>
+        <dd>Standardize <code>npsych_scores</code> using norms</dd>
+
+        <dt>
+
+          <code><a href="std_using_regression.html">std_using_regression()</a></code>
+
+        </dt>
+        <dd>Standardize using regression</dd>
+
+        <dt>
+
+          <code><a href="std_using_norms-npsych_scores.html">std_using_norms-npsych_scores</a></code>
+
+        </dt>
+        <dd>Standardize test scores using norms</dd>
+
+        <dt>
+
+          <code><a href="std_using_regression-npsych_scores.html">std_using_regression-npsych_scores</a></code>
+
+        </dt>
+        <dd>Standardize test scores using regression</dd>
+      </dl></div><div class="section level2">
+      <h2 id="version-management">Version Management<a class="anchor" aria-label="anchor" href="#version-management"></a></h2>
+
+      <div class="section-desc"><p>Register versions and manage defaults.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="std_version.html">std_version()</a></code>
+
+        </dt>
+        <dd>Standardization Version</dd>
+
+        <dt>
+
+          <code><a href="get_std_defaults.html">get_std_defaults()</a></code>
+
+        </dt>
+        <dd>Get standardization defaults <code>npsych_scores</code></dd>
+
+        <dt>
+
+          <code><a href="set_std_defaults.html">set_std_defaults()</a></code>
+
+        </dt>
+        <dd>Set the default standardization method (and version) an <code>npsych_scores</code> subclass</dd>
+      </dl></div><div class="section level2">
+      <h2 id="norms-versions">Norms Versions<a class="anchor" aria-label="anchor" href="#norms-versions"></a></h2>
+
+      <div class="section-desc"><p>Create and register norms-based standardization versions.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="norms_version.html">norms_version()</a></code>
+
+        </dt>
+        <dd>Norms-Based Standardization Version</dd>
+
+        <dt>
+
+          <code><a href="register_norms_version.html">register_norms_version()</a></code>
+
+        </dt>
+        <dd>Register a norms-based standardization version</dd>
+
+        <dt>
+
+          <code><a href="normative_summaries.html">normative_summaries</a></code>
+
+        </dt>
+        <dd>Means and SDs for calculating z-scores</dd>
+      </dl></div><div class="section level2">
+      <h2 id="regression-versions">Regression Versions<a class="anchor" aria-label="anchor" href="#regression-versions"></a></h2>
+
+      <div class="section-desc"><p>Create and register regression-based standardization versions.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="regression_version.html">regression_version()</a></code>
+
+        </dt>
+        <dd>Regression-Based Standardization Version</dd>
+
+        <dt>
+
+          <code><a href="register_regression_version.html">register_regression_version()</a></code>
+
+        </dt>
+        <dd>Register a regression-based standardization version</dd>
+
+        <dt>
+
+          <code><a href="reg_coefs.html">reg_coefs</a></code>
+
+        </dt>
+        <dd>Regression Coefficients for Regression Based Standardization</dd>
+      </dl></div><div class="section level2">
+      <h2 id="discovery">Discovery<a class="anchor" aria-label="anchor" href="#discovery"></a></h2>
+
+      <div class="section-desc"><p>List available scores, methods, and versions.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="list_npsych_scores.html">list_npsych_scores()</a></code>
+
+        </dt>
+        <dd>List <code>npsych_scores</code> subclasses</dd>
+
+        <dt>
+
+          <code><a href="list_std_methods.html">list_std_methods()</a></code>
+
+        </dt>
+        <dd>List available standardization methods for <code>npsych_scores</code></dd>
+
+        <dt>
+
+          <code><a href="list_method_versions.html">list_method_versions()</a></code>
+
+        </dt>
+        <dd>Get available version names for a standardization method</dd>
+
+        <dt>
+
+          <code><a href="get_version_data.html">get_version_data()</a></code>
+
+        </dt>
+        <dd>Get version data</dd>
+
+        <dt>
+
+          <code><a href="get_npsych_scores.html">get_npsych_scores()</a></code>
+
+        </dt>
+        <dd>Get an npsych_scores constructor by name</dd>
+      </dl></div><div class="section level2">
+      <h2 id="score-calculators">Score Calculators<a class="anchor" aria-label="anchor" href="#score-calculators"></a></h2>
+
+      <div class="section-desc"><p>Compute derived scores from raw inputs.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="calc_FAS.html">calc_FAS()</a></code>
+
+        </dt>
+        <dd>Calcaulate Functional Assessment Score summary</dd>
+
+        <dt>
+
+          <code><a href="calc_MOCACLOCK.html">calc_MOCACLOCK()</a></code>
+
+        </dt>
+        <dd>Calculate MoCA clock drawing test total</dd>
+
+        <dt>
+
+          <code><a href="calc_REYAREC.html">calc_REYAREC()</a></code>
+
+        </dt>
+        <dd>Calculate the Rey AVLT Accuracy</dd>
+
+        <dt>
+
+          <code><a href="calc_REYTOTAL.html">calc_REYTOTAL()</a></code>
+
+        </dt>
+        <dd>Calculate Rey Total</dd>
+      </dl></div><div class="section level2">
+      <h2 id="data-reference">Data &amp; Reference<a class="anchor" aria-label="anchor" href="#data-reference"></a></h2>
+
+      <div class="section-desc"><p>Demo data and reference resources.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="demo_data.html">demo_data</a></code>
+
+        </dt>
+        <dd>Demo Data</dd>
+
+        <dt>
+
+          <code><a href="rdd.html">rdd</a></code>
+
+        </dt>
+        <dd>Researchers Data Dictionary in List Form</dd>
+      </dl></div><div class="section level2">
+      <h2 id="test-score-constructors">Test Score Constructors<a class="anchor" aria-label="anchor" href="#test-score-constructors"></a></h2>
+
+      <div class="section-desc"><p>Factory functions for individual neuropsychological test scores.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -420,218 +709,9 @@
 
         </dt>
         <dd>WAIS Test Scores</dd>
-
-        <dt>
-
-          <code><a href="calc_FAS.html">calc_FAS()</a></code>
-
-        </dt>
-        <dd>Calcaulate Functional Assessment Score summary</dd>
-
-        <dt>
-
-          <code><a href="calc_MOCACLOCK.html">calc_MOCACLOCK()</a></code>
-
-        </dt>
-        <dd>Calculate MoCA clock drawing test total</dd>
-
-        <dt>
-
-          <code><a href="calc_REYAREC.html">calc_REYAREC()</a></code>
-
-        </dt>
-        <dd>Calculate the Rey AVLT Accuracy</dd>
-
-        <dt>
-
-          <code><a href="calc_REYTOTAL.html">calc_REYTOTAL()</a></code>
-
-        </dt>
-        <dd>Calculate Rey Total</dd>
-
-        <dt>
-
-          <code><a href="demo_data.html">demo_data</a></code>
-
-        </dt>
-        <dd>Demo Data</dd>
-
-        <dt>
-
-          <code><a href="get_npsych_scores.html">get_npsych_scores()</a></code>
-
-        </dt>
-        <dd>Get an npsych_scores constructor by name</dd>
-
-        <dt>
-
-          <code><a href="get_std_defaults.html">get_std_defaults()</a></code>
-
-        </dt>
-        <dd>Get standardization defaults <code>npsych_scores</code></dd>
-
-        <dt>
-
-          <code><a href="get_version_data.html">get_version_data()</a></code>
-
-        </dt>
-        <dd>Get version data</dd>
-
-        <dt>
-
-          <code><a href="is_npsych_scores.html">is_npsych_scores()</a></code>
-
-        </dt>
-        <dd>Is <code>x</code> an npsych_scores object?</dd>
-
-        <dt>
-
-          <code><a href="list_method_versions.html">list_method_versions()</a></code>
-
-        </dt>
-        <dd>Get available version names for a standardization method</dd>
-
-        <dt>
-
-          <code><a href="list_npsych_scores.html">list_npsych_scores()</a></code>
-
-        </dt>
-        <dd>List <code>npsych_scores</code> subclasses</dd>
-
-        <dt>
-
-          <code><a href="list_std_methods.html">list_std_methods()</a></code>
-
-        </dt>
-        <dd>List available standardization methods for <code>npsych_scores</code></dd>
-
-        <dt>
-
-          <code><a href="new_npsych_scores.html">new_npsych_scores()</a></code>
-
-        </dt>
-        <dd>Create an npsych_scores subclass</dd>
-
-        <dt>
-
-          <code><a href="normative_summaries.html">normative_summaries</a></code>
-
-        </dt>
-        <dd>Means and SDs for calculating z-scores</dd>
-
-        <dt>
-
-          <code><a href="norms_version.html">norms_version()</a></code>
-
-        </dt>
-        <dd>Norms-Based Standardization Version</dd>
-
-        <dt>
-
-          <code><a href="npsych_scores.html">npsych_scores()</a></code>
-
-        </dt>
-        <dd>Neuropsychological Test Scores</dd>
-
-        <dt>
-
-          <code><a href="rdd.html">rdd</a></code>
-
-        </dt>
-        <dd>Researchers Data Dictionary in List Form</dd>
-
-        <dt>
-
-          <code><a href="reg_coefs.html">reg_coefs</a></code>
-
-        </dt>
-        <dd>Regression Coefficients for Regression Based Standardization</dd>
-
-        <dt>
-
-          <code><a href="register_norms_version.html">register_norms_version()</a></code>
-
-        </dt>
-        <dd>Register a norms-based standardization version</dd>
-
-        <dt>
-
-          <code><a href="register_regression_version.html">register_regression_version()</a></code>
-
-        </dt>
-        <dd>Register a regression-based standardization version</dd>
-
-        <dt>
-
-          <code><a href="regression_version.html">regression_version()</a></code>
-
-        </dt>
-        <dd>Regression-Based Standardization Version</dd>
-
-        <dt>
-
-          <code><a href="remove_error_codes.html">remove_error_codes()</a></code>
-
-        </dt>
-        <dd>Remove error codes</dd>
-
-        <dt>
-
-          <code><a href="set_std_defaults.html">set_std_defaults()</a></code>
-
-        </dt>
-        <dd>Set the default standardization method (and version) an <code>npsych_scores</code> subclass</dd>
-
-        <dt>
-
-          <code><a href="std.html">std()</a></code>
-
-        </dt>
-        <dd>Standardize neuropsychological test scores</dd>
-
-        <dt>
-
-          <code><a href="std_data.html">std_data()</a></code>
-
-        </dt>
-        <dd>Standardize all <code>npsych_scores</code> columns in a data frame</dd>
-
-        <dt>
-
-          <code><a href="std_using_norms-npsych_scores.html">std_using_norms-npsych_scores</a></code>
-
-        </dt>
-        <dd>Standardize test scores using norms</dd>
-
-        <dt>
-
-          <code><a href="std_using_norms.html">std_using_norms()</a></code>
-
-        </dt>
-        <dd>Standardize <code>npsych_scores</code> using norms</dd>
-
-        <dt>
-
-          <code><a href="std_using_regression-npsych_scores.html">std_using_regression-npsych_scores</a></code>
-
-        </dt>
-        <dd>Standardize test scores using regression</dd>
-
-        <dt>
-
-          <code><a href="std_using_regression.html">std_using_regression()</a></code>
-
-        </dt>
-        <dd>Standardize using regression</dd>
-
-        <dt>
-
-          <code><a href="std_version.html">std_version()</a></code>
-
-        </dt>
-        <dd>Standardization Version</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

@@ -149,7 +149,10 @@ set_std_defaults(
 
 ``` r
 z_reg <- std(moca, age = 72, sex = 1, educ = 16, race = 1)
+z_reg
 ```
+
+    [1] -0.3628727  0.8910142  1.7269388
 
 To override the default method or version, specify them explicitly:
 
@@ -225,20 +228,3 @@ result2
     1  72   1   16    1   25      18 -0.4166667 -0.6295726
     2  75   2   14    2   28      20  0.8928571  0.5252069
     3  68   1   12    1   22      16 -1.0303030 -0.7205741
-
-## Changing defaults
-
-If you prefer a different default method for your session, use
-[`set_std_defaults()`](https://rmtrane.github.io/ntrs/reference/set_std_defaults.md):
-
-``` r
-set_std_defaults(
-  MOCATOTS(),
-  method = "norms",
-  version = "nacc",
-  overwrite = TRUE
-)
-
-# Subsequent calls use the new default
-std(MOCATOTS(c(25, 28)), age = 72, sex = 1, educ = 16)
-```
