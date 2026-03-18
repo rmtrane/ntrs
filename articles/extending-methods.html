@@ -131,7 +131,9 @@
 <span></span>
 <span><span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span><span class="va">moca</span>, method <span class="op">=</span> <span class="st">"percentile"</span>, ref_scores <span class="op">=</span> <span class="va">ref</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 18.18182 54.54545 81.81818</code></pre>
+<pre><code>[1] 18.18182 54.54545 81.81818
+attr(,"method")
+[1] "percentile"</code></pre>
 </div>
 </div>
 <p>Notice that our method doesn’t use a <code>version</code> parameter. That’s fine — <code><a href="../reference/std.html">std()</a></code> passes <code>version</code> only when it’s non-NULL, and <code><a href="../reference/list_std_methods.html">list_std_methods()</a></code> doesn’t require version registration for methods without a <code>version</code> formal. Also, notice how <code>std_using_percentile()</code> removes error codes before computing percentiles. It is on the method implementer to decide how to handle error codes — the <code><a href="../reference/remove_error_codes.html">remove_error_codes()</a></code> helper is available, and recommended, but needs to be explicitly called.</p>
@@ -256,13 +258,21 @@
 <span><span class="co"># Uses the default "community" version</span></span>
 <span><span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span><span class="va">moca</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 18.18182 54.54545 81.81818</code></pre>
+<pre><code>[1] 18.18182 54.54545 81.81818
+attr(,"method")
+[1] "percentile"
+attr(,"version")
+[1] "community"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Or specify explicitly</span></span>
 <span><span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span><span class="va">moca</span>, method <span class="op">=</span> <span class="st">"percentile"</span>, version <span class="op">=</span> <span class="st">"clinic"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  54.54545  81.81818 100.00000</code></pre>
+<pre><code>[1]  54.54545  81.81818 100.00000
+attr(,"method")
+[1] "percentile"
+attr(,"version")
+[1] "clinic"</code></pre>
 </div>
 </div>
 </section></section><section class="level2"><h2 id="part-2-score-specific-method-overrides">Part 2: Score-specific method overrides<a class="anchor" aria-label="anchor" href="#part-2-score-specific-method-overrides"></a>
@@ -292,7 +302,11 @@
 <span>  version <span class="op">=</span> <span class="st">"community"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 18.18182 81.81818</code></pre>
+<pre><code>[1] 18.18182 81.81818
+attr(,"method")
+[1] "percentile"
+attr(,"version")
+[1] "community"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># TRAILA uses the specific method (lower time = better)</span></span>
@@ -302,7 +316,9 @@
 <span>  ref_scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">30</span>, <span class="fl">40</span>, <span class="fl">50</span>, <span class="fl">60</span>, <span class="fl">80</span>, <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 71.42857 28.57143</code></pre>
+<pre><code>[1] 71.42857 28.57143
+attr(,"method")
+[1] "percentile"</code></pre>
 </div>
 </div>
 <p>S7 dispatch order: specific class method → parent class method. The same pattern is used in <code>ntrs</code> itself — <code>std_using_norms</code> and <code>std_using_regression</code> have methods on <code>npsych_scores</code> (the parent) that handle all tests uniformly.</p>

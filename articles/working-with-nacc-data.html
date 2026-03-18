@@ -286,21 +286,57 @@ Not available: UDS form submitted did not collect data in this way, or a skip pa
 <div class="sourceCode cell-code" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MOCATOTS"</span>, <span class="st">"z_MOCATOTS"</span>, <span class="st">"ANIMALS"</span>, <span class="st">"z_ANIMALS"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           MOCATOTS z_MOCATOTS         ANIMALS  z_ANIMALS
-   &lt;ntrs::MOCATOTS&gt;      &lt;num&gt; &lt;ntrs::ANIMALS&gt;      &lt;num&gt;
-1:               -4         NA              26  0.9749259
-2:               -4         NA              27  0.9119765
-3:               -4         NA              23 -0.2150435
-4:               -4         NA              12 -2.2613609
-5:               -4         NA              22 -0.2426291
-6:               -4         NA              18 -0.9339301</code></pre>
+<pre><code>           MOCATOTS                z_MOCATOTS         ANIMALS
+   &lt;ntrs::MOCATOTS&gt; &lt;ntrs::std_npsych_scores&gt; &lt;ntrs::ANIMALS&gt;
+1:               -4                        NA              26
+2:               -4                        NA              27
+3:               -4                        NA              23
+4:               -4                        NA              12
+5:               -4                        NA              22
+6:               -4                        NA              18
+                   z_ANIMALS
+   &lt;ntrs::std_npsych_scores&gt;
+1:                 0.9749259
+2:                 0.9119765
+3:                -0.2150435
+4:                -2.2613609
+5:                -0.2426291
+6:                -0.9339301</code></pre>
 </div>
 </div>
-<section class="level3"><h3 id="keeping-raw-scores-alongside-z-scores">Keeping raw scores alongside z-scores<a class="anchor" aria-label="anchor" href="#keeping-raw-scores-alongside-z-scores"></a>
+<section class="level3"><h3 id="tracking-which-method-was-used">Tracking which method was used<a class="anchor" aria-label="anchor" href="#tracking-which-method-was-used"></a>
+</h3>
+<p>The result carries metadata attributes. Use <code><a href="../reference/methods_from_std_data.html">methods_from_std_data()</a></code> to see which method and version were applied to each score:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/methods_from_std_data.html">methods_from_std_data</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$MOCATOTS
+           method           version
+     "regression" "updated_2025.06"
+
+$TRAILA
+           method           version
+     "regression" "updated_2025.06"
+
+$ANIMALS
+           method           version
+     "regression" "updated_2025.06"
+
+$UDSBENTD
+           method           version
+     "regression" "updated_2025.06"
+
+$CRAFTVRS
+           method           version
+     "regression" "updated_2025.06" </code></pre>
+</div>
+</div>
+</section><section class="level3"><h3 id="keeping-raw-scores-alongside-z-scores">Keeping raw scores alongside z-scores<a class="anchor" aria-label="anchor" href="#keeping-raw-scores-alongside-z-scores"></a>
 </h3>
 <p>By default, the original <code>npsych_scores</code> columns are left in place. If you prefer to rename them with a prefix (e.g., <code>raw_</code>) for clearer bookkeeping, use the <code>prefix_raw</code> argument:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_data.html">std_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  prefix_raw <span class="op">=</span> <span class="st">"raw_"</span>,</span>
@@ -333,7 +369,7 @@ Not available: UDS form submitted did not collect data in this way, or a skip pa
 ✖ ✖ No default method registered for &lt;REYAREC&gt;. ℹ Register a default via
   `set_std_defaults()()`.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Now we have raw_MOCATOTS and z_MOCATOTS</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">result2</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"MOCATOTS"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">result2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -344,7 +380,7 @@ Not available: UDS form submitted did not collect data in this way, or a skip pa
 </h3>
 <p>You can specify different methods or versions for specific tests via the <code>methods</code> argument, keyed by class name:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_data.html">std_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -393,7 +429,7 @@ will be ignored.</code></pre>
 </h3>
 <p>If you only want to standardize specific columns, use <code>.cols</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_data.html">std_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  .cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MOCATOTS"</span>, <span class="st">"ANIMALS"</span>, <span class="st">"TRAILA"</span><span class="op">)</span>,</span>
@@ -412,7 +448,7 @@ will be ignored.</code></pre>
 </h2>
 <p>For simplicity, consider just a subset of the <code>demo_data</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo_subset</span> <span class="op">&lt;-</span> <span class="va">demo_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"NACCID"</span>,</span>
 <span>  <span class="st">"NACCAGE"</span>,</span>
@@ -446,7 +482,7 @@ will be ignored.</code></pre>
 </div>
 <p>Here is the full workflow, from raw data to standardized scores:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Start with raw NACC data</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">demo_subset</span></span>
 <span><span class="co"># 2. Convert test columns to npsych_scores</span></span>
@@ -504,7 +540,7 @@ will be ignored.</code></pre>
 </div>
 <p>We can similarly work within the <code>tidyverse</code> if that’s your preference:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -520,7 +556,7 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_tidy</span> <span class="op">&lt;-</span> <span class="va">demo_subset</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    MOCATOTS <span class="op">=</span> <span class="fu"><a href="../reference/MOCATOTS.html">MOCATOTS</a></span><span class="op">(</span><span class="va">MOCATOTS</span><span class="op">)</span>,</span>
@@ -574,7 +610,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>Or <code>data.table</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -585,7 +621,7 @@ Attaching package: 'data.table'</code></pre>
 
     between, first, last</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">demo_subset</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df_dt</span><span class="op">[</span>,</span>
@@ -649,12 +685,12 @@ Attaching package: 'data.table'</code></pre>
 </div>
 <p>We can verify that all three approaches yield the same result (par differences in classes):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html" class="external-link">compare</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df_tidy_result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✔ No differences</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html" class="external-link">compare</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df_tidy_result</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df_dt_result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✔ No differences</code></pre>

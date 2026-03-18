@@ -1,6 +1,7 @@
 # Standardize `npsych_scores` using norms
 
-A short description...
+Computes z-scores by looking up the mean and standard deviation from a
+norms table, adjusting for covariates (e.g., age, sex, education).
 
 ## Usage
 
@@ -12,13 +13,15 @@ std_using_norms(scores, ...)
 
 - scores:
 
-  A numeric vector.
+  An `npsych_scores` object.
 
 - ...:
 
-  Arguments passed to methods.
+  Named covariates required by the norms version (e.g., `age = 72`,
+  `sex = 1`, `educ = 16`).
 
 ## Value
 
-The standardized value of `x`, whose exact type depends on the specific
-S7 method called.
+An
+[std_npsych_scores](https://rmtrane.github.io/ntrs/reference/std_npsych_scores.md)
+object containing z-scores.

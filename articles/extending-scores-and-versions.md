@@ -188,7 +188,11 @@ std(
 )
 ```
 
-    [1] -0.2727273  1.1000000 -0.5833333
+    <ntrs::std_npsych_scores> num [1:3] -0.273 1.1 -0.583
+     @ scores_subclass: chr "DSYM"
+     @ description    : chr "Standardized using norms, version example_v1. Adjusted for covariates age, sex."
+     @ method         : chr "norms"
+     @ version        : chr "example_v1"
 
 ## Registering a regression version
 
@@ -250,7 +254,11 @@ std(
 )
 ```
 
-    [1] -0.8210526  0.8315789 -1.6210526
+    <ntrs::std_npsych_scores> num [1:3] -0.821 0.832 -1.621
+     @ scores_subclass: chr "DSYM"
+     @ description    : chr "Standardized using regression, version example_reg. Adjusted for covariates age, sex, educ."
+     @ method         : chr "regression"
+     @ version        : chr "example_reg"
 
 We can verify that the education variable is indeed truncated by
 comparing the result at the boundary to a value above it:
@@ -266,7 +274,11 @@ std(
 )
 ```
 
-    [1] -2 -2
+    <ntrs::std_npsych_scores> num [1:2] -2 -2
+     @ scores_subclass: chr "DSYM"
+     @ description    : chr "Standardized using regression, version example_reg. Adjusted for covariates age, sex, educ."
+     @ method         : chr "regression"
+     @ version        : chr "example_reg"
 
 ## Setting defaults and standardizing
 
@@ -299,14 +311,22 @@ test_scores <- DSYM(c(45, 62, 33))
 std(test_scores, age = 72, sex = 1, educ = 16)
 ```
 
-    [1] -0.8210526  0.9684211 -2.0842105
+    <ntrs::std_npsych_scores> num [1:3] -0.821 0.968 -2.084
+     @ scores_subclass: chr "DSYM"
+     @ description    : chr "Standardized using regression, version example_reg. Adjusted for covariates age, sex, educ."
+     @ method         : chr "regression"
+     @ version        : chr "example_reg"
 
 ``` r
 # Explicitly use norms
 std(test_scores, method = "norms", version = "example_v1", age = 72, sex = 1)
 ```
 
-    [1] -0.2727273  1.2727273 -1.3636364
+    <ntrs::std_npsych_scores> num [1:3] -0.273 1.273 -1.364
+     @ scores_subclass: chr "DSYM"
+     @ description    : chr "Standardized using norms, version example_v1. Adjusted for covariates age, sex."
+     @ method         : chr "norms"
+     @ version        : chr "example_v1"
 
 ## Optional: `raw_scores_fn` and `post_proc_fn`
 

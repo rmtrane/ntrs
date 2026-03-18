@@ -126,9 +126,23 @@ columns are processed.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The input <code>data</code> with additional standardized score columns
-appended. The original columns are left unchanged. The return type
-matches the input type (<code>data.frame</code> or <code>data.table</code>).</p>
-    </div>
+appended. The original columns are left unchanged (unless <code>prefix_raw</code>
+is specified, in which case they are renamed with that prefix). The
+return type matches the input type (<code>data.frame</code> or <code>data.table</code>).</p>
+<p>Each standardized column is an <a href="std_npsych_scores.html">std_npsych_scores</a> object with S7
+properties <code>@method</code>, <code>@version</code>, <code>@description</code>, and
+<code>@scores_subclass</code>. Use <code><a href="methods_from_std_data.html">methods_from_std_data()</a></code> to extract the
+method and version from all standardized columns at once.</p>
+<p>The returned data frame carries two attributes:</p><dl><dt><code>prefix_std</code></dt>
+<dd><p>The prefix used for standardized columns (default
+<code>"z_"</code>).</p></dd>
+
+<dt><code>prefix_raw</code></dt>
+<dd><p>The prefix used for raw score columns, or <code>NULL</code>
+if <code>prefix_raw</code> was not specified.</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="std.html">std()</a></code> for standardizing a single <code>npsych_scores</code> vector.</p></div>

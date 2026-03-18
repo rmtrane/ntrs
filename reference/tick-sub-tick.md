@@ -2,6 +2,8 @@
 
 Subset `npsych_scores` objects.
 
+Subset `npsych_scores` objects.
+
 ## Arguments
 
 - x:
@@ -13,6 +15,9 @@ Subset `npsych_scores` objects.
   A numeric index.
 
 ## Value
+
+A new `npsych_scores` object containing the elements of `x` specified by
+`i`.
 
 A new `npsych_scores` object containing the elements of `x` specified by
 `i`.

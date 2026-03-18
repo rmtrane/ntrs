@@ -1,6 +1,8 @@
-# Standardize using regression
+# Standardize `npsych_scores` using regression
 
-A short description...
+Computes z-scores using regression-based norms: predicts the expected
+score from covariates via a linear model, then returns the scaled
+residual `(score - predicted) / RMSE`.
 
 ## Usage
 
@@ -12,12 +14,15 @@ std_using_regression(scores, ...)
 
 - scores:
 
-  A numeric vector of test scores.
+  An `npsych_scores` object.
 
 - ...:
 
-  Arguments passed to the specific method.
+  Named covariates required by the regression version (e.g., `age = 72`,
+  `sex = 1`, `educ = 16`).
 
 ## Value
 
-The result of the dispatched method for `std_using_regression`.
+An
+[std_npsych_scores](https://rmtrane.github.io/ntrs/reference/std_npsych_scores.md)
+object containing z-scores.

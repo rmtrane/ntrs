@@ -285,7 +285,11 @@ N/A (not official error code, but shows up in full NACC data)
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std.html">std</a></span><span class="op">(</span><span class="va">scores</span>, age <span class="op">=</span> <span class="fl">72</span>, sex <span class="op">=</span> <span class="fl">1</span>, educ <span class="op">=</span> <span class="fl">16</span>, race <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">z</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3628727         NA         NA  0.8910142  1.7269388</code></pre>
+<pre><code>&lt;ntrs::std_npsych_scores&gt; num [1:5] -0.363 NA NA 0.891 1.727
+ @ scores_subclass: chr "MOCATOTS"
+ @ description    : chr "Standardized using regression, version updated_2025.06. Adjusted for covariates age, sex, educ, race."
+ @ method         : chr "regression"
+ @ version        : chr "updated_2025.06"</code></pre>
 </div>
 </div>
 <p>The positions corresponding to error codes (<code>88</code> and <code>-4</code>) are <code>NA</code> in the result, while valid scores are standardized normally.</p>

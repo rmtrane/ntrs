@@ -231,14 +231,52 @@ z_cols
 head(result[, c("MOCATOTS", "z_MOCATOTS", "ANIMALS", "z_ANIMALS")])
 ```
 
-               MOCATOTS z_MOCATOTS         ANIMALS  z_ANIMALS
-       <ntrs::MOCATOTS>      <num> <ntrs::ANIMALS>      <num>
-    1:               -4         NA              26  0.9749259
-    2:               -4         NA              27  0.9119765
-    3:               -4         NA              23 -0.2150435
-    4:               -4         NA              12 -2.2613609
-    5:               -4         NA              22 -0.2426291
-    6:               -4         NA              18 -0.9339301
+               MOCATOTS                z_MOCATOTS         ANIMALS
+       <ntrs::MOCATOTS> <ntrs::std_npsych_scores> <ntrs::ANIMALS>
+    1:               -4                        NA              26
+    2:               -4                        NA              27
+    3:               -4                        NA              23
+    4:               -4                        NA              12
+    5:               -4                        NA              22
+    6:               -4                        NA              18
+                       z_ANIMALS
+       <ntrs::std_npsych_scores>
+    1:                 0.9749259
+    2:                 0.9119765
+    3:                -0.2150435
+    4:                -2.2613609
+    5:                -0.2426291
+    6:                -0.9339301
+
+### Tracking which method was used
+
+The result carries metadata attributes. Use
+[`methods_from_std_data()`](https://rmtrane.github.io/ntrs/reference/methods_from_std_data.md)
+to see which method and version were applied to each score:
+
+``` r
+methods_from_std_data(result)
+```
+
+    $MOCATOTS
+               method           version
+         "regression" "updated_2025.06"
+
+    $TRAILA
+               method           version
+         "regression" "updated_2025.06"
+
+    $ANIMALS
+               method           version
+         "regression" "updated_2025.06"
+
+    $UDSBENTD
+               method           version
+         "regression" "updated_2025.06"
+
+    $CRAFTVRS
+               method           version
+         "regression" "updated_2025.06" 
 
 ### Keeping raw scores alongside z-scores
 

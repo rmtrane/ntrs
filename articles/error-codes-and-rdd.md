@@ -261,7 +261,11 @@ z <- std(scores, age = 72, sex = 1, educ = 16, race = 1)
 z
 ```
 
-    [1] -0.3628727         NA         NA  0.8910142  1.7269388
+    <ntrs::std_npsych_scores> num [1:5] -0.363 NA NA 0.891 1.727
+     @ scores_subclass: chr "MOCATOTS"
+     @ description    : chr "Standardized using regression, version updated_2025.06. Adjusted for covariates age, sex, educ, race."
+     @ method         : chr "regression"
+     @ version        : chr "updated_2025.06"
 
 The positions corresponding to error codes (`88` and `-4`) are `NA` in
 the result, while valid scores are standardized normally.

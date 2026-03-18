@@ -46,6 +46,9 @@ Create and inspect `npsych_scores` objects.
 - [`npsych_scores()`](https://rmtrane.github.io/ntrs/reference/npsych_scores.md)
   : Neuropsychological Test Scores
 
+- [`std_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/std_npsych_scores.md)
+  : Standardized neuropsychological test scores
+
 - [`new_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/new_npsych_scores.md)
   : Create an npsych_scores subclass
 
@@ -77,7 +80,9 @@ Standardize scores.
   Standardize `npsych_scores` using norms
 
 - [`std_using_regression()`](https://rmtrane.github.io/ntrs/reference/std_using_regression.md)
-  : Standardize using regression
+  :
+
+  Standardize `npsych_scores` using regression
 
 - [`std_using_norms-npsych_scores`](https://rmtrane.github.io/ntrs/reference/std_using_norms-npsych_scores.md)
   : Standardize test scores using norms
@@ -127,7 +132,8 @@ Create and register regression-based standardization versions.
 
 ## Discovery
 
-List available scores, methods, and versions.
+List available scores, methods, and versions, and inspect `std_data` to
+get standardization details.
 
 - [`list_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/list_npsych_scores.md)
   :
@@ -147,6 +153,13 @@ List available scores, methods, and versions.
 
 - [`get_npsych_scores()`](https://rmtrane.github.io/ntrs/reference/get_npsych_scores.md)
   : Get an npsych_scores constructor by name
+
+- [`methods_from_std_data()`](https://rmtrane.github.io/ntrs/reference/methods_from_std_data.md)
+  :
+
+  Extract standardization method and version from
+  [`std_data()`](https://rmtrane.github.io/ntrs/reference/std_data.md)
+  output
 
 ## Score Calculators
 

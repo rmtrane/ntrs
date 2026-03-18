@@ -12,6 +12,10 @@ Useful links:
 
 - <https://rmtrane.github.io/ntrs/>
 
+- <https://github.com/rmtrane/ntrs>
+
+- Report bugs at <https://github.com/rmtrane/ntrs/issues>
+
 ## Author
 
 **Maintainer**: Ralph Møller Trane <rmtrane@gmail.com>

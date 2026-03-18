@@ -72,8 +72,27 @@ std_data(
 ## Value
 
 The input `data` with additional standardized score columns appended.
-The original columns are left unchanged. The return type matches the
-input type (`data.frame` or `data.table`).
+The original columns are left unchanged (unless `prefix_raw` is
+specified, in which case they are renamed with that prefix). The return
+type matches the input type (`data.frame` or `data.table`).
+
+Each standardized column is an
+[std_npsych_scores](https://rmtrane.github.io/ntrs/reference/std_npsych_scores.md)
+object with S7 properties `@method`, `@version`, `@description`, and
+`@scores_subclass`. Use
+[`methods_from_std_data()`](https://rmtrane.github.io/ntrs/reference/methods_from_std_data.md)
+to extract the method and version from all standardized columns at once.
+
+The returned data frame carries two attributes:
+
+- `prefix_std`:
+
+  The prefix used for standardized columns (default `"z_"`).
+
+- `prefix_raw`:
+
+  The prefix used for raw score columns, or `NULL` if `prefix_raw` was
+  not specified.
 
 ## See also
 

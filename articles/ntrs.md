@@ -21,39 +21,39 @@ being set. These can be suppressed with
 library(ntrs)
 ```
 
-    ✔ Set "updated_2025.06" as default for regression method on <TRAILA>
-    ✔ Set "updated_2025.06" as default for regression method on <CRAFTDVR>
-    ✔ Set "updated_2025.06" as default for regression method on <OTRAILB>
-    ✔ Set "nacc_legacy" as default for regression method on <DIGIF>
-    ✔ Set "updated_2025.06" as default for regression method on <ANIMALS>
-    ✔ Set "updated_2025.06" as default for regression method on <UDSVERLC>
-    ✔ Set "updated_2025.06" as default for regression method on <UDSBENTD>
-    ✔ Set "updated_2025.06" as default for regression method on <CRAFTURS>
-    ✔ Set "updated_2025.06" as default for regression method on <MOCATOTS>
-    ✔ Set "nacc_legacy" as default for regression method on <DIGIB>
-    ✔ Set "nacc_legacy" as default for regression method on <DIGIBLEN>
-    ✔ Set "updated_2025.06" as default for regression method on <UDSVERFC>
-    ✔ Set "updated_2025.06" as default for regression method on <DIGBACCT>
-    ✔ Set "updated_2025.06" as default for regression method on <DIGFORSL>
-    ✔ Set "updated_2025.06" as default for regression method on <OTRAILA>
-    ✔ Set "updated_2025.06" as default for regression method on <OTRLBRR>
-    ✔ Set "updated_2025.06" as default for regression method on <TRAILB>
-    ✔ Set "updated_2025.06" as default for regression method on <VEG>
-    ✔ Set "nacc_legacy" as default for regression method on <LOGIMEM>
+    ✔ Set "updated_2025.06" as default for regression method on <DIGBACLS>
     ✔ Set "updated_2025.06" as default for regression method on <MINTTOTS>
-    ✔ Set "updated_2025.06" as default for regression method on <CRAFTDRE>
+    ✔ Set "nacc_legacy" as default for regression method on <NACCMMSE>
+    ✔ Set "updated_2025.06" as default for regression method on <OTRLBRR>
     ✔ Set "updated_2025.06" as default for regression method on <UDSVERTN>
     ✔ Set "nacc_legacy" as default for regression method on <BOSTON>
-    ✔ Set "ravlt_trials" as default for norms method on <REY6REC>
-    ✔ Set "nacc_legacy" as default for regression method on <NACCMMSE>
-    ✔ Set "ravlt_trials" as default for norms method on <REYDREC>
-    ✔ Set "updated_2025.06" as default for regression method on <DIGBACLS>
-    ✔ Set "updated_2025.06" as default for regression method on <CRAFTVRS>
-    ✔ Set "updated_2025.06" as default for regression method on <UDSBENTC>
-    ✔ Set "nacc_legacy" as default for regression method on <DIGIFLEN>
-    ✔ Set "nacc_legacy" as default for regression method on <MEMUNITS>
+    ✔ Set "updated_2025.06" as default for regression method on <DIGBACCT>
+    ✔ Set "updated_2025.06" as default for regression method on <CRAFTDVR>
     ✔ Set "updated_2025.06" as default for regression method on <OTRLARR>
+    ✔ Set "updated_2025.06" as default for regression method on <UDSVERFC>
+    ✔ Set "ravlt_trials" as default for norms method on <REYDREC>
+    ✔ Set "ravlt_trials" as default for norms method on <REY6REC>
+    ✔ Set "updated_2025.06" as default for regression method on <MOCATOTS>
+    ✔ Set "updated_2025.06" as default for regression method on <ANIMALS>
+    ✔ Set "nacc_legacy" as default for regression method on <MEMUNITS>
+    ✔ Set "updated_2025.06" as default for regression method on <CRAFTURS>
     ✔ Set "updated_2025.06" as default for regression method on <DIGFORCT>
+    ✔ Set "updated_2025.06" as default for regression method on <VEG>
+    ✔ Set "updated_2025.06" as default for regression method on <UDSBENTD>
+    ✔ Set "nacc_legacy" as default for regression method on <DIGIB>
+    ✔ Set "updated_2025.06" as default for regression method on <CRAFTDRE>
+    ✔ Set "updated_2025.06" as default for regression method on <TRAILB>
+    ✔ Set "updated_2025.06" as default for regression method on <UDSVERLC>
+    ✔ Set "nacc_legacy" as default for regression method on <DIGIFLEN>
+    ✔ Set "updated_2025.06" as default for regression method on <OTRAILB>
+    ✔ Set "updated_2025.06" as default for regression method on <UDSBENTC>
+    ✔ Set "updated_2025.06" as default for regression method on <TRAILA>
+    ✔ Set "nacc_legacy" as default for regression method on <LOGIMEM>
+    ✔ Set "nacc_legacy" as default for regression method on <DIGIBLEN>
+    ✔ Set "updated_2025.06" as default for regression method on <OTRAILA>
+    ✔ Set "nacc_legacy" as default for regression method on <DIGIF>
+    ✔ Set "updated_2025.06" as default for regression method on <CRAFTVRS>
+    ✔ Set "updated_2025.06" as default for regression method on <DIGFORSL>
 
 ## Creating score objects
 
@@ -167,7 +167,32 @@ z <- std(moca, age = 72, sex = 1, educ = 16)
 z
 ```
 
-    [1] -0.4166667  0.8333333  1.6666667
+    <ntrs::std_npsych_scores> num [1:3] -0.417 0.833 1.667
+     @ scores_subclass: chr "MOCATOTS"
+     @ description    : chr "Standardized using norms, version nacc. Adjusted for covariates age, educ, sex."
+     @ method         : chr "norms"
+     @ version        : chr "nacc"
+
+The result is an `std_npsych_scores` object. You can inspect the
+standardization metadata via S7 properties:
+
+``` r
+z@method
+```
+
+    [1] "norms"
+
+``` r
+z@version
+```
+
+    [1] "nacc"
+
+``` r
+z@description
+```
+
+    [1] "Standardized using norms, version nacc. Adjusted for covariates age, educ, sex."
 
 ``` r
 set_std_defaults(
@@ -188,7 +213,11 @@ z_reg <- std(moca, age = 72, sex = 1, educ = 16, race = 1)
 z_reg
 ```
 
-    [1] -0.3628727  0.8910142  1.7269388
+    <ntrs::std_npsych_scores> num [1:3] -0.363 0.891 1.727
+     @ scores_subclass: chr "MOCATOTS"
+     @ description    : chr "Standardized using regression, version updated_2025.06. Adjusted for covariates age, sex, educ, race."
+     @ method         : chr "regression"
+     @ version        : chr "updated_2025.06"
 
 To override the default method or version, specify them explicitly:
 
@@ -204,7 +233,11 @@ z_norms <- std(
 z_norms
 ```
 
-    [1] -0.3532407  0.8313253  1.6210360
+    <ntrs::std_npsych_scores> num [1:3] -0.353 0.831 1.621
+     @ scores_subclass: chr "MOCATOTS"
+     @ description    : chr "Standardized using norms, version updated. Adjusted for covariates sex, age, educ."
+     @ method         : chr "norms"
+     @ version        : chr "updated"
 
 ## Batch standardization with `std_data()`
 
@@ -237,6 +270,29 @@ result
     1  72   1   16    1   25      18 -0.3628727 -0.6295726
     2  75   2   14    2   28      20  1.6463434  0.5252069
     3  68   1   12    1   22      16 -1.1015874 -0.7205741
+
+Each standardized column is an `std_npsych_scores` object carrying
+`@method`, `@version`, and `@description` properties. Use
+[`methods_from_std_data()`](https://rmtrane.github.io/ntrs/reference/methods_from_std_data.md)
+to extract them conveniently:
+
+``` r
+attr(result, "prefix_std")
+```
+
+    [1] "z_"
+
+``` r
+methods_from_std_data(result)
+```
+
+    $moca
+               method           version
+         "regression" "updated_2025.06"
+
+    $animals
+               method           version
+         "regression" "updated_2025.06" 
 
 You can override the method/version per test class:
 

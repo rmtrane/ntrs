@@ -89,8 +89,25 @@ when the resolved method does not use versioned data.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A numeric vector of standardized scores.</p>
-    </div>
+    <p>An <a href="std_npsych_scores.html">std_npsych_scores</a> object (inherits <code>numeric</code>). Access
+standardization metadata via S7 properties:</p><dl><dt><code>@method</code></dt>
+<dd><p>The standardization method used (e.g., <code>"norms"</code>,
+<code>"regression"</code>).</p></dd>
+
+<dt><code>@version</code></dt>
+<dd><p>The version identifier (e.g., <code>"nacc"</code>,
+<code>"updated_2025.06"</code>), or <code>NULL</code> if the method is unversioned.</p></dd>
+
+<dt><code>@description</code></dt>
+<dd><p>A human-readable summary of the standardization
+applied, including covariates.</p></dd>
+
+<dt><code>@scores_subclass</code></dt>
+<dd><p>The name of the originating <code>npsych_scores</code>
+subclass (e.g., <code>"MOCATOTS"</code>).</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="std_data.html">std_data()</a></code> for batch-standardizing every <code>npsych_scores</code>

@@ -71,6 +71,8 @@ std(moca, method = "percentile", ref_scores = ref)
 ```
 
     [1] 18.18182 54.54545 81.81818
+    attr(,"method")
+    [1] "percentile"
 
 Notice that our method doesn’t use a `version` parameter. That’s fine —
 [`std()`](https://rmtrane.github.io/ntrs/reference/std.md) passes
@@ -223,6 +225,10 @@ std(moca)
 ```
 
     [1] 18.18182 54.54545 81.81818
+    attr(,"method")
+    [1] "percentile"
+    attr(,"version")
+    [1] "community"
 
 ``` r
 # Or specify explicitly
@@ -230,6 +236,10 @@ std(moca, method = "percentile", version = "clinic")
 ```
 
     [1]  54.54545  81.81818 100.00000
+    attr(,"method")
+    [1] "percentile"
+    attr(,"version")
+    [1] "clinic"
 
 ## Part 2: Score-specific method overrides
 
@@ -266,6 +276,10 @@ std(
 ```
 
     [1] 18.18182 81.81818
+    attr(,"method")
+    [1] "percentile"
+    attr(,"version")
+    [1] "community"
 
 ``` r
 # TRAILA uses the specific method (lower time = better)
@@ -277,6 +291,8 @@ std(
 ```
 
     [1] 71.42857 28.57143
+    attr(,"method")
+    [1] "percentile"
 
 S7 dispatch order: specific class method → parent class method. The same
 pattern is used in `ntrs` itself — `std_using_norms` and

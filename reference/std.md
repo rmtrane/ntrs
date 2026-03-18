@@ -41,7 +41,29 @@ std(scores, ..., method = NULL, version = NULL)
 
 ## Value
 
-A numeric vector of standardized scores.
+An
+[std_npsych_scores](https://rmtrane.github.io/ntrs/reference/std_npsych_scores.md)
+object (inherits `numeric`). Access standardization metadata via S7
+properties:
+
+- `@method`:
+
+  The standardization method used (e.g., `"norms"`, `"regression"`).
+
+- `@version`:
+
+  The version identifier (e.g., `"nacc"`, `"updated_2025.06"`), or
+  `NULL` if the method is unversioned.
+
+- `@description`:
+
+  A human-readable summary of the standardization applied, including
+  covariates.
+
+- `@scores_subclass`:
+
+  The name of the originating `npsych_scores` subclass (e.g.,
+  `"MOCATOTS"`).
 
 ## See also
 
