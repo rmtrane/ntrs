@@ -172,6 +172,16 @@ z_cols
 head(result[, c("MOCATOTS", "z_MOCATOTS", "ANIMALS", "z_ANIMALS")])
 ```
 
+### Tracking which method was used
+
+The result carries metadata attributes. Use `methods_from_std_data()` to see
+which method and version were applied to each score:
+
+```{r}
+#| label: methods-from-std-data
+methods_from_std_data(result)
+```
+
 ### Keeping raw scores alongside z-scores
 
 By default, the original `npsych_scores` columns are left in place. If you

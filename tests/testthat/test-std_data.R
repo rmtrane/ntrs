@@ -351,6 +351,126 @@ test_that("std_data() renames raw npsych_scores columns when prefix_raw is set",
 })
 
 # ---------------------------------------------------------------------------
+# Attributes — prefix_std and prefix_raw on result, method/version on columns
+# ---------------------------------------------------------------------------
+
+test_that("std_data() result carries prefix_std attribute", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)
+
+  expect_equal(attr(result, "prefix_std"), "z_")
+})
+
+test_that("std_data() result carries custom prefix_std attribute", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(
+    df,
+    prefix_std = "std_",
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
+  )
+
+  expect_equal(attr(result, "prefix_std"), "std_")
+})
+
+test_that("std_data() result carries prefix_raw attribute when set", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(
+    df,
+    prefix_raw = "raw_",
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
+  )
+
+  expect_equal(attr(result, "prefix_raw"), "raw_")
+})
+
+test_that("std_data() prefix_raw attribute is NULL when not specified", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)
+
+  expect_null(attr(result, "prefix_raw"))
+})
+
+test_that("std_data() standardized columns carry method and version attributes", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)
+
+  expect_equal(attr(result$z_moca, "method"), "norms")
+  expect_equal(attr(result$z_moca, "version"), "nacc")
+})
+
+test_that("methods_from_std_data() extracts method/version from std_data() output", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
+  df$moca <- MOCATOTS(c(25, 28))
+
+  result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)
+  methods_info <- methods_from_std_data(result)
+
+  expect_named(methods_info, "moca")
+  expect_equal(methods_info$moca[["method"]], "norms")
+  expect_equal(methods_info$moca[["version"]], "nacc")
+
+  result_dt <- std_data(
+    data.table::as.data.table(df),
+    age = df$age,
+    sex = df$sex,
+    educ = df$educ
+  )
+  methods_info_dt <- methods_from_std_data(result_dt)
+
+  expect_identical(methods_info, methods_info_dt)
+})
+
+# ---------------------------------------------------------------------------
 # Original columns are preserved
 # ---------------------------------------------------------------------------
 
@@ -364,7 +484,7 @@ test_that("std_data() preserves original columns unchanged", {
   df <- data.frame(age = c(72, 75), sex = c(1, 2), educ = c(16, 12))
   df$moca <- MOCATOTS(c(25, 28))
 
-  result <- std_data(df, age = df$age, sex = df$sex, educ = df$educ)
+  result <- std_data(df, age = age, sex = sex, educ = educ)
 
   expect_equal(result$moca, df$moca)
   expect_equal(result$age, df$age)

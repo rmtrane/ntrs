@@ -48,8 +48,22 @@ columns are processed.}
 }
 \value{
 The input \code{data} with additional standardized score columns
-appended. The original columns are left unchanged. The return type
-matches the input type (\code{data.frame} or \code{data.table}).
+appended. The original columns are left unchanged (unless \code{prefix_raw}
+is specified, in which case they are renamed with that prefix). The
+return type matches the input type (\code{data.frame} or \code{data.table}).
+
+Each standardized column is an \link{std_npsych_scores} object with S7
+properties \verb{@method}, \verb{@version}, \verb{@description}, and
+\verb{@scores_subclass}. Use \code{\link[=methods_from_std_data]{methods_from_std_data()}} to extract the
+method and version from all standardized columns at once.
+
+The returned data frame carries two attributes:
+\describe{
+\item{\code{prefix_std}}{The prefix used for standardized columns (default
+\code{"z_"}).}
+\item{\code{prefix_raw}}{The prefix used for raw score columns, or \code{NULL}
+if \code{prefix_raw} was not specified.}
+}
 }
 \description{
 Finds every column in \code{data} that inherits from \code{npsych_scores},

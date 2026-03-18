@@ -2,18 +2,21 @@
 % Please edit documentation in R/std_using_regression.R
 \name{std_using_regression}
 \alias{std_using_regression}
-\title{Standardize using regression}
+\title{Standardize \code{npsych_scores} using regression}
 \usage{
 std_using_regression(scores, ...)
 }
 \arguments{
-\item{scores}{A numeric vector of test scores.}
+\item{scores}{An \code{npsych_scores} object.}
 
-\item{...}{Arguments passed to the specific method.}
+\item{...}{Named covariates required by the regression version (e.g.,
+\code{age = 72}, \code{sex = 1}, \code{educ = 16}).}
 }
 \value{
-The result of the dispatched method for \code{std_using_regression}.
+An \link{std_npsych_scores} object containing z-scores.
 }
 \description{
-A short description...
+Computes z-scores using regression-based norms: predicts the expected
+score from covariates via a linear model, then returns the scaled
+residual \code{(score - predicted) / RMSE}.
 }

@@ -38,8 +38,22 @@
 #'   columns are processed.
 #'
 #' @returns The input `data` with additional standardized score columns
-#'   appended. The original columns are left unchanged. The return type
-#'   matches the input type (`data.frame` or `data.table`).
+#'   appended. The original columns are left unchanged (unless `prefix_raw`
+#'   is specified, in which case they are renamed with that prefix). The
+#'   return type matches the input type (`data.frame` or `data.table`).
+#'
+#'   Each standardized column is an [std_npsych_scores] object with S7
+#'   properties `@method`, `@version`, `@description`, and
+#'   `@scores_subclass`. Use [methods_from_std_data()] to extract the
+#'   method and version from all standardized columns at once.
+#'
+#'   The returned data frame carries two attributes:
+#'   \describe{
+#'     \item{`prefix_std`}{The prefix used for standardized columns (default
+#'       `"z_"`).}
+#'     \item{`prefix_raw`}{The prefix used for raw score columns, or `NULL`
+#'       if `prefix_raw` was not specified.}
+#'   }
 #'
 #' @seealso [std()] for standardizing a single `npsych_scores` vector.
 #'
@@ -169,7 +183,7 @@ std_data <- function(
 
       tryCatch(
         {
-          tmp <- do.call(
+          do.call(
             std,
             c(
               list(
@@ -180,11 +194,6 @@ std_data <- function(
               covars
             )
           )
-
-          attr(tmp, "method") <- col_method
-          attr(tmp, "version") <- col_version
-
-          tmp
         },
         error = function(e) {
           col_nm <- npsych_cols[
@@ -214,6 +223,9 @@ std_data <- function(
   if (!input_is_dt) {
     dat <- as.data.frame(dat)
   }
+
+  attr(dat, "prefix_std") <- prefix_std
+  attr(dat, "prefix_raw") <- prefix_raw
 
   dat
 }

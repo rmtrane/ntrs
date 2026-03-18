@@ -79,7 +79,18 @@ education, etc.) are passed as named arguments:
 ```{r}
 z <- std(moca, age = 72, sex = 1, educ = 16)
 z
+```
 
+The result is an `std_npsych_scores` object. You can inspect the
+standardization metadata via S7 properties:
+
+```{r}
+z@method
+z@version
+z@description
+```
+
+```{r}
 set_std_defaults(
   moca,
   method = "regression",
@@ -129,6 +140,16 @@ result <- std_data(
 )
 
 result
+```
+
+Each standardized column is an `std_npsych_scores` object carrying `@method`,
+`@version`, and `@description` properties. Use `methods_from_std_data()` to
+extract them conveniently:
+
+```{r}
+attr(result, "prefix_std")
+
+methods_from_std_data(result)
 ```
 
 You can override the method/version per test class:

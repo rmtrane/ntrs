@@ -1,14 +1,14 @@
 #' Standardize `npsych_scores` using norms
 #'
 #' @description
-#' A short description...
+#' Computes z-scores by looking up the mean and standard deviation from a
+#' norms table, adjusting for covariates (e.g., age, sex, education).
 #'
-#' @param scores A numeric vector.
-#' @param ... Arguments passed to methods.
+#' @param scores An `npsych_scores` object.
+#' @param ... Named covariates required by the norms version (e.g.,
+#'   `age = 72`, `sex = 1`, `educ = 16`).
 #'
-#' @returns
-#' The standardized value of `x`, whose exact type depends on the specific S7
-#' method called.
+#' @returns An [std_npsych_scores] object containing z-scores.
 #'
 #' @rdname std_using_norms
 #'
@@ -135,5 +135,19 @@ S7::method(std_using_norms, npsych_scores) <- function(scores, ..., version) {
     (raw_scores - m) / sd
   )
 
-  version_obj@post_proc_fn(std_scrs)
+  std_scrs <- version_obj@post_proc_fn(std_scrs)
+
+  std_npsych_scores(
+    std_scrs,
+    scores_subclass = S7::S7_class(scores)@name,
+    method = "norms",
+    version = version,
+    description = paste0(
+      "Standardized using norms, version ",
+      version,
+      ". Adjusted for covariates ",
+      paste(covars_needed, collapse = ", "),
+      "."
+    )
+  )
 }

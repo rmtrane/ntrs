@@ -143,7 +143,7 @@ test_that("std_using_regression() output length equals input length", {
   )
 
   expect_equal(
-    result,
+    as.numeric(result),
     exp_res
   )
 })
@@ -168,7 +168,7 @@ test_that("std_using_regression() accepts scalar covariates recycled across scor
   )
 
   expect_equal(
-    result,
+    as.numeric(result),
     exp_res
   )
 })
@@ -186,7 +186,10 @@ test_that("std_using_regression() computes the correct standardized score", {
     version = "test_reg_str_001"
   )
 
-  expect_equal(result, -0.16)
+  expect_equal(
+    as.numeric(result),
+    -0.16
+  )
 })
 
 # Test 11: covar_fns are applied before computing the prediction ----
@@ -202,7 +205,7 @@ test_that("std_using_regression() applies covar_fns before computing prediction"
     version = "test_reg_str_001"
   )
 
-  expect_equal(result, 1.44)
+  expect_equal(as.numeric(result), 1.44)
 })
 
 # Test 12: vectorised scores and covariates all compute correctly ----
@@ -217,7 +220,7 @@ test_that("std_using_regression() correctly standardizes multiple scores", {
     version = "test_reg_str_001"
   )
 
-  expect_equal(result, c(0.32, -0.64))
+  expect_equal(as.numeric(result), c(0.32, -0.64))
 })
 
 # Test 13: multi-covariate (age + sex + educ) z-score calculation ----
@@ -265,7 +268,7 @@ test_that("std_using_regression() computes correct z-score with three covariates
     version = "test_reg_multi_001"
   )
 
-  expect_equal(result, -0.08)
+  expect_equal(as.numeric(result), -0.08)
 })
 
 test_that("std_using_regression() vectorises correctly with three covariates", {
@@ -281,7 +284,7 @@ test_that("std_using_regression() vectorises correctly with three covariates", {
     version = "test_reg_multi_001"
   )
 
-  expect_equal(result, c(0.72, 0.16))
+  expect_equal(as.numeric(result), c(0.72, 0.16))
 })
 
 # Test 14: integration test with real registered regression version ----
@@ -375,7 +378,10 @@ test_that("std_using_regression() uses full model row when all covariates are pr
     version = "test_reg_submodel_001"
   )
 
-  expect_equal(result, -0.16)
+  expect_equal(
+    as.numeric(result),
+    -0.16
+  )
 })
 
 test_that("std_using_regression() uses submodel row when a covariate is NA", {
@@ -387,7 +393,10 @@ test_that("std_using_regression() uses submodel row when a covariate is NA", {
     version = "test_reg_submodel_001"
   )
 
-  expect_equal(result, 2.5)
+  expect_equal(
+    as.numeric(result),
+    2.5
+  )
 })
 
 test_that("std_using_regression() handles mixed covariate missingness across observations", {
@@ -401,7 +410,10 @@ test_that("std_using_regression() handles mixed covariate missingness across obs
     version = "test_reg_submodel_001"
   )
 
-  expect_equal(result, c(-0.16, 1.0))
+  expect_equal(
+    as.numeric(result),
+    c(-0.16, 1.0)
+  )
 })
 
 test_that("std_using_regression() returns NA when no submodel matches the missingness pattern", {
@@ -452,7 +464,10 @@ test_that("std_using_regression() works when no covar_fns are registered", {
     version = "test_reg_no_fns_001"
   )
 
-  expect_equal(result, -0.16)
+  expect_equal(
+    as.numeric(result),
+    -0.16
+  )
 })
 
 test_that("std_using_regression() with no covar_fns uses raw covariate values", {
@@ -466,7 +481,7 @@ test_that("std_using_regression() with no covar_fns uses raw covariate values", 
     version = "test_reg_no_fns_001"
   )
 
-  expect_equal(result, 5.04)
+  expect_equal(as.numeric(result), 5.04)
 })
 
 # Test 19: extra covariates not in the model are silently ignored ----

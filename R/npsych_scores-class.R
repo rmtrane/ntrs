@@ -114,7 +114,31 @@ npsych_scores <- S7::new_class(
 #'
 #' @name `[`
 S7::method(`[`, npsych_scores) <- function(x, i) {
-  npsych_scores_constructor <- S7::S7_class(x)@name
+  S7::S7_data(x) <- as.numeric(x)[i]
+  x
+}
 
-  do.call(npsych_scores_constructor, args = list(x = as.integer(x)[i]))
+#' @export
+`[<-.npsych_scores` <- function(x, i, value) {
+  data <- S7::S7_data(x)
+  data[i] <- as.numeric(value)
+  S7::S7_data(x) <- data
+  x
+}
+
+#' @export
+c.npsych_scores <- function(x, ...) {
+  all_args <- list(x, ...)
+
+  classes <- vapply(all_args, \(a) S7::S7_class(a)@name, character(1))
+
+  if (length(unique(classes)) > 1L) {
+    cli::cli_abort(
+      "Cannot combine different {.cls npsych_scores} subclasses: {.val {unique(classes)}}."
+    )
+  }
+
+  combined_data <- unlist(lapply(all_args, S7::S7_data))
+  constructor <- S7::S7_class(x)
+  constructor(combined_data)
 }

@@ -49,6 +49,7 @@ Collate:
     'list_method_versions.R'
     'list_npsych_scores.R'
     'list_std_methods.R'
+    'methods_from_std_data.R'
     'npsych_subclass_helpers.R'
     'npsych_scores-class.R'
     'new_npsych_scores.R'
@@ -122,4 +123,5 @@ Collate:
     'std.R'
     'std_data.R'
     'std_defaults.R'
+    'std_npsych_scores-class.R'
     'zzz.R'

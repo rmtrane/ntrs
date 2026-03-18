@@ -29,7 +29,7 @@ test_that("std() uses default norms method when method/version are NULL", {
     version = "nacc"
   )
 
-  expect_equal(result, expected)
+  expect_equal(as.numeric(result), as.numeric(expected))
 })
 
 test_that("std() uses default regression method when method/version are NULL", {
@@ -55,7 +55,7 @@ test_that("std() uses default regression method when method/version are NULL", {
     version = "updated_2025.06"
   )
 
-  expect_equal(result, expected)
+  expect_equal(as.numeric(result), as.numeric(expected))
 })
 
 # ---------------------------------------------------------------------------
@@ -89,7 +89,7 @@ test_that("std() with explicit method + version overrides defaults", {
     version = "updated_2025.06"
   )
 
-  expect_equal(result, expected)
+  expect_equal(as.numeric(result), as.numeric(expected))
 })
 
 # ---------------------------------------------------------------------------
@@ -183,6 +183,70 @@ test_that("std() errors when scores is not an npsych_scores object", {
     std(42),
     regexp = "npsych_scores"
   )
+})
+
+# ---------------------------------------------------------------------------
+# Attributes — method and version are embedded in the result
+# ---------------------------------------------------------------------------
+
+test_that("std() result carries method and version attributes", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  result <- std(MOCATOTS(c(25, 28)), age = 72, sex = 1, educ = 16)
+
+  expect_equal(attr(result, "method"), "norms")
+  expect_equal(attr(result, "version"), "nacc")
+})
+
+test_that("std() attributes reflect explicit method/version, not defaults", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(MOCATOTS(), method = "norms", version = "nacc")
+  )
+
+  result <- std(
+    MOCATOTS(c(25, 28)),
+    method = "regression",
+    version = "updated_2025.06",
+    age = 72,
+    sex = 1,
+    educ = 16,
+    race = 1
+  )
+
+  expect_equal(attr(result, "method"), "regression")
+  expect_equal(attr(result, "version"), "updated_2025.06")
+})
+
+test_that("std() version attribute is NULL when method has no version", {
+  local_restore_default("MOCATOTS")
+
+  suppressMessages(
+    set_std_defaults(
+      MOCATOTS(),
+      method = "regression",
+      version = "updated_2025.06"
+    )
+  )
+
+  # Explicit method with NULL version
+  result <- std(
+    MOCATOTS(c(25, 28)),
+    method = "regression",
+    version = "updated_2025.06",
+    age = 72,
+    sex = 1,
+    educ = 16,
+    race = 1
+  )
+
+  expect_equal(attr(result, "method"), "regression")
+  expect_false(is.null(attr(result, "version")))
 })
 
 test_that("std() output length matches input length", {

@@ -138,7 +138,16 @@ test_that("std_using_norms() computes the correct z-score", {
     version = "test_norms_stn_001"
   )
 
-  expect_equal(result, -0.5)
+  expect_equal(
+    result,
+    std_npsych_scores(
+      -0.5,
+      "MOCATOTS",
+      method = "norms",
+      version = "test_norms_stn_001",
+      description = "Standardized using norms, version test_norms_stn_001. Adjusted for covariates age."
+    )
+  )
 })
 
 # Test 10: covar_fns are applied before lookup ----
@@ -152,7 +161,7 @@ test_that("std_using_norms() applies covar_fns before matching to lookup table",
     version = "test_norms_stn_001"
   )
 
-  expect_equal(result, -0.5)
+  expect_equal(as.numeric(result), -0.5)
 })
 
 # Test 11: vectorised scores and covariates ----
@@ -166,7 +175,7 @@ test_that("std_using_norms() correctly standardizes multiple scores", {
     version = "test_norms_stn_001"
   )
 
-  expect_equal(result, c(-1.0, 0.8))
+  expect_equal(as.numeric(result), c(-1.0, 0.8))
 })
 
 # Test 12: multi-covariate (age + sex + educ) z-score calculation ----
@@ -221,7 +230,10 @@ test_that("std_using_norms() computes correct z-score with three covariates", {
     version = "test_norms_multi_001"
   )
 
-  expect_equal(result, -0.5)
+  expect_equal(
+    as.numeric(result),
+    -0.5
+  )
 })
 
 test_that("std_using_norms() vectorises correctly with three covariates", {
@@ -237,7 +249,10 @@ test_that("std_using_norms() vectorises correctly with three covariates", {
     version = "test_norms_multi_001"
   )
 
-  expect_equal(result, c(1.0, -1.0))
+  expect_equal(
+    as.numeric(result),
+    c(1.0, -1.0)
+  )
 })
 
 # Test 13: integration test with real registered norms version ----
@@ -320,13 +335,11 @@ test_that("std_using_norms() passes covariates through when version has no covar
   )
 
   expect_equal(
-    std_using_norms(
+    as.numeric(std_using_norms(
       MOCATOTS(c(25, 27)),
       age = 60,
       version = "test_no_covar_fns_001"
-    ),
+    )),
     c(0, 1)
   )
 })
-
-
