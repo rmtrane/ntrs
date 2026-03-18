@@ -32,6 +32,7 @@ reference:
     desc: "Create and inspect `npsych_scores` objects."
     contents:
       - npsych_scores
+      - std_npsych_scores
       - new_npsych_scores
       - is_npsych_scores
       - remove_error_codes
@@ -69,13 +70,14 @@ reference:
       - reg_coefs
 
   - title: "Discovery"
-    desc: "List available scores, methods, and versions."
+    desc: "List available scores, methods, and versions, and inspect `std_data` to get standardization details."
     contents:
       - list_npsych_scores
       - list_std_methods
       - list_method_versions
       - get_version_data
       - get_npsych_scores
+      - methods_from_std_data
 
   - title: "Score Calculators"
     desc: "Compute derived scores from raw inputs."
