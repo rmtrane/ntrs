@@ -156,9 +156,9 @@ remove_error_codes <- function(x) {
 #' @returns
 #' A new `npsych_scores` object containing the elements of `x` specified by `i`.
 #'
-#' @keywords internal
-#'
 #' @name `[`
+#'
+#' @export
 S7::method(`[`, npsych_scores) <- function(x, i) {
   npsych_scores_constructor <- S7::S7_class(x)@name
 
