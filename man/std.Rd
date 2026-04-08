@@ -22,7 +22,18 @@ default version registered via \code{\link[=set_std_defaults]{set_std_defaults()
 when the resolved method does not use versioned data.}
 }
 \value{
-A numeric vector of standardized scores.
+An \link{std_npsych_scores} object (inherits \code{numeric}). Access
+standardization metadata via S7 properties:
+\describe{
+\item{\verb{@method}}{The standardization method used (e.g., \code{"norms"},
+\code{"regression"}).}
+\item{\verb{@version}}{The version identifier (e.g., \code{"nacc"},
+\code{"updated_2025.06"}), or \code{NULL} if the method is unversioned.}
+\item{\verb{@description}}{A human-readable summary of the standardization
+applied, including covariates.}
+\item{\verb{@scores_subclass}}{The name of the originating \code{npsych_scores}
+subclass (e.g., \code{"MOCATOTS"}).}
+}
 }
 \description{
 User-facing wrapper that dispatches to the appropriate \verb{std_using_*()}

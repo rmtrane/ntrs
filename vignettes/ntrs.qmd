@@ -1,16 +1,11 @@
 ---
-title: "Getting Started"
+title: "Get Started"
 vignette: >
-  %\VignetteIndexEntry{Getting Started}
+  %\VignetteIndexEntry{Get Started}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r}
-suppressPackageStartupMessages(
-  library(ntrs)
-)
-```
 
 ## Overview
 
@@ -19,6 +14,12 @@ neuropsychological test scores. The typical workflow is:
 
 1. Create score objects using factory functions (e.g., `MOCATOTS()`, `ANIMALS()`)
 2. Standardize scores with `std()` or batch-standardize a data frame with `std_data()`
+
+When loading the package, messages are printed for all the defaults being set. These can be suppressed with `suppressPackageStartupMessages()`.
+
+```{r}
+library(ntrs)
+```
 
 ## Creating score objects
 
@@ -78,7 +79,18 @@ education, etc.) are passed as named arguments:
 ```{r}
 z <- std(moca, age = 72, sex = 1, educ = 16)
 z
+```
 
+The result is an `std_npsych_scores` object. You can inspect the
+standardization metadata via S7 properties:
+
+```{r}
+z@method
+z@version
+z@description
+```
+
+```{r}
 set_std_defaults(
   moca,
   method = "regression",
@@ -87,6 +99,7 @@ set_std_defaults(
 )
 
 z_reg <- std(moca, age = 72, sex = 1, educ = 16, race = 1)
+z_reg
 ```
 
 To override the default method or version, specify them explicitly:
@@ -129,6 +142,16 @@ result <- std_data(
 result
 ```
 
+Each standardized column is an `std_npsych_scores` object carrying `@method`,
+`@version`, and `@description` properties. Use `methods_from_std_data()` to
+extract them conveniently:
+
+```{r}
+attr(result, "prefix_std")
+
+methods_from_std_data(result)
+```
+
 You can override the method/version per test class:
 
 ```{r}
@@ -146,20 +169,3 @@ result2 <- std_data(
 result2
 ```
 
-## Changing defaults
-
-If you prefer a different default method for your session, use
-`set_std_defaults()`:
-
-```{r}
-#| eval: false
-set_std_defaults(
-  MOCATOTS(),
-  method = "norms",
-  version = "nacc",
-  overwrite = TRUE
-)
-
-# Subsequent calls use the new default
-std(MOCATOTS(c(25, 28)), age = 72, sex = 1, educ = 16)
-```

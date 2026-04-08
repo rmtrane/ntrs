@@ -101,17 +101,59 @@ test_that("register_regression_version() rejects non-function entries in covar_f
   )
 })
 
+test_that("register_regression_version() rejects extra functions in covar_fns", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    register_regression_version(
+      scores = MOCATOTS(),
+      version = "v1",
+      coefs = valid_coefs_vec,
+      covar_fns = list(race = identity, educ = identity)
+    ),
+    regexp = "covar_fns"
+  )
+})
+
 # ---------------------------------------------------------------------------
 # Successful registration: numeric coefs
 # ---------------------------------------------------------------------------
 
 test_that("register_regression_version() registers successfully with numeric coefs", {
+  withr::defer(
+    {
+      # Clean up after test
+      rm(
+        list = "test_reg_vec_001",
+        envir = .std_versions[["regression"]][["MOCATOTS"]]
+      )
+    }
+  )
+
   expect_no_error(
     register_regression_version(
       scores = MOCATOTS(),
       version = "test_reg_vec_001",
       coefs = valid_coefs_vec,
       covar_fns = list(age = identity, educ = identity)
+    )
+  )
+
+  versions <- list_method_versions(MOCATOTS(), "regression")
+  expect_true("test_reg_vec_001" %in% versions)
+})
+
+# ---------------------------------------------------------------------------
+# Successful registration: default covar_fns
+# ---------------------------------------------------------------------------
+
+test_that("register_regression_version() registers successfully with default covar_fns", {
+  expect_no_error(
+    register_regression_version(
+      scores = MOCATOTS(),
+      version = "test_reg_vec_001",
+      coefs = valid_coefs_vec,
+      covar_fns = NULL
     )
   )
 

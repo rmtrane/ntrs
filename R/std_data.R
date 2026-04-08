@@ -38,8 +38,22 @@
 #'   columns are processed.
 #'
 #' @returns The input `data` with additional standardized score columns
-#'   appended. The original columns are left unchanged. The return type
-#'   matches the input type (`data.frame` or `data.table`).
+#'   appended. The original columns are left unchanged (unless `prefix_raw`
+#'   is specified, in which case they are renamed with that prefix). The
+#'   return type matches the input type (`data.frame` or `data.table`).
+#'
+#'   Each standardized column is an [std_npsych_scores] object with S7
+#'   properties `@method`, `@version`, `@description`, and
+#'   `@scores_subclass`. Use [methods_from_std_data()] to extract the
+#'   method and version from all standardized columns at once.
+#'
+#'   The returned data frame carries two attributes:
+#'   \describe{
+#'     \item{`prefix_std`}{The prefix used for standardized columns (default
+#'       `"z_"`).}
+#'     \item{`prefix_raw`}{The prefix used for raw score columns, or `NULL`
+#'       if `prefix_raw` was not specified.}
+#'   }
 #'
 #' @seealso [std()] for standardizing a single `npsych_scores` vector.
 #'
@@ -81,18 +95,20 @@ std_data <- function(
   input_is_dt <- data.table::is.data.table(data)
 
   if (!input_is_dt) {
-    data <- data.table::as.data.table(data)
+    dat <- data.table::as.data.table(data)
+  } else {
+    dat <- data.table::copy(data)
   }
 
   # ---- Identify npsych_scores columns ----
-  npsych_cols <- names(data)[
-    vapply(data, S7::S7_inherits, logical(1), class = npsych_scores)
+  npsych_cols <- names(dat)[
+    vapply(dat, S7::S7_inherits, logical(1), class = npsych_scores)
   ]
 
   if (length(npsych_cols) == 0L) {
     cli::cli_warn("No {.cls npsych_scores} columns found in {.arg data}.")
     if (!input_is_dt) {
-      data <- as.data.frame(data)
+      dat <- as.data.frame(dat)
     }
     return(data)
   }
@@ -110,7 +126,7 @@ std_data <- function(
 
   # ---- Build class → column map ----
   col_classes <- vapply(
-    data[, npsych_cols, with = FALSE],
+    dat[, npsych_cols, with = FALSE],
     function(x) S7::S7_class(x)@name,
     character(1)
   )
@@ -147,7 +163,7 @@ std_data <- function(
     cli::cli_abort("All covariates in {.arg ...} must be named.")
   }
 
-  data_mask <- rlang::as_data_mask(data)
+  data_mask <- rlang::as_data_mask(dat)
   caller_env <- rlang::caller_env()
 
   covars <- lapply(dots, function(quo) {
@@ -158,7 +174,7 @@ std_data <- function(
   new_nms <- paste0(prefix_std, npsych_cols)
 
   # ---- Standardize using .SD / .SDcols ----
-  data[,
+  dat[,
     (new_nms) := lapply(.SD, function(scores_col) {
       scores_class <- S7::S7_class(scores_col)@name
       col_spec <- methods[[scores_class]]
@@ -167,7 +183,7 @@ std_data <- function(
 
       tryCatch(
         {
-          tmp <- do.call(
+          do.call(
             std,
             c(
               list(
@@ -178,11 +194,6 @@ std_data <- function(
               covars
             )
           )
-
-          attr(tmp, "method") <- col_method
-          attr(tmp, "version") <- col_version
-
-          tmp
         },
         error = function(e) {
           col_nm <- npsych_cols[
@@ -202,7 +213,7 @@ std_data <- function(
   # --- New column names for raw columns, if prefix_raw specified ---
   if (!is.null(prefix_raw)) {
     data.table::setnames(
-      data,
+      dat,
       old = npsych_cols,
       new = paste0(prefix_raw, npsych_cols)
     )
@@ -210,8 +221,11 @@ std_data <- function(
 
   # ---- Revert to data.frame if input was not data.table ----
   if (!input_is_dt) {
-    data <- as.data.frame(data)
+    dat <- as.data.frame(dat)
   }
 
-  data
+  attr(dat, "prefix_std") <- prefix_std
+  attr(dat, "prefix_raw") <- prefix_raw
+
+  dat
 }

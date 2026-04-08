@@ -25,16 +25,16 @@ calc_REYTOTAL <- function(
     rey1rec <- ntrs::REY1REC(rey1rec)
   }
   if (!S7::S7_inherits(rey2rec, ntrs::REY2REC)) {
-    rey2rec <- ntrs::REY1REC(rey2rec)
+    rey2rec <- ntrs::REY2REC(rey2rec)
   }
   if (!S7::S7_inherits(rey3rec, ntrs::REY3REC)) {
-    rey3rec <- ntrs::REY1REC(rey3rec)
+    rey3rec <- ntrs::REY3REC(rey3rec)
   }
   if (!S7::S7_inherits(rey4rec, ntrs::REY4REC)) {
-    rey4rec <- ntrs::REY1REC(rey4rec)
+    rey4rec <- ntrs::REY4REC(rey4rec)
   }
   if (!S7::S7_inherits(rey5rec, ntrs::REY5REC)) {
-    rey5rec <- ntrs::REY1REC(rey5rec)
+    rey5rec <- ntrs::REY5REC(rey5rec)
   }
 
   reytotal <- ntrs::remove_error_codes(rey1rec) +

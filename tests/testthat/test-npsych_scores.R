@@ -123,6 +123,46 @@ test_that("npsych_scores errors when codes is unnamed", {
   )
 })
 
+test_that("npsych_scores errors when domain is not a single string", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    npsych_scores(
+      c(1, 5),
+      label = "My Test",
+      domain = c("a", "b"),
+      range = c(1, 10)
+    ),
+    regexp = "domain"
+  )
+})
+
+test_that("npsych_scores errors when short_descriptor is not a single string", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    npsych_scores(
+      c(1, 5),
+      label = "My Test",
+      short_descriptor = c("a", "b"),
+      range = c(1, 10)
+    ),
+    regexp = "short_descriptor"
+  )
+})
+
+# ---------------------------------------------------------------------------
+# Subset method
+# ---------------------------------------------------------------------------
+
+test_that("subsetting npsych_scores returns correct subclass and values", {
+  x <- MOCATOTS(c(25, 28, 30))
+  result <- x[1:2]
+
+  expect_true(S7::S7_inherits(result, MOCATOTS))
+  expect_equal(as.numeric(result), c(25, 28))
+})
+
 
 # ---------------------------------------------------------------------------
 # Validation errors: new_npsych_scores factory

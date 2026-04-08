@@ -8,8 +8,8 @@
 \subsection{\code{rdd}}{
 
 \describe{A list of entries for NACC variables with short descriptions,
-allowable values, and codes. This is created from
-from the .csv version of \href{https://files.alz.washington.edu/documentation/uds3-rdd.pdf}{this PDF},
+allowable values, and codes. This is created from the .csv version of
+\href{https://files.alz.washington.edu/documentation/uds3-rdd.pdf}{this PDF},
 which is made available to researcher upon acceptance of the data request,
 with the addition of some entries calculated based on the NACC variables.
 Each entry of the list has three entries:

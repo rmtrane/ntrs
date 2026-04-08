@@ -1,6 +1,7 @@
 Package: ntrs
 Title: Neuropsychological Test Result Standardization
-URL: https://rmtrane.github.io/ntrs/
+URL: https://rmtrane.github.io/ntrs/, https://github.com/rmtrane/ntrs
+BugReports: https://github.com/rmtrane/ntrs/issues
 Version: 0.0.0.9000
 Authors@R: 
     person(
@@ -25,8 +26,10 @@ Imports:
     data.table,
     rlang,
     S7
-Suggests: 
+Suggests:
+    dplyr,
     testthat (>= 3.0.0),
+    waldo,
     withr,
     quarto
 VignetteBuilder: 
@@ -46,6 +49,7 @@ Collate:
     'list_method_versions.R'
     'list_npsych_scores.R'
     'list_std_methods.R'
+    'methods_from_std_data.R'
     'npsych_subclass_helpers.R'
     'npsych_scores-class.R'
     'new_npsych_scores.R'
@@ -108,6 +112,7 @@ Collate:
     'npsych_scores-UDSVERTN.R'
     'npsych_scores-VEG.R'
     'npsych_scores-WAIS.R'
+    'npsych_scores_helpers.R'
     'ntrs-package.R'
     'rdd.R'
     'reg_coefs.R'
@@ -118,4 +123,5 @@ Collate:
     'std.R'
     'std_data.R'
     'std_defaults.R'
+    'std_npsych_scores-class.R'
     'zzz.R'

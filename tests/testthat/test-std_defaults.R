@@ -9,6 +9,24 @@
 # get_std_defaults() — error when no default set
 # ---------------------------------------------------------------------------
 
+test_that("set_std_defaults() errors when scores is not an npsych_scores object", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    set_std_defaults(42, "regression"),
+    regexp = "npsych_scores"
+  )
+})
+
+test_that("get_std_defaults() errors when scores is not an npsych_scores object", {
+  testthat::local_reproducible_output()
+
+  expect_error(
+    get_std_defaults(42),
+    regexp = "npsych_scores"
+  )
+})
+
 test_that("get_std_defaults() returns NULL when no default has been set for the class", {
   bare_cls <- new_npsych_scores(
     "bare_class_defaults_test",

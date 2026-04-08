@@ -1,13 +1,15 @@
-#' Standardize using regression
+#' Standardize `npsych_scores` using regression
 #'
 #' @description
-#' A short description...
+#' Computes z-scores using regression-based norms: predicts the expected
+#' score from covariates via a linear model, then returns the scaled
+#' residual `(score - predicted) / RMSE`.
 #'
-#' @param scores A numeric vector of test scores.
-#' @param ... Arguments passed to the specific method.
+#' @param scores An `npsych_scores` object.
+#' @param ... Named covariates required by the regression version (e.g.,
+#'   `age = 72`, `sex = 1`, `educ = 16`).
 #'
-#' @returns
-#' The result of the dispatched method for `std_using_regression`.
+#' @returns An [std_npsych_scores] object containing z-scores.
 #'
 #' @export
 std_using_regression <- S7::new_generic("std_using_regression", "scores")
@@ -121,7 +123,21 @@ S7::method(std_using_regression, npsych_scores) <- function(
     coefs_to_use = coefs
   )
 
-  version_obj@post_proc_fn(std_scrs)
+  std_scrs <- version_obj@post_proc_fn(std_scrs)
+
+  std_npsych_scores(
+    std_scrs,
+    scores_subclass = S7::S7_class(scores)@name,
+    method = "regression",
+    version = version,
+    description = paste0(
+      "Standardized using regression, version ",
+      version,
+      ". Adjusted for covariates ",
+      paste(covars_needed, collapse = ", "),
+      "."
+    )
+  )
 }
 
 

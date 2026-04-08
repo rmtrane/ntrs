@@ -12,6 +12,8 @@ S7 based framework for working with and standardizing neuropsychological test re
 Useful links:
 \itemize{
   \item \url{https://rmtrane.github.io/ntrs/}
+  \item \url{https://github.com/rmtrane/ntrs}
+  \item Report bugs at \url{https://github.com/rmtrane/ntrs/issues}
 }
 
 }

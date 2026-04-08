@@ -17,7 +17,18 @@
 #'   when the resolved method does not use versioned data.
 #'
 #'
-#' @returns A numeric vector of standardized scores.
+#' @returns An [std_npsych_scores] object (inherits `numeric`). Access
+#'   standardization metadata via S7 properties:
+#'   \describe{
+#'     \item{`@method`}{The standardization method used (e.g., `"norms"`,
+#'       `"regression"`).}
+#'     \item{`@version`}{The version identifier (e.g., `"nacc"`,
+#'       `"updated_2025.06"`), or `NULL` if the method is unversioned.}
+#'     \item{`@description`}{A human-readable summary of the standardization
+#'       applied, including covariates.}
+#'     \item{`@scores_subclass`}{The name of the originating `npsych_scores`
+#'       subclass (e.g., `"MOCATOTS"`).}
+#'   }
 #'
 #' @seealso [std_data()] for batch-standardizing every `npsych_scores`
 #'   column in a data frame, [list_std_methods()], [list_method_versions()],
@@ -84,9 +95,14 @@ std <- function(
   }
 
   # Dispatch — pass version only when non-NULL
-  if (!is.null(version)) {
+  std_res <- if (!is.null(version)) {
     fn(scores, ..., version = version)
   } else {
     fn(scores, ...)
   }
+
+  attr(std_res, "method") <- method
+  attr(std_res, "version") <- version
+
+  std_res
 }

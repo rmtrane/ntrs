@@ -7,14 +7,15 @@
 std_using_norms(scores, ...)
 }
 \arguments{
-\item{scores}{A numeric vector.}
+\item{scores}{An \code{npsych_scores} object.}
 
-\item{...}{Arguments passed to methods.}
+\item{...}{Named covariates required by the norms version (e.g.,
+\code{age = 72}, \code{sex = 1}, \code{educ = 16}).}
 }
 \value{
-The standardized value of \code{x}, whose exact type depends on the specific S7
-method called.
+An \link{std_npsych_scores} object containing z-scores.
 }
 \description{
-A short description...
+Computes z-scores by looking up the mean and standard deviation from a
+norms table, adjusting for covariates (e.g., age, sex, education).
 }

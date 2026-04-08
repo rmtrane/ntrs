@@ -101,52 +101,6 @@ npsych_scores <- S7::new_class(
   }
 )
 
-if (FALSE) {
-  # Should work
-  tmp <- npsych_scores(
-    scores = c(1, 2, NA, 99),
-    label = "MoCA",
-    range = c(0, 30),
-    codes = c("N/A" = 99)
-  )
-
-  # Should fail
-  npsych_scores(
-    scores = c(1, 2, NA, 90),
-    label = "MoCA",
-    range = c(0, 30),
-    codes = c("N/A" = 99)
-  )
-}
-
-#' Remove error codes
-#'
-#' @description
-#' Removes error codes from the `npsych_scores` object using the `codes` attribute.
-#'
-#' @param x An object of class `npsych_scores`
-#'
-#' @returns
-#' An object with error codes removed.
-#'
-#' @export
-remove_error_codes <- function(x) {
-  if (!S7::S7_inherits(x, npsych_scores)) {
-    cli::cli_abort("{.arg x} must be a {.cls npsych_scores} object.")
-  }
-
-  numeric_x <- as.numeric(x)
-
-  # codes might not be error codes. We find error codes by checking if codes are inside range
-  all_codes <- x@codes
-  error_codes <- all_codes[all_codes < x@range[1] | all_codes > x@range[2]]
-
-  # replace error codes by NA
-  numeric_x[numeric_x %in% error_codes] <- NA
-
-  numeric_x
-}
-
 
 #' Subset `npsych_scores` objects.
 #'
@@ -160,22 +114,31 @@ remove_error_codes <- function(x) {
 #'
 #' @export
 S7::method(`[`, npsych_scores) <- function(x, i) {
-  npsych_scores_constructor <- S7::S7_class(x)@name
-
-  do.call(npsych_scores_constructor, args = list(x = as.integer(x)[i]))
+  S7::S7_data(x) <- as.numeric(x)[i]
+  x
 }
 
-
-#' Is `x` an npsych_scores object?
-#'
-#' @description#' A short description...
-#'
-#' @param x An R object.
-#'
-#' @returns
-#' A single logical value: `TRUE` if `x` is an `npsych_scores` object, `FALSE` otherwise.
-#'
 #' @export
-is_npsych_scores <- function(x) {
-  S7::S7_inherits(x, npsych_scores)
+`[<-.npsych_scores` <- function(x, i, value) {
+  data <- S7::S7_data(x)
+  data[i] <- as.numeric(value)
+  S7::S7_data(x) <- data
+  x
+}
+
+#' @export
+c.npsych_scores <- function(x, ...) {
+  all_args <- list(x, ...)
+
+  classes <- vapply(all_args, \(a) S7::S7_class(a)@name, character(1))
+
+  if (length(unique(classes)) > 1L) {
+    cli::cli_abort(
+      "Cannot combine different {.cls npsych_scores} subclasses: {.val {unique(classes)}}."
+    )
+  }
+
+  combined_data <- unlist(lapply(all_args, S7::S7_data))
+  constructor <- S7::S7_class(x)
+  constructor(combined_data)
 }
