@@ -1,5 +1,18 @@
 .datatable.aware <- TRUE
 
+.set_defaults <- function() {
+  ## Run all .setup_CLASS_versions()
+  ns <- getNamespace("ntrs")
+
+  invisible(lapply(
+    grep(pattern = "^\\.setup_.+_versions", x = names(ns), value = T),
+    \(x) {
+      # message(x)
+      do.call(x, args = list())
+    }
+  ))
+}
+
 .onLoad <- function(libname, pkgname) {
   # nocov start
   S7::methods_register()
@@ -11,14 +24,5 @@
   registerS3method("c", "ntrs::std_npsych_scores", c.std_npsych_scores)
   registerS3method("[<-", "ntrs::std_npsych_scores", `[<-.std_npsych_scores`)
 
-  ## Run all .setup_CLASS_versions()
-  ns <- getNamespace("ntrs")
-
-  invisible(lapply(
-    grep(pattern = "^\\.setup_.+_versions", x = names(ns), value = T),
-    \(x) {
-      # message(x)
-      do.call(x, args = list())
-    }
-  ))
+  .set_defaults()
 } # nocov end

@@ -112,13 +112,25 @@ npsych_scores <- S7::new_class(
 #'
 #' @name `[`
 #'
-#' @export
+#' @keywords internal
 S7::method(`[`, npsych_scores) <- function(x, i) {
   S7::S7_data(x) <- as.numeric(x)[i]
   x
 }
 
-#' @export
+
+#' Subset replacement for `npsych_scores` objects
+#'
+#' @param x An `npsych_scores` object.
+#' @param i A numeric, logical, or character index.
+#' @param value A numeric value.
+#'
+#' @returns
+#' The modified `npsych_scores` object `x`.
+#'
+#' @name `[`
+#'
+#' @keywords internal
 `[<-.npsych_scores` <- function(x, i, value) {
   data <- S7::S7_data(x)
   data[i] <- as.numeric(value)
@@ -126,7 +138,16 @@ S7::method(`[`, npsych_scores) <- function(x, i) {
   x
 }
 
-#' @export
+#' Combine `npsych_scores` objects
+#'
+#' @param x An `npsych_scores` object.
+#' @param ... Additional `npsych_scores` objects to combine.
+#'
+#' @returns
+#' An `npsych_scores` object containing the combined data from `x` and `...`.
+#' The function will error if different subclasses of `npsych_scores` are provided.
+#'
+#' @keywords internal
 c.npsych_scores <- function(x, ...) {
   all_args <- list(x, ...)
 

@@ -3,19 +3,30 @@
 %   R/std_npsych_scores-class.R
 \name{`[`}
 \alias{`[`}
+\alias{[<-.npsych_scores}
 \title{Subset \code{npsych_scores} objects.}
+\usage{
+\method{[}{npsych_scores}(x, i) <- value
+}
 \arguments{
 \item{x}{An S7 object of class \code{npsych_scores}.}
 
 \item{i}{A numeric index.}
+
+\item{value}{A numeric value.}
 }
 \value{
 A new \code{npsych_scores} object containing the elements of \code{x} specified by \code{i}.
+
+The modified \code{npsych_scores} object \code{x}.
 
 A new \code{npsych_scores} object containing the elements of \code{x} specified by \code{i}.
 }
 \description{
 Subset \code{npsych_scores} objects.
 
+Subset replacement for \code{npsych_scores} objects
+
 Subset \code{npsych_scores} objects.
 }
+\keyword{internal}
