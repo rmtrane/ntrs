@@ -248,7 +248,7 @@
 </div>
 </section></section><section class="level2"><h2 id="registering-a-regression-version">Registering a regression version<a class="anchor" aria-label="anchor" href="#registering-a-regression-version"></a>
 </h2>
-<p>Regression-based standardization uses a linear model: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtext mathvariant="normal">raw</mtext><mo>−</mo><mtext mathvariant="normal">predicted</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mtext mathvariant="normal">RMSE</mtext></mrow><annotation encoding="application/x-tex">z = (\text{raw} - \text{predicted}) / \text{RMSE}</annotation></semantics></math>, where predicted values come from regression coefficients.</p>
+<p>Regression-based standardization uses a linear model: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">raw</mtext><mo>−</mo><mtext mathvariant="normal">predicted</mtext><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mtext mathvariant="normal">RMSE</mtext></mrow><annotation encoding="application/x-tex">z = (\text{raw} - \text{predicted}) / \text{RMSE}</annotation></semantics></math>, where predicted values come from regression coefficients.</p>
 <section class="level3"><h3 id="the-coefficients">The coefficients<a class="anchor" aria-label="anchor" href="#the-coefficients"></a>
 </h3>
 <p>Provide a named numeric vector with <code>intercept</code>, <code>rmse</code>, and any covariate names:</p>

@@ -2,7 +2,16 @@
 
 Subset `npsych_scores` objects.
 
+Subset replacement for `npsych_scores` objects
+
 Subset `npsych_scores` objects.
+
+## Usage
+
+``` r
+# S3 method for class 'npsych_scores'
+x[i] <- value
+```
 
 ## Arguments
 
@@ -14,10 +23,16 @@ Subset `npsych_scores` objects.
 
   A numeric index.
 
+- value:
+
+  A numeric value.
+
 ## Value
 
 A new `npsych_scores` object containing the elements of `x` specified by
 `i`.
+
+The modified `npsych_scores` object `x`.
 
 A new `npsych_scores` object containing the elements of `x` specified by
 `i`.

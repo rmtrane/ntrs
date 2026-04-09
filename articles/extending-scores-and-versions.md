@@ -197,8 +197,8 @@ std(
 ## Registering a regression version
 
 Regression-based standardization uses a linear model:
-$z = \left( \text{raw} - \text{predicted} \right)/\text{RMSE}$, where
-predicted values come from regression coefficients.
+$z = (\text{raw} - \text{predicted})/\text{RMSE}$, where predicted
+values come from regression coefficients.
 
 ### The coefficients
 
