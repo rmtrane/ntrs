@@ -101,12 +101,12 @@
     if (overwrite) {
       cli::cli_warn(c(
         "Overwriting existing version",
-        "i" = "Version {.val {version}} already exists for {.val {method}} method on {.val {scores_class}}",
+        "i" = "Version {.val {version_id}} already exists for {.val {method}} method on {.val {scores_class}}",
         "i" = "The previous version will be replaced"
       ))
     } else {
       cli::cli_abort(c(
-        "Version {.val {version}} already exists for {.val {method}} method on {.val {scores_class}}. To overwrite, call with {.arg overwrite = TRUE}."
+        "Version {.val {version_id}} already exists for {.val {method}} method on {.val {scores_class}}. To overwrite, call with {.arg overwrite = TRUE}."
       ))
     }
   }
