@@ -1,6 +1,6 @@
 .datatable.aware <- TRUE
 
-.set_defaults <- function(overwrite = T) {
+.set_defaults <- function() {
   ## Run all .setup_CLASS_versions()
   ns <- getNamespace("ntrs")
 
@@ -8,7 +8,7 @@
     grep(pattern = "^\\.setup_.+_versions", x = names(ns), value = T),
     \(x) {
       # message(x)
-      do.call(x, args = list(overwrite = overwrite))
+      do.call(x, args = list())
     }
   ))
 }
