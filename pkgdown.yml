@@ -1,4 +1,4 @@
-pandoc: 3.1.11
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   extending-scores-and-versions: extending-scores-and-versions.html
   ntrs: ntrs.html
   working-with-nacc-data: working-with-nacc-data.html
-last_built: 2026-04-09T17:27Z
+last_built: 2026-05-12T19:39Z
 urls:
   reference: https://rmtrane.github.io/ntrs/reference
   article: https://rmtrane.github.io/ntrs/articles

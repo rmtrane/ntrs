@@ -621,7 +621,12 @@ Attaching package: 'data.table'</code></pre>
 
     between, first, last</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="downlit sourceCode r">
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    %notin%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">demo_subset</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df_dt</span><span class="op">[</span>,</span>
@@ -685,12 +690,12 @@ Attaching package: 'data.table'</code></pre>
 </div>
 <p>We can verify that all three approaches yield the same result (par differences in classes):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html" class="external-link">compare</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df_tidy_result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✔ No differences</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html" class="external-link">compare</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df_tidy_result</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df_dt_result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✔ No differences</code></pre>

@@ -11,6 +11,7 @@ You can install the development version of `ntrs` from
 [GitHub](https://github.com/rmtrane/ntrs) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("rmtrane/ntrs")
 ```
@@ -20,6 +21,7 @@ pak::pak("rmtrane/ntrs")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
+
 suppressPackageStartupMessages(library(ntrs))
 
 moca_scores <- MOCATOTS(c(25, 28, 18))

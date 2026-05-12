@@ -17,24 +17,28 @@ Data Dictionary. Each entry contains the valid range, special codes, and
 a short description for a NACC variable:
 
 ``` r
+
 names(rdd$MOCATOTS)
 ```
 
     [1] "range"            "codes"            "short_descriptor"
 
 ``` r
+
 rdd$MOCATOTS$short_descriptor
 ```
 
     [1] "MoCA Total Raw Score - uncorrected"
 
 ``` r
+
 rdd$MOCATOTS$range
 ```
 
     [1]  0 30
 
 ``` r
+
 rdd$MOCATOTS$codes
 ```
 
@@ -46,6 +50,7 @@ rdd$MOCATOTS$codes
 This is useful for quick lookups without needing to consult the PDF:
 
 ``` r
+
 # What codes does TRAILA have?
 rdd$TRAILA$codes
 ```
@@ -62,6 +67,7 @@ rdd$TRAILA$codes
                                                                                                                            -4 
 
 ``` r
+
 # What is the valid range for ANIMALS?
 rdd$ANIMALS$range
 ```
@@ -72,13 +78,17 @@ The `rdd` object covers all variables in the demo dataset, not just
 those with `npsych_scores` constructors:
 
 ``` r
+
 rdd$SEX$codes
 ```
 
-      Male Female
-         1      2 
+                    Male               Female           Don't know
+                       1                    2                    9
+    Prefer not to answer
+                       8 
 
 ``` r
+
 rdd$RACE$codes
 ```
 
@@ -113,6 +123,7 @@ rdd$RACE$codes
 For most tests, all codes are error codes (outside range):
 
 ``` r
+
 moca <- MOCATOTS(c(25, 88, -4, 28))
 moca
 ```
@@ -126,6 +137,7 @@ moca
      .. - attr(*, "names")= chr [1:2] "Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question" "Item(s) or whole test not administered"
 
 ``` r
+
 # 88 and -4 are both outside 0-30, so both are error codes
 moca@codes
 ```
@@ -136,6 +148,7 @@ moca@codes
                                                                                                                            88 
 
 ``` r
+
 moca@range
 ```
 
@@ -145,15 +158,16 @@ moca@range
 identifies codes outside the range and replaces them with `NA`:
 
 ``` r
+
 remove_error_codes(moca)
 ```
 
     [1] 25 NA NA 28
 
-An exampel of a test with an in-range code is the Global CDR
-Score.[¹](#fn1)
+An exampel of a test with an in-range code is the Global CDR Score.[^1]
 
 ``` r
+
 cdr <- CDRGLOB(c(0, 0.5, 1, 2, 3, 99))
 cdr
 ```
@@ -167,6 +181,7 @@ cdr
      .. - attr(*, "names")= chr [1:6] "No impairment" "Questionable impairment" "Mild impairment" "Moderate impairment" ...
 
 ``` r
+
 # all values are within the valid range, and all are codes
 cdr@range
 ```
@@ -174,6 +189,7 @@ cdr@range
     [1] 0 3
 
 ``` r
+
 cdr@codes
 ```
 
@@ -191,6 +207,7 @@ cdr@codes
                                                              99.0 
 
 ``` r
+
 # only 99 is removed
 remove_error_codes(cdr)
 ```
@@ -212,6 +229,7 @@ is useful for inspection — it substitutes each code value with its
 human-readable label:
 
 ``` r
+
 replace_codes(moca)
 ```
 
@@ -231,6 +249,7 @@ registered code, or is `NA`. Values that don’t fit any category are
 rejected:
 
 ``` r
+
 # 50 is outside MOCATOTS range (0-30) and is not a registered code
 MOCATOTS(c(25, 50))
 ```
@@ -255,6 +274,7 @@ automatically become `NA` in the standardized output — you don’t need to
 clean them manually:
 
 ``` r
+
 scores <- MOCATOTS(c(25, 88, -4, 28, 30))
 
 z <- std(scores, age = 72, sex = 1, educ = 16, race = 1)
@@ -276,6 +296,7 @@ You can check which codes a score type recognizes by examining the
 `codes` property:
 
 ``` r
+
 TRAILA()@codes
 ```
 
@@ -291,6 +312,7 @@ TRAILA()@codes
                                                                                                                            -4 
 
 ``` r
+
 ANIMALS()@codes
 ```
 
@@ -306,6 +328,7 @@ ANIMALS()@codes
                                                                                                                            -4 
 
 ``` r
+
 REYTCOR()@codes
 ```
 
@@ -336,12 +359,14 @@ turns numeric codes into descriptive labels, you can use it to tabulate
 *why* data is missing:
 
 ``` r
+
 scores <- MOCATOTS(demo_data$MOCATOTS)
 labeled <- replace_codes(scores)
 
 # Count occurrences of each code label
 table(labeled[!labeled %in% as.character(0:30)])
 ```
+
 
                                                                                        Item(s) or whole test not administered
                                                                                                                             5
@@ -354,6 +379,7 @@ A common pattern is to filter a dataset to rows where a particular test
 was actually administered:
 
 ``` r
+
 df <- demo_data
 df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
 
@@ -371,6 +397,7 @@ When working with several tests, you might want to identify rows where
 *all* tests of interest have valid data:
 
 ``` r
+
 df <- demo_data
 df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
 df$ANIMALS <- ANIMALS(df$ANIMALS)
@@ -386,9 +413,7 @@ sum(all_valid)
 
     [1] 79
 
-------------------------------------------------------------------------
-
-1.  In the official documentation for CDRGLOB, `99` is not listed, but
+[^1]: In the official documentation for CDRGLOB, `99` is not listed, but
     this value shows up in the NACC data. It is therefore included as an
     error code in
     [`CDRGLOB()`](https://rmtrane.github.io/ntrs/reference/CDRGLOB.md).

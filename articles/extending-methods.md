@@ -25,6 +25,7 @@ A standardization generic must:
 2.  Be an S7 generic dispatching on `scores`
 
 ``` r
+
 std_using_percentile <- S7::new_generic(
   "std_using_percentile",
   dispatch_args = "scores"
@@ -41,6 +42,7 @@ Our method will take a `ref_scores` argument — a numeric vector of
 reference sample scores — and compute percentile ranks:
 
 ``` r
+
 S7::method(std_using_percentile, npsych_scores) <- function(
   scores,
   ...,
@@ -55,6 +57,7 @@ S7::method(std_using_percentile, npsych_scores) <- function(
 That’s it. The method is immediately available:
 
 ``` r
+
 list_std_methods(MOCATOTS())
 ```
 
@@ -64,6 +67,7 @@ And callable via
 [`std()`](https://rmtrane.github.io/ntrs/reference/std.md):
 
 ``` r
+
 moca <- MOCATOTS(c(22, 25, 28))
 ref <- c(20, 22, 23, 24, 25, 25, 26, 27, 28, 29, 30)
 
@@ -107,6 +111,7 @@ properties (`scores_class`, `method_name`, `version_id`, `description`).
 Add any method-specific properties:
 
 ``` r
+
 percentile_version <- S7::new_class(
   "percentile_version",
   parent = std_version,
@@ -137,6 +142,7 @@ This is a thin wrapper around the internal
 [`.register_std_version()`](https://rmtrane.github.io/ntrs/reference/dot-register_std_version.md):
 
 ``` r
+
 register_percentile_version <- function(
   scores,
   version,
@@ -162,6 +168,7 @@ Now redefine the method with a `version` parameter, and look up the
 reference data from the registry:
 
 ``` r
+
 S7::method(std_using_percentile, npsych_scores) <- function(
   scores,
   ...,
@@ -179,6 +186,7 @@ S7::method(std_using_percentile, npsych_scores) <- function(
 **Step 4: Register versions and set defaults**
 
 ``` r
+
 register_percentile_version(
   MOCATOTS(),
   version = "community",
@@ -209,6 +217,7 @@ set_std_defaults(
 Now versions appear in the discovery functions:
 
 ``` r
+
 list_method_versions(MOCATOTS(), "percentile")
 ```
 
@@ -218,6 +227,7 @@ And [`std()`](https://rmtrane.github.io/ntrs/reference/std.md) can
 resolve the default:
 
 ``` r
+
 moca <- MOCATOTS(c(22, 25, 28))
 
 # Uses the default "community" version
@@ -231,6 +241,7 @@ std(moca)
     [1] "community"
 
 ``` r
+
 # Or specify explicitly
 std(moca, method = "percentile", version = "clinic")
 ```
@@ -252,6 +263,7 @@ performance. Let’s make `std_using_percentile` flip the percentiles for
 `TRAILA`:
 
 ``` r
+
 S7::method(std_using_percentile, TRAILA) <- function(
   scores,
   ...,
@@ -267,6 +279,7 @@ S7::method(std_using_percentile, TRAILA) <- function(
 Now the dispatch works as expected:
 
 ``` r
+
 # MOCATOTS uses the parent method (higher = better)
 std(
   MOCATOTS(c(22, 28)),
@@ -282,6 +295,7 @@ std(
     [1] "community"
 
 ``` r
+
 # TRAILA uses the specific method (lower time = better)
 std(
   TRAILA(c(30, 60)),
@@ -325,6 +339,7 @@ R package that extends `ntrs`. It adds T-score standardization
 **1. Define the generic once** — in `R/std_using_tscores.R`:
 
 ``` r
+
 std_using_tscores <- S7::new_generic(
   "std_using_tscores",
   dispatch_args = "scores"
@@ -338,6 +353,7 @@ only one set of norms.
 **2. Register S7 methods in `.onLoad()`** — in `R/zzz.R`:
 
 ``` r
+
 .onLoad <- function(...) {
   S7::methods_register()
 }
@@ -352,6 +368,7 @@ calls. This is essential — without it, your methods won’t be found.
 loads the package:
 
 ``` r
+
 .onAttach <- function(...) {
   ntrs::set_std_defaults(REY123(), method = "tscores")
 }
@@ -361,6 +378,7 @@ loads the package:
 test-specific regression coefficients to scaled scores:
 
 ``` r
+
 S7::method(std_using_tscores, ANIMALS) <- function(
   scores,
   ...,

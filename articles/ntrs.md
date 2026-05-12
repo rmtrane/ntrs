@@ -18,6 +18,7 @@ being set. These can be suppressed with
 [`suppressPackageStartupMessages()`](https://rdrr.io/r/base/message.html).
 
 ``` r
+
 library(ntrs)
 ```
 
@@ -61,6 +62,7 @@ Each neuropsychological test has a dedicated factory function that wraps
 raw numeric scores with metadata (valid range, error codes, etc.):
 
 ``` r
+
 moca <- MOCATOTS(c(25, 28, 30))
 moca
 ```
@@ -76,6 +78,7 @@ moca
 To see all available tests:
 
 ``` r
+
 list_npsych_scores()
 ```
 
@@ -95,18 +98,21 @@ Before standardizing, you can check which methods and versions are
 available for a given test:
 
 ``` r
+
 list_std_methods(moca)
 ```
 
     [1] "norms"      "regression"
 
 ``` r
+
 list_method_versions(moca, "norms")
 ```
 
     [1] "nacc"    "updated"
 
 ``` r
+
 list_method_versions(moca, "regression")
 ```
 
@@ -116,6 +122,7 @@ Each test has registered defaults so you don’t need to specify a method
 every time:
 
 ``` r
+
 get_std_defaults(moca)
 ```
 
@@ -129,6 +136,7 @@ These can be changed globally with
 [`set_std_defaults()`](https://rmtrane.github.io/ntrs/reference/set_std_defaults.md):
 
 ``` r
+
 set_std_defaults(
   moca,
   method = "norms",
@@ -143,6 +151,7 @@ set_std_defaults(
     ✔ Set "nacc" as default for norms method on <MOCATOTS>
 
 ``` r
+
 get_std_defaults(moca)
 ```
 
@@ -163,6 +172,7 @@ convert raw scores to z-scores. Covariates (age, sex, education, etc.)
 are passed as named arguments:
 
 ``` r
+
 z <- std(moca, age = 72, sex = 1, educ = 16)
 z
 ```
@@ -177,24 +187,28 @@ The result is an `std_npsych_scores` object. You can inspect the
 standardization metadata via S7 properties:
 
 ``` r
+
 z@method
 ```
 
     [1] "norms"
 
 ``` r
+
 z@version
 ```
 
     [1] "nacc"
 
 ``` r
+
 z@description
 ```
 
     [1] "Standardized using norms, version nacc. Adjusted for covariates age, educ, sex."
 
 ``` r
+
 set_std_defaults(
   moca,
   method = "regression",
@@ -209,6 +223,7 @@ set_std_defaults(
     ✔ Set "updated_2025.06" as default for regression method on <MOCATOTS>
 
 ``` r
+
 z_reg <- std(moca, age = 72, sex = 1, educ = 16, race = 1)
 z_reg
 ```
@@ -222,6 +237,7 @@ z_reg
 To override the default method or version, specify them explicitly:
 
 ``` r
+
 z_norms <- std(
   moca,
   method = "norms",
@@ -246,6 +262,7 @@ When you have a data frame with multiple test score columns,
 standardizes all of them at once:
 
 ``` r
+
 df <- data.frame(
   age = c(72, 75, 68),
   sex = c(1, 2, 1),
@@ -277,12 +294,14 @@ Each standardized column is an `std_npsych_scores` object carrying
 to extract them conveniently:
 
 ``` r
+
 attr(result, "prefix_std")
 ```
 
     [1] "z_"
 
 ``` r
+
 methods_from_std_data(result)
 ```
 
@@ -297,6 +316,7 @@ methods_from_std_data(result)
 You can override the method/version per test class:
 
 ``` r
+
 result2 <- std_data(
   df,
   methods = list(
@@ -313,6 +333,7 @@ result2 <- std_data(
     will be ignored.
 
 ``` r
+
 result2
 ```
 

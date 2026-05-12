@@ -13,12 +13,14 @@ cognitive test scores, and functional assessment items — all with
 realistic error codes.
 
 ``` r
+
 dim(demo_data)
 ```
 
     [1] 344 159
 
 ``` r
+
 names(demo_data)[1:20]
 ```
 
@@ -32,18 +34,21 @@ The column names match NACC variable names (e.g., `MOCATOTS`, `TRAILA`,
 Dictionary via the `rdd` object:
 
 ``` r
+
 rdd$MOCATOTS$short_descriptor
 ```
 
     [1] "MoCA Total Raw Score - uncorrected"
 
 ``` r
+
 rdd$MOCATOTS$range
 ```
 
     [1]  0 30
 
 ``` r
+
 rdd$MOCATOTS$codes
 ```
 
@@ -59,6 +64,7 @@ wrap the columns you want to standardize as `npsych_scores` objects.
 This adds validation, range checking, and error-code awareness.
 
 ``` r
+
 df <- demo_data
 
 df$MOCATOTS <- MOCATOTS(df$MOCATOTS)
@@ -71,6 +77,7 @@ df$UDSBENTD <- UDSBENTD(df$UDSBENTD)
 Once converted, the columns carry metadata:
 
 ``` r
+
 df$MOCATOTS[1:10]
 ```
 
@@ -94,6 +101,7 @@ The MoCA clock drawing score is the sum of three sub-items (contour,
 numbers, hands), each scored 0 or 1:
 
 ``` r
+
 df$MOCACLOCK <- calc_MOCACLOCK(
   MOCACLOC = demo_data$MOCACLOC,
   MOCACLON = demo_data$MOCACLON,
@@ -116,6 +124,7 @@ The Rey Auditory Verbal Learning Test (RAVLT) total learning score is
 the sum of trials 1 through 5:
 
 ``` r
+
 df$REYTOTAL <- calc_REYTOTAL(
   rey1rec = REY1REC(demo_data$REY1REC),
   rey2rec = REY2REC(demo_data$REY2REC),
@@ -140,6 +149,7 @@ Recognition accuracy combines true positives (`REYTCOR`) and false
 positives (`REYFPOS`):
 
 ``` r
+
 df$REYAREC <- calc_REYAREC(
   reytcor = REYTCOR(demo_data$REYTCOR),
   reyfpos = REYFPOS(demo_data$REYFPOS)
@@ -162,6 +172,7 @@ everyday-functioning items. Error codes like 8 (“Not applicable”) are
 treated as 0:
 
 ``` r
+
 df$FAS <- calc_FAS(
   BILLS = demo_data$BILLS,
   TAXES = demo_data$TAXES,
@@ -187,6 +198,7 @@ standardize them all at once. Covariates are passed as bare column names
 referencing columns in the data frame:
 
 ``` r
+
 result <- std_data(
   df,
   age = NACCAGE,
@@ -219,6 +231,7 @@ finds every `npsych_scores` column, standardizes it using the registered
 default method and version, and adds a new column with a `z_` prefix:
 
 ``` r
+
 # Show the z-score columns
 z_cols <- grep("^z_", names(result), value = TRUE)
 z_cols
@@ -228,6 +241,7 @@ z_cols
     [6] "z_MOCACLOCK" "z_REYTOTAL"  "z_REYAREC"  
 
 ``` r
+
 head(result[, c("MOCATOTS", "z_MOCATOTS", "ANIMALS", "z_ANIMALS")])
 ```
 
@@ -255,6 +269,7 @@ The result carries metadata attributes. Use
 to see which method and version were applied to each score:
 
 ``` r
+
 methods_from_std_data(result)
 ```
 
@@ -285,6 +300,7 @@ you prefer to rename them with a prefix (e.g., `raw_`) for clearer
 bookkeeping, use the `prefix_raw` argument:
 
 ``` r
+
 result2 <- std_data(
   df,
   prefix_raw = "raw_",
@@ -314,6 +330,7 @@ result2 <- std_data(
       `set_std_defaults()()`.
 
 ``` r
+
 # Now we have raw_MOCATOTS and z_MOCATOTS
 names(result2)[grep("MOCATOTS", names(result2))]
 ```
@@ -326,6 +343,7 @@ You can specify different methods or versions for specific tests via the
 `methods` argument, keyed by class name:
 
 ``` r
+
 result3 <- std_data(
   df,
   methods = list(
@@ -368,6 +386,7 @@ result3 <- std_data(
 If you only want to standardize specific columns, use `.cols`:
 
 ``` r
+
 result4 <- std_data(
   df,
   .cols = c("MOCATOTS", "ANIMALS", "TRAILA"),
@@ -387,6 +406,7 @@ grep("^z_", names(result4), value = TRUE)
 For simplicity, consider just a subset of the `demo_data`.
 
 ``` r
+
 demo_subset <- demo_data[, c(
   "NACCID",
   "NACCAGE",
@@ -422,6 +442,7 @@ demo_subset <- demo_data[, c(
 Here is the full workflow, from raw data to standardized scores:
 
 ``` r
+
 # 1. Start with raw NACC data
 df <- demo_subset
 # 2. Convert test columns to npsych_scores
@@ -477,8 +498,10 @@ result <- std_data(
 We can similarly work within the `tidyverse` if that’s your preference:
 
 ``` r
+
 library(dplyr)
 ```
+
 
     Attaching package: 'dplyr'
 
@@ -491,6 +514,7 @@ library(dplyr)
         intersect, setdiff, setequal, union
 
 ``` r
+
 df_tidy <- demo_subset |>
   mutate(
     MOCATOTS = MOCATOTS(MOCATOTS),
@@ -542,8 +566,10 @@ df_tidy_result <- std_data(
 Or `data.table`:
 
 ``` r
+
 library(data.table)
 ```
+
 
     Attaching package: 'data.table'
 
@@ -551,7 +577,12 @@ library(data.table)
 
         between, first, last
 
+    The following object is masked from 'package:base':
+
+        %notin%
+
 ``` r
+
 df_dt <- as.data.table(demo_subset)
 
 df_dt[,
@@ -614,12 +645,14 @@ We can verify that all three approaches yield the same result (par
 differences in classes):
 
 ``` r
+
 waldo::compare(as.data.frame(result), as.data.frame(df_tidy_result))
 ```
 
     ✔ No differences
 
 ``` r
+
 waldo::compare(as.data.frame(df_tidy_result), as.data.frame(df_dt_result))
 ```
 

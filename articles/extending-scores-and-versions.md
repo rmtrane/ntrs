@@ -16,6 +16,7 @@ with the
 factory function. Let’s create one for a fictional “Digit Symbol” test:
 
 ``` r
+
 DSYM <- new_npsych_scores(
   name = "DSYM",
   label = "Digit Symbol",
@@ -42,6 +43,7 @@ The arguments are:
 `DSYM` is now a constructor function. Use it to wrap raw numeric data:
 
 ``` r
+
 scores <- DSYM(c(45, 62, 88, 33, NA))
 scores
 ```
@@ -58,6 +60,7 @@ The value `88` is stored as-is because it’s a registered code ("Not
 administered"). Validation catches values outside the range *and* codes:
 
 ``` r
+
 DSYM(c(45, 100))
 ```
 
@@ -68,6 +71,7 @@ DSYM(c(45, 100))
 The new score is immediately discoverable:
 
 ``` r
+
 "DSYM" %in% list_npsych_scores()
 ```
 
@@ -82,12 +86,14 @@ to replace codes with `NA` for analysis, or
 to see their labels:
 
 ``` r
+
 remove_error_codes(scores)
 ```
 
     [1] 45 62 NA 33 NA
 
 ``` r
+
 replace_codes(scores)
 ```
 
@@ -112,6 +118,7 @@ The lookup table is a data frame with columns for each covariate plus
 (sample size). Here’s a small example stratified by age group and sex:
 
 ``` r
+
 dsym_norms <- data.frame(
   age = factor(rep(c("<65", "65-74", "75+"), each = 2)),
   sex = factor(rep(c("m", "f"), 3)),
@@ -138,6 +145,7 @@ format. Each function takes a numeric vector and returns the transformed
 values:
 
 ``` r
+
 dsym_covar_fns <- list(
   age = \(x) {
     dplyr::case_when(
@@ -160,6 +168,7 @@ Now register with
 [`register_norms_version()`](https://rmtrane.github.io/ntrs/reference/register_norms_version.md):
 
 ``` r
+
 register_norms_version(
   scores = DSYM(),
   version = "example_v1",
@@ -171,6 +180,7 @@ register_norms_version(
 The version is now discoverable:
 
 ``` r
+
 list_method_versions(DSYM(), "norms")
 ```
 
@@ -179,6 +189,7 @@ list_method_versions(DSYM(), "norms")
 We can standardize using it:
 
 ``` r
+
 std(
   DSYM(c(45, 62, 33)),
   method = "norms",
@@ -197,7 +208,7 @@ std(
 ## Registering a regression version
 
 Regression-based standardization uses a linear model:
-$z = (\text{raw} - \text{predicted})/\text{RMSE}$, where predicted
+$`z = (\text{raw} - \text{predicted}) / \text{RMSE}`$, where predicted
 values come from regression coefficients.
 
 ### The coefficients
@@ -206,6 +217,7 @@ Provide a named numeric vector with `intercept`, `rmse`, and any
 covariate names:
 
 ``` r
+
 dsym_coefs <- c(
   intercept = 65.2,
   age = -0.35,
@@ -223,6 +235,7 @@ covariate. Here we recode sex from `1/2` to `0/1`, and truncate
 education at 8 and 30 years:
 
 ``` r
+
 register_regression_version(
   scores = DSYM(),
   version = "example_reg",
@@ -238,12 +251,14 @@ register_regression_version(
 Again, the version is discoverable and can be used for standardization:
 
 ``` r
+
 list_method_versions(DSYM(), "regression")
 ```
 
     [1] "example_reg"
 
 ``` r
+
 std(
   DSYM(c(45, 62, 33)),
   method = "regression",
@@ -264,6 +279,7 @@ We can verify that the education variable is indeed truncated by
 comparing the result at the boundary to a value above it:
 
 ``` r
+
 std(
   DSYM(c(45, 45)),
   method = "regression",
@@ -287,12 +303,14 @@ Set a default method and version so users can call
 specifying them:
 
 ``` r
+
 set_std_defaults(DSYM(), method = "regression", version = "example_reg")
 ```
 
     ✔ Set "example_reg" as default for regression method on <DSYM>
 
 ``` r
+
 get_std_defaults(DSYM())
 ```
 
@@ -305,6 +323,7 @@ get_std_defaults(DSYM())
 Now standardize:
 
 ``` r
+
 test_scores <- DSYM(c(45, 62, 33))
 
 # Uses the default (regression)
@@ -318,6 +337,7 @@ std(test_scores, age = 72, sex = 1, educ = 16)
      @ version        : chr "example_reg"
 
 ``` r
+
 # Explicitly use norms
 std(test_scores, method = "norms", version = "example_v1", age = 72, sex = 1)
 ```
@@ -347,6 +367,7 @@ performance. A `post_proc_fn = \(x) -x` flips the z-scores so that
 positive always means better:
 
 ``` r
+
 register_norms_version(
   scores = TRAILA(),
   version = "my_flipped",
@@ -363,6 +384,7 @@ for any score that `ntrs` already provides. For instance, to add
 site-specific norms for `MOCATOTS`:
 
 ``` r
+
 my_moca_norms <- data.frame(
   age = factor(c("<70", "70+", "<70", "70+")),
   sex = factor(c("m", "m", "f", "f")),
