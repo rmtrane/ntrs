@@ -86,6 +86,7 @@ OTRLARR <- new_npsych_scores(
         x
       },
       sex = \(x) {
+        x[!x %in% c(1, 2)] <- NA
         as.numeric(x == 2)
       },
       educ = \(x) {
@@ -114,6 +115,7 @@ OTRLARR <- new_npsych_scores(
         x
       },
       sex = \(x) {
+        x[!x %in% c(1, 2)] <- NA
         as.numeric(x == 2)
       },
       educ = \(x) {
