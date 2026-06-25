@@ -17,11 +17,18 @@ relatively painless for interested parties.
 ## Installation
 
 You can install the development version of `ntrs` from
-[GitHub](https://github.com/rmtrane/ntrs) with:
+[GitHub](https://github.com/rmtrane/ntrs) with
 
 ``` r
 # install.packages("pak")
 pak::pak("rmtrane/ntrs")
+```
+
+or
+
+``` r
+# install.packages("remotes")
+remotes::install_github("rmtrane/ntrs")
 ```
 
 ## Example
@@ -42,4 +49,8 @@ std(
 )
 ```
 
-    [1] -0.431067  1.597505 -2.689024
+    <ntrs::std_npsych_scores> num [1:3] -0.431 1.598 -2.689
+     @ scores_subclass: chr "MOCATOTS"
+     @ description    : chr "Standardized using regression, version updated_2025.06. Adjusted for covariates age, sex, educ, race."
+     @ method         : chr "regression"
+     @ version        : chr "updated_2025.06"
