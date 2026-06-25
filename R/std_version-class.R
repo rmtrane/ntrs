@@ -12,6 +12,8 @@
 #' @param version_id A single non-empty string uniquely identifying this
 #'   version within its method and scores class.
 #' @param description An optional single string describing the version.
+#' @param reference An optional single string providing a reference to the
+#'   version implemented.
 #'
 #' @returns
 #' An S7 object of class `std_version` with properties `scores_class`,

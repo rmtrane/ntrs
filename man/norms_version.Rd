@@ -11,7 +11,8 @@ norms_version(
   covar_fns,
   raw_scores_fn = function(x) x,
   post_proc_fn = function(x) x,
-  description = ""
+  description = "",
+  reference = NULL
 )
 }
 \arguments{
@@ -39,6 +40,9 @@ of \code{TRAILA}, the sign of the z-scores are flipped to that larger z-scores a
 correlated with better performance. Hence, \verb{post_proc_fn = \\(x) -x}.}
 
 \item{description}{An optional single string describing the version.}
+
+\item{reference}{An optional single string providing a reference to the
+version implemented.}
 }
 \value{
 An S7 object of class \code{norms_version} with properties inherited from

@@ -8,7 +8,8 @@ std_version(
   scores_class = character(0),
   method_name = character(0),
   version_id = character(0),
-  description = character(0)
+  description = character(0),
+  reference = character(0)
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ method (e.g., \code{"norms"}, \code{"regression"}).}
 version within its method and scores class.}
 
 \item{description}{An optional single string describing the version.}
+
+\item{reference}{An optional single string providing a reference to the
+version implemented.}
 }
 \value{
 An S7 object of class \code{std_version} with properties \code{scores_class},

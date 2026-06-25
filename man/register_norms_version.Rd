@@ -12,7 +12,8 @@ register_norms_version(
   covar_fns,
   post_proc_fn = function(x) x,
   overwrite = FALSE,
-  description = ""
+  description = "",
+  reference = NULL
 )
 }
 \arguments{
@@ -45,6 +46,9 @@ registry. If \code{TRUE}, the existing version is overwritten with the new
 one.}
 
 \item{description}{An optional single string describing the version.}
+
+\item{reference}{An optional single string providing a reference to the
+version implemented.}
 }
 \value{
 Invisible \code{NULL}. Called for its side effect of registering the
