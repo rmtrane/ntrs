@@ -89,6 +89,7 @@ DIGFORSL <- new_npsych_scores(
       sex = \(x) factor(x, levels = c(1, 2), labels = c("m", "f"))
     )
   )
+
   # Register regression versions for DIGFORSL
   coefs <- subset(
     reg_coefs[["updated_2024.06"]],

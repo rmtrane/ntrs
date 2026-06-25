@@ -26,7 +26,8 @@ register_norms_version <- function(
   covar_fns,
   post_proc_fn = \(x) x,
   overwrite = FALSE,
-  description = ""
+  description = "",
+  reference = NULL
 ) {
   if (!S7::S7_inherits(scores, npsych_scores)) {
     cli::cli_abort(c(
@@ -39,6 +40,7 @@ register_norms_version <- function(
     scores_class = S7::S7_class(scores)@name,
     version_id = version,
     description = description,
+    reference = reference,
     lookup_table = lookup_table,
     raw_scores_fn = raw_scores_fn,
     covar_fns = covar_fns,

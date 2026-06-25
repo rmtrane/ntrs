@@ -24,7 +24,8 @@ std_version <- S7::new_class(
     scores_class = S7::class_character,
     method_name = S7::class_character,
     version_id = S7::class_character,
-    description = S7::class_character
+    description = S7::class_character,
+    reference = S7::class_character | NULL
   ),
   validator = function(self) {
     errs <- character()
@@ -38,6 +39,9 @@ std_version <- S7::new_class(
       errs <- c(errs, "version_id must be a non-empty single string")
     }
     if (length(self@description) > 1) {
+      errs <- c(errs, "description must empty or a single string")
+    }
+    if (length(self@reference) > 1) {
       errs <- c(errs, "description must empty or a single string")
     }
     if (length(errs)) errs else NULL

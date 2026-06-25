@@ -44,7 +44,8 @@ norms_version <- S7::new_class(
     covar_fns,
     raw_scores_fn = \(x) x,
     post_proc_fn = \(x) x,
-    description = ""
+    description = "",
+    reference = NULL
   ) {
     S7::new_object(
       S7::S7_object(),
@@ -52,6 +53,7 @@ norms_version <- S7::new_class(
       method_name = "norms",
       version_id = version_id,
       description = description,
+      reference = reference,
       lookup_table = lookup_table,
       raw_scores_fn = raw_scores_fn,
       covar_fns = covar_fns,
@@ -82,10 +84,10 @@ norms_version <- S7::new_class(
           c(
             "x" = "{.arg covar_fns} names must match non-stat columns in {.arg lookup_table}.",
             if (length(missing_fns)) {
-              "i" = "Missing from {.arg covar_fns}: {.val {missing_fns}}."
+              "i" <- "Missing from {.arg covar_fns}: {.val {missing_fns}}."
             },
             if (length(extra_fns)) {
-              "i" = "Extra in {.arg covar_fns}: {.val {extra_fns}}."
+              "i" <- "Extra in {.arg covar_fns}: {.val {extra_fns}}."
             }
           )
         )
