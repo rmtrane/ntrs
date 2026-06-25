@@ -16,7 +16,8 @@ register_norms_version(
   covar_fns,
   post_proc_fn = function(x) x,
   overwrite = FALSE,
-  description = ""
+  description = "",
+  reference = NULL
 )
 ```
 
@@ -69,6 +70,11 @@ register_norms_version(
 - description:
 
   An optional single string describing the version.
+
+- reference:
+
+  An optional single string providing a reference to the version
+  implemented.
 
 ## Value
 

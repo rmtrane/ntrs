@@ -11,7 +11,8 @@ std_version(
   scores_class = character(0),
   method_name = character(0),
   version_id = character(0),
-  description = character(0)
+  description = character(0),
+  reference = character(0)
 )
 ```
 
@@ -35,6 +36,11 @@ std_version(
 - description:
 
   An optional single string describing the version.
+
+- reference:
+
+  An optional single string providing a reference to the version
+  implemented.
 
 ## Value
 

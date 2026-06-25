@@ -70,16 +70,20 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <code>ntrs</code> from <a href="https://github.com/rmtrane/ntrs" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of <code>ntrs</code> from <a href="https://github.com/rmtrane/ntrs" class="external-link">GitHub</a> with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"rmtrane/ntrs"</span><span class="op">)</span></span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rmtrane/ntrs"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmtrane.github.io/ntrs/">ntrs</a></span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">moca_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/MOCATOTS.html">MOCATOTS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">28</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span></span>
@@ -91,7 +95,11 @@
 <span>  sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  race <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="fl">0.431067</span>  <span class="fl">1.597505</span> <span class="sc">-</span><span class="fl">2.689024</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="sc">&lt;</span>ntrs<span class="sc">::</span>std_npsych_scores<span class="sc">&gt;</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">-</span><span class="fl">0.431</span> <span class="fl">1.598</span> <span class="sc">-</span><span class="fl">2.689</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a> <span class="sc">@</span> scores_subclass<span class="sc">:</span> chr <span class="st">"MOCATOTS"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a> <span class="sc">@</span> description    <span class="sc">:</span> chr <span class="st">"Standardized using regression, version updated_2025.06. Adjusted for covariates age, sex, educ, race."</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a> <span class="sc">@</span> method         <span class="sc">:</span> chr <span class="st">"regression"</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a> <span class="sc">@</span> version        <span class="sc">:</span> chr <span class="st">"updated_2025.06"</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

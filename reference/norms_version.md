@@ -14,7 +14,8 @@ norms_version(
   covar_fns,
   raw_scores_fn = function(x) x,
   post_proc_fn = function(x) x,
-  description = ""
+  description = "",
+  reference = NULL
 )
 ```
 
@@ -59,6 +60,11 @@ norms_version(
 - description:
 
   An optional single string describing the version.
+
+- reference:
+
+  An optional single string providing a reference to the version
+  implemented.
 
 ## Value
 
