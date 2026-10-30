@@ -217,6 +217,24 @@ for (spec in npsych_scores_specs) {
         }
       }
     )
+
+    test_that(
+      paste0(nm, " regression race covar_fn treats NA and 99 as missing"),
+      {
+        for (ver in spec$regression_versions) {
+          data <- get_version_data(factory(), "regression", ver)
+          if (!"race" %in% names(data@covar_fns)) {
+            next
+          }
+
+          expect_identical(
+            data@covar_fns$race(c(1, 2, 5, 99, NA)),
+            c(0, 1, 1, NA, NA),
+            info = ver
+          )
+        }
+      }
+    )
   }
 
   # =========================================================================

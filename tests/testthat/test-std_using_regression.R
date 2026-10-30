@@ -648,3 +648,91 @@ test_that("lin_reg_resids() returns NA when no submodel matches the missingness 
 
   expect_true(is.na(lin_reg_resids(25, X, lr_coefs_df)))
 })
+
+
+# Missing race falls back to the submodel without race ----
+
+test_that("std_using_regression() treats race = NA like race = 99, not as 'Other'", {
+  std_race <- function(race) {
+    as.numeric(std_using_regression(
+      MOCATOTS(25),
+      age = 70,
+      sex = 1,
+      educ = 16,
+      race = race,
+      version = "updated_2025.06"
+    ))
+  }
+
+  expect_equal(std_race(NA_real_), std_race(99))
+  expect_false(isTRUE(all.equal(std_race(NA_real_), std_race(2))))
+})
+
+test_that("std_using_regression() uses the no-race submodel row by row when race is NA", {
+  result <- std_using_regression(
+    MOCATOTS(c(25, 25, 25)),
+    age = 70,
+    sex = 1,
+    educ = 16,
+    race = c(1, NA, 2),
+    version = "updated_2025.06"
+  )
+
+  expect_equal(
+    as.numeric(result),
+    c(
+      as.numeric(std_using_regression(
+        MOCATOTS(25),
+        age = 70,
+        sex = 1,
+        educ = 16,
+        race = 1,
+        version = "updated_2025.06"
+      )),
+      as.numeric(std_using_regression(
+        MOCATOTS(25),
+        age = 70,
+        sex = 1,
+        educ = 16,
+        race = 99,
+        version = "updated_2025.06"
+      )),
+      as.numeric(std_using_regression(
+        MOCATOTS(25),
+        age = 70,
+        sex = 1,
+        educ = 16,
+        race = 2,
+        version = "updated_2025.06"
+      ))
+    )
+  )
+})
+
+# Description lists only covariates that were actually supplied ----
+test_that("std_using_regression() description omits a covariate supplied as all NA", {
+  result <- std_using_regression(
+    MOCATOTS(c(25, 28)),
+    age = 70,
+    sex = 1,
+    educ = 16,
+    race = NA_real_,
+    version = "updated_2025.06"
+  )
+
+  expect_match(result@description, "age, sex, educ", fixed = TRUE)
+  expect_no_match(result@description, "race", fixed = TRUE)
+})
+
+test_that("std_using_regression() description keeps a covariate supplied for some rows", {
+  result <- std_using_regression(
+    MOCATOTS(c(25, 28)),
+    age = 70,
+    sex = 1,
+    educ = 16,
+    race = c(1, NA),
+    version = "updated_2025.06"
+  )
+
+  expect_match(result@description, "age, sex, educ, race", fixed = TRUE)
+})

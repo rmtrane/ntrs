@@ -59,6 +59,8 @@
     }
   }
 
+  result <- result[order(names(result))]
+
   # Update cache
   .npsych_cache$ns_snapshot <- current_ns
   .npsych_cache$classes <- result
