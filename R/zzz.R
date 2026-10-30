@@ -51,6 +51,8 @@
   registerS3method("[<-", "ntrs::npsych_scores", `[<-.npsych_scores`)
   registerS3method("c", "ntrs::std_npsych_scores", c.std_npsych_scores)
   registerS3method("[<-", "ntrs::std_npsych_scores", `[<-.std_npsych_scores`)
+  registerS3method("c", "ntrs::npsych_covariate", c.npsych_covariate)
+  registerS3method("[<-", "ntrs::npsych_covariate", `[<-.npsych_covariate`)
 
   .set_defaults()
 } # nocov end
