@@ -164,7 +164,6 @@ S7::method(std_using_regression, npsych_scores) <- function(
 #'   matching submodel exists.
 #'
 #' @keywords internal
-#' @noRd
 lin_reg_resids <- function(raw_scores, X, coefs_to_use) {
   if (is.null(names(coefs_to_use))) {
     cli::cli_abort("{.arg coefs_to_use} must be named.")

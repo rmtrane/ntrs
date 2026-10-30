@@ -26,7 +26,6 @@
 #' }
 #'
 #' @keywords internal
-#' @noRd
 race_covar_fn <- function(x) {
   as.numeric(
     data.table::fcase(
