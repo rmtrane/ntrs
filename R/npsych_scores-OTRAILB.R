@@ -92,18 +92,7 @@ OTRAILB <- new_npsych_scores(
 
           x
         },
-        race = \(x) {
-          as.numeric(
-            data.table::fcase(
-              x == 1  ,
-              "White" ,
-              x == 99 ,
-              NA      ,
-              default = "Other"
-            ) ==
-              "Other"
-          )
-        }
+        race = \(x) race_covar_fn(x)
       )
     )
   }
@@ -137,18 +126,7 @@ OTRAILB <- new_npsych_scores(
 
         x
       },
-      race = \(x) {
-        as.numeric(
-          data.table::fcase(
-            x == 1  ,
-            "White" ,
-            x == 99 ,
-            NA      ,
-            default = "Other"
-          ) ==
-            "Other"
-        )
-      }
+      race = \(x) race_covar_fn(x)
     )
   )
 
