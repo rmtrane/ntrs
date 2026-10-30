@@ -250,6 +250,31 @@ for (spec in npsych_scores_specs) {
         }
       }
     )
+
+    test_that(
+      paste0(nm, " regression age, educ and sex covar_fns handle edge cases"),
+      {
+        for (ver in spec$regression_versions) {
+          data <- get_version_data(factory(), "regression", ver)
+
+          expect_identical(
+            data@covar_fns$age(c(-1, 70, 120, NA)),
+            c(0, 70, 110, NA),
+            info = ver
+          )
+          expect_identical(
+            data@covar_fns$educ(c(-1, 16, 36, 99, NA)),
+            c(0, 16, 31, NA, NA),
+            info = ver
+          )
+          expect_identical(
+            data@covar_fns$sex(c(1, 2, 8, 9, NA)),
+            c(0, 1, NA, NA, NA),
+            info = ver
+          )
+        }
+      }
+    )
   }
 
   # =========================================================================

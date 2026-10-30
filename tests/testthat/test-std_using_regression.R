@@ -736,3 +736,21 @@ test_that("std_using_regression() description keeps a covariate supplied for som
 
   expect_match(result@description, "age, sex, educ, race", fixed = TRUE)
 })
+
+# Unknown education falls back to the submodel without education ----
+
+test_that("std_using_regression() treats educ = 99 like educ = NA, not as 31 years", {
+  std_educ <- function(educ) {
+    as.numeric(std_using_regression(
+      MOCATOTS(25),
+      age = 70,
+      sex = 1,
+      educ = educ,
+      race = 1,
+      version = "updated_2025.06"
+    ))
+  }
+
+  expect_equal(std_educ(99), std_educ(NA_real_))
+  expect_false(isTRUE(all.equal(std_educ(99), std_educ(31))))
+})

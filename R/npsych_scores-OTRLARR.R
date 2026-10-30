@@ -80,20 +80,9 @@ OTRLARR <- new_npsych_scores(
     version = "updated_2024.06",
     coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covar_fns = list(
-      age = \(x) {
-        x[x < 0] <- 0
-        x[x > 110] <- 110
-        x
-      },
-      sex = \(x) {
-        x[!x %in% c(1, 2)] <- NA
-        as.numeric(x == 2)
-      },
-      educ = \(x) {
-        x[x < 0] <- 0
-        x[x > 31] <- 31
-        x
-      },
+      age = \(x) age_covar_fn(x),
+      sex = \(x) sex_covar_fn(x),
+      educ = \(x) educ_covar_fn(x),
       race = \(x) race_covar_fn(x)
     )
   )
@@ -110,20 +99,9 @@ OTRLARR <- new_npsych_scores(
     version = "updated_2025.06",
     coefs = coefs[names(which(unlist(lapply(coefs, \(x) any(!is.na(x))))))],
     covar_fns = list(
-      age = \(x) {
-        x[x < 0] <- 0
-        x[x > 110] <- 110
-        x
-      },
-      sex = \(x) {
-        x[!x %in% c(1, 2)] <- NA
-        as.numeric(x == 2)
-      },
-      educ = \(x) {
-        x[x < 0] <- 0
-        x[x > 31] <- 31
-        x
-      },
+      age = \(x) age_covar_fn(x),
+      sex = \(x) sex_covar_fn(x),
+      educ = \(x) educ_covar_fn(x),
       race = \(x) race_covar_fn(x)
     )
   )
