@@ -712,7 +712,7 @@ test_that("std_using_regression() uses the no-race submodel row by row when race
 # Description lists only covariates that were actually supplied ----
 test_that("std_using_regression() description omits a covariate supplied as all NA", {
   result <- std_using_regression(
-    MOCATOTS(c(25, 28)),
+    scores = MOCATOTS(c(25, 28)),
     age = 70,
     sex = 1,
     educ = 16,

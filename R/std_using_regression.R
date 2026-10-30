@@ -123,6 +123,13 @@ S7::method(std_using_regression, npsych_scores) <- function(
     coefs_to_use = coefs
   )
 
+  ## Covars used
+
+  covars_used <- intersect(
+    setdiff(names(which(colSums(!is.na(X)) > 0)), "intercept"),
+    names(coefs)
+  )
+
   std_scrs <- version_obj@post_proc_fn(std_scrs)
 
   std_npsych_scores(
@@ -134,7 +141,8 @@ S7::method(std_using_regression, npsych_scores) <- function(
       "Standardized using regression, version ",
       version,
       ". Adjusted for covariates ",
-      paste(covars_needed, collapse = ", "),
+      # paste(covars_needed, collapse = ", "),
+      paste(covars_used, collapse = ", "),
       "."
     )
   )

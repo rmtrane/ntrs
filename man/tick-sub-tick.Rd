@@ -6,7 +6,13 @@
 \alias{[<-.npsych_scores}
 \title{Subset \code{npsych_scores} objects.}
 \usage{
+## S7 method for class <ntrs::npsych_scores>
+\special{x[i]}
+
 \method{[}{npsych_scores}(x, i) <- value
+
+## S7 method for class <ntrs::std_npsych_scores>
+\special{x[i]}
 }
 \arguments{
 \item{x}{An S7 object of class \code{npsych_scores}.}

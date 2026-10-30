@@ -83,5 +83,7 @@ export(std_npsych_scores)
 export(std_using_norms)
 export(std_using_regression)
 export(std_version)
-importFrom(data.table,":=")
-importFrom(data.table,.SD)
+importFrom(data.table,
+  ":=",
+  .SD
+)

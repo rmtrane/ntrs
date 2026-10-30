@@ -3,6 +3,10 @@
 \name{std_using_regression-npsych_scores}
 \alias{std_using_regression-npsych_scores}
 \title{Standardize test scores using regression}
+\usage{
+## S7 method for class <ntrs::npsych_scores>
+\special{std_using_regression(scores, ..., version)}
+}
 \arguments{
 \item{scores}{A vector coercible to numeric, representing raw test scores.}
 

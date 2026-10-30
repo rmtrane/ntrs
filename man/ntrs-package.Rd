@@ -20,5 +20,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Ralph Møller Trane \email{rmtrane@gmail.com} (\href{https://orcid.org/0000-0001-7824-1785}{ORCID})
 
+Authors:
+\itemize{
+  \item Ralph Møller Trane \email{rmtrane@gmail.com} (\href{https://orcid.org/0000-0001-7824-1785}{ORCID})
+}
+
 }
 \keyword{internal}

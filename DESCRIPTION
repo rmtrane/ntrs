@@ -20,7 +20,6 @@ Description: S7 based framework for working with and standardizing neuropsycholo
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Imports: 
     cli,
     data.table,
@@ -126,3 +125,4 @@ Collate:
     'std_defaults.R'
     'std_npsych_scores-class.R'
     'zzz.R'
+Config/roxygen2/version: 8.1.1

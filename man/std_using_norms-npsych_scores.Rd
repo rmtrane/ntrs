@@ -3,6 +3,10 @@
 \name{std_using_norms-npsych_scores}
 \alias{std_using_norms-npsych_scores}
 \title{Standardize test scores using norms}
+\usage{
+## S7 method for class <ntrs::npsych_scores>
+\special{std_using_norms(scores, ..., version)}
+}
 \arguments{
 \item{scores}{A numeric vector of raw test scores.}
 
