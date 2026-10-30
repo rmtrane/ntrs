@@ -235,6 +235,21 @@ for (spec in npsych_scores_specs) {
         }
       }
     )
+
+    test_that(
+      paste0(nm, " regression demographic coefs all have a covar_fn"),
+      {
+        for (ver in spec$regression_versions) {
+          data <- get_version_data(factory(), "regression", ver)
+          demo_coefs <- intersect(
+            names(data@coefs),
+            c("age", "sex", "educ", "race")
+          )
+
+          expect_in(demo_coefs, names(data@covar_fns))
+        }
+      }
+    )
   }
 
   # =========================================================================

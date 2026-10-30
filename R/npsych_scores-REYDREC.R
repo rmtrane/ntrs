@@ -132,7 +132,8 @@ REYDREC <- new_npsych_scores(
         x[x > 31] <- 31
 
         x
-      }
+      },
+      race = \(x) race_covar_fn(x)
     )
   )
 

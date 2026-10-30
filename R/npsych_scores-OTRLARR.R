@@ -93,7 +93,8 @@ OTRLARR <- new_npsych_scores(
         x[x < 0] <- 0
         x[x > 31] <- 31
         x
-      }
+      },
+      race = \(x) race_covar_fn(x)
     )
   )
   coefs <- subset(
@@ -122,7 +123,8 @@ OTRLARR <- new_npsych_scores(
         x[x < 0] <- 0
         x[x > 31] <- 31
         x
-      }
+      },
+      race = \(x) race_covar_fn(x)
     )
   )
   ## Set the default for %s
